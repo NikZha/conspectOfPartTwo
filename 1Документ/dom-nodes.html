@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-дерево</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#domtree">DOM-дерево</a></h2>
+        <ul>
+            <li><a href="#exapmle">Пример DOM</a></li>
+            <li><a href="#autocorrect">Автоисправление</a></li>
+            <li><a href="#another">Другие типы узлов</a></li>
+            <li><a href="#urself">Поэкспериментируйте сами</a></li>
+            <li><a href="#concole">Взаимодействие с консолью</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="domtree">
+        <h2><a href="https://learn.javascript.ru/dom-nodes">DOM-дерево</a></h2>
+        <p>Каждый тег HTML-документа является объектом, вложенные теги являются детьми родительского элемента, текст
+            внутри тега является объектом.
+            Доступ из JS к объектам документа:
+        <pre><button onclick="document.body.style.background = 'red'; // сделать фон красным
+
+setTimeout(() => document.body.style.background = '', 3000); // вернуть назад">Тест</button>
+    <code class="language-js">
+document.body.style.background = 'red'; // сделать фон красным
+
+setTimeout(() => document.body.style.background = '', 3000); // вернуть назад        
+    </code>
+</pre>
+
+        </p>
+    </div>
+    <div class="topic" id="exapmle">
+        <h3><a href="https://learn.javascript.ru/dom-nodes#primer-dom">Пример DOM</a></h3>
+        <p>
+            Пример того, как выглядят графически теги вложенные друг в друга и составлляющие HTML-документ:
+            <br><img src="dom.jpeg" alt="dom">
+        </p>
+    </div>
+    <div class="topic" id="autocorrect">
+        <h3><a href="https://learn.javascript.ru/dom-nodes#avtoispravlenie">Автоисправление</a></h3>
+        <p>Если браузер сталкивается с некорректно написанным HTML-кодом, он автоматически корректирует его при
+            построении DOM.
+
+            Например, в начале документа всегда должен быть тег &lt;html>. Даже если его нет в документе – он будет в
+            дереве DOM, браузер его создаст. То же самое касается и тега
+
+            <body>.
+
+                Например, если HTML-файл состоит из единственного слова "Привет", браузер обернёт его в теги &lt;html> и
+                &lt;body>, добавит необходимый тег &lt;head>,
+        </p>
+    </div>
+    <div class="topic" id="another">
+        <h3>Другие типы узлов</h3>
+        <p>Другие типы узлов, например комментарий:
+        <pre>
+     &lt;!-- комментарий -->
+</pre>
+        Они так же являются частью DOM.
+        </p>
+    </div>
+    <div class="topic" id="urself">
+        <h3>Поэкспериментируйте сами</h3>
+        <p>
+            Можно открыть консоль разработчика и посмотреть всё дерево dom, посмотреть отдельные элементы дерева dom
+        </p>
+    </div>
+    <div class="topic" id="concole">
+        <h3><a href="https://learn.javascript.ru/dom-nodes#vzaimodeystvie-s-konsolyu">Взаимодействие с консолью</a></h3>
+        <p>
+            При помощи консоли, расположенной внизу инструментов разработчика можно менять параметры элементов, например
+            задавать им цвет:
+            <code>$0.style.background = 'red'</code>. Так же правая кнопка мыши на элементе позволяет посмотреть
+            контекстное меню и произвести разные действия.
+            Так же консоль позволяет вводить в себя например document.body и инспектировать все элементы этого объекта.
+            По сути инструменты разработчика и консоль в частности представляет собой инструмент дебага dom и js.
+        </p>
+
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Dom это представление HTML-документа в виде иерархической структуры. Комментарии так же являются частью dom.
+        </p>
+        <p>Инструменты разработчика браузера - гибкий и мощный инструмент для изменения и отладки.</p>
+        <p>Подробную документацию по инструментам разработки Chrome Developer Tools можно найти на странице
+            https://developers.google.com/web/tools/chrome-devtools. </p>
+
+
+
+
+
+
+
+</body>
+
+</html>
