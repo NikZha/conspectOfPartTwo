@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Браузерное окружение, спецификации</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h1><a href="#env">Браузерное окружение, спецификации</a></h1>
+        <ul>
+            <li><a href="#dom">DOM (Document Object Model)</a></li>
+            <li><a href="#bom">BOM (Browser Object Model)</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="env">
+        <h2><a href="https://learn.javascript.ru/browser-environment">Браузерное окружение, спецификации</a></h2>
+        <p>
+            На картинке ниже в общих чертах показано, что доступно для JavaScript в браузерном окружении:
+            <img src="global.jpeg" alt="Глобальное окружение" />
+            <br>Как мы видим, имеется корневой объект window, который выступает в 2 ролях:
+        <ol>
+            <li>Во-первых, это глобальный объект для JavaScript-кода, об этом более подробно говорится в главе
+                Глобальный объект.</li>
+            <li>Во-вторых, он также представляет собой окно браузера и располагает методами для управления им.</li>
+        </ol>
+        Например, здесь мы используем window как глобальный объект:
+        <pre>
+    <code class="language-js">
+function sayHi() {
+  alert("Hello");
+}
+
+// глобальные функции доступны как методы глобального объекта:
+window.sayHi();        
+    </code>
+</pre>
+        А здесь мы используем window как объект окна браузера, чтобы узнать его высоту:
+        <pre>
+    <code class="language-js">
+alert(window.innerHeight); // внутренняя высота окна браузера        
+    </code>
+</pre>
+
+
+        </p>
+    </div>
+    <div class="topic" id="dom">
+        <h3>DOM (Document Object Model)</h3>
+        <p>Document Object Model, сокращённо DOM – объектная модель документа, которая представляет все содержимое
+            страницы в виде объектов, которые можно менять.
+
+            Объект document – основная «входная точка». С его помощью мы можем что-то создавать или менять на странице.
+
+            Например:
+        <pre>
+    <code class="language-js">
+// заменим цвет фона на красный,
+document.body.style.background = "red";
+
+// а через секунду вернём как было
+setTimeout(() => document.body.style.background = "", 1000);        
+    </code>
+</pre>
+        DOM Living Standard на https://dom.spec.whatwg.org
+        </p>
+    </div>
+    <div class="topic" id="bom">
+        <h3>BOM (Browser Object Model)</h3>
+        <p>Объектная модель браузера (Browser Object Model, BOM) – это дополнительные объекты, предоставляемые браузером
+            (окружением), чтобы работать со всем, кроме документа.
+        <ul>
+            <li>Объект navigator даёт информацию о самом браузере и операционной системе. Среди множества его свойств
+                самыми известными являются: navigator.userAgent – информация о текущем браузере, и navigator.platform –
+                информация о платформе (может помочь в понимании того, в какой ОС открыт браузер – Windows/Linux/Mac и
+                так далее).
+                <pre><button onclick="expl1()">Показать юзерагент</button>
+                <code class="language-js">
+alert(navigator.userAgent)                    
+                </code>
+            </pre>
+            </li>
+            <li>Объект location позволяет получить текущий URL и перенаправить браузер по новому адресу.
+                <pre>
+    <code class="language-js">
+alert(location.href); // показывает текущий URL
+if (confirm("Перейти на Wikipedia?")) {
+  location.href = "https://wikipedia.org"; // перенаправляет браузер на другой URL
+}        
+    </code>
+</pre>
+
+            </li>
+        </ul>
+        <script>
+            function expl1(params) {
+                alert(navigator.userAgent)
+            }
+        </script>
+        Функции alert/confirm/prompt тоже являются частью BOM: они не относятся непосредственно к странице, но
+        представляют собой методы объекта окна браузера для коммуникации с пользователем.
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Стандарты:</p>
+        <div id="specdom">
+            <h4>Спецификация DOM</h4>
+            <p>описывает структуру документа, манипуляции с контентом и события, подробнее на
+                https://dom.spec.whatwg.org .</p>
+        </div>
+        <div id="cssom">
+            <h4>Спецификация CSSOM</h4>
+            <p>Описывает файлы стилей, правила написания стилей и манипуляций с ними, а также то, как это всё связано со
+                страницей, подробнее на https://www.w3.org/TR/cssom-1/.</p>
+        </div>
+<div id="spechtml">
+    <h4>Спецификация HTML</h4>
+<p>Описывает язык HTML (например, теги) и BOM (объектную модель браузера) – разные функции браузера: setTimeout, alert, location и так далее, подробнее на https://html.spec.whatwg.org. Тут берётся за основу спецификация DOM и расширяется дополнительными свойствами и методами.</p>
+Кроме того, некоторые классы описаны отдельно на https://spec.whatwg.org/.
+
+<p>Пожалуйста, заметьте для себя эти ссылки, так как по ним содержится очень много информации, которую невозможно изучить полностью и держать в уме.</p>
+
+<p>Когда вам нужно будет прочитать о каком-то свойстве или методе, справочник на сайте Mozilla https://developer.mozilla.org/ru/ тоже очень хороший ресурс, хотя ничто не сравнится с чтением спецификации: она сложная и объёмная, но сделает ваши знания максимально полными.</p>
+
+<p>Для поиска чего-либо обычно удобно использовать интернет-поиск со словами «WHATWG [термин]» или «MDN [термин]», например https://google.com?q=whatwg+localstorage, https://google.com?q=mdn+localstorage.</p>
+    
+</div>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
