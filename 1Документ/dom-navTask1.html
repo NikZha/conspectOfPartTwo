@@ -1,0 +1,16 @@
+<html>
+<body>
+  <div>Пользователи:</div>
+  <ul>
+    <li>Джон</li>
+    <li>Пит</li>
+  </ul>
+  <script>
+    function task1(params) {
+        alert(document.querySelector("body > ul > li:nth-child(1)").innerHTML)
+        alert(document.querySelector("body > ul > li:nth-child(2)").innerHTML)
+    }
+  </script>
+  <button onclick="task1()">Первая задача</button>
+</body>
+</html>

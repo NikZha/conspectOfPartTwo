@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Навигация по DOM-элементам</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#dom-navigation">Навигация по DOM-элементам</a></h2>
+        <ul>
+            <li><a href="#up">Сверху: documentElement и body</a></li>
+            <li><a href="#childs">Дети: childNodes, firstChild, lastChild</a></li>
+            <li><a href="#neibor">Соседи и родитель</a></li>
+            <li><a href="#only">Навигация только по элементам</a></li>
+            <li><a href="#more">Ещё немного ссылок: таблицы</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="dom-navigation">
+        <h2><a href="https://learn.javascript.ru/dom-navigation">Навигация по DOM-элементам</a></h2>
+        <p>DOM по сути граф, а значит можно осуществлять навигацию по нему. Все операции с DOM начинаются с объекта
+            document. Это главная «точка входа» в DOM. Из него мы можем получить доступ к любому узлу.</p>
+    </div>
+    <div class="topic" id="up">
+        <h3>Сверху: documentElement и body</h3>
+        <p>&lt;html> = document.documentElement</p>
+        <p>&lt;body> = document.body</p>
+        <p>&lt;head> = document.head</p>
+        <blockquote>
+            <h4>Есть одна тонкость: document.body может быть равен null</h4>
+            <pre>
+    <code class="language-js">
+&lt;html>
+
+&lt;head>
+  &lt;script>
+    alert( "Из HEAD: " + document.body ); // null, &lt;body> ещё нет
+  &lt;/script>
+&lt;/head>
+
+&lt;body>
+
+  &lt;script>
+    alert( "Из BODY: " + document.body ); // HTMLBodyElement, теперь он есть
+  &lt;/script>
+
+&lt;/body>
+&lt;/html>        
+    </code>
+</pre>
+            <h4>В мире DOM null означает «не существует»</h4>
+            <p>В DOM значение null значит «не существует» или «нет такого узла».</p>
+
+        </blockquote>
+    </div>
+    <div class="topic" id="childs">
+        <h3>Дети: childNodes, firstChild, lastChild</h3>
+        <p>
+            Два принципиально разных термина:
+        <ul>
+            <li>Дочерние узлы (или дети) – элементы, которые являются непосредственными детьми узла. Другими словами,
+                элементы, которые лежат непосредственно внутри данного. Например,
+
+                &lt;head> и
+
+                &lt;body> являются детьми элемента &lt;html>.
+            </li>
+            <li>Потомки – все элементы, которые лежат внутри данного, включая детей, их детей и т.д.</li>
+
+        </ul>
+        Коллекция childNodes содержит список всех детей, включая текстовые узлы.
+        <pre><button onclick="    for (let i = 0; i < document.body.childNodes.length; i++) {
+      alert( document.body.childNodes[i] ); // Text, DIV, Text, UL, ..., SCRIPT
+    }">Вывести все childNodes этого документа</button>
+    <code class="language-js">
+//В исходном примере этот цикл пускается по выдуманному HTML-документу, я пуляю по этому:
+    for (let i = 0; i < document.body.childNodes.length; i++) {
+      alert( document.body.childNodes[i] ); // Text, DIV, Text, UL, ..., SCRIPT
+    }
+    </code>
+</pre>
+        Свойства firstChild и lastChild обеспечивают быстрый доступ к первому и последнему дочернему элементу.
+        Они, по сути, являются всего лишь сокращениями. Если у тега есть дочерние узлы, условие ниже всегда верно:
+        <pre>
+    <code class="language-js">
+elem.childNodes[0] === elem.firstChild
+elem.childNodes[elem.childNodes.length - 1] === elem.lastChild        
+    </code>
+</pre>
+        </p>
+        <div id="dom-collection">
+            <h4>DOM-коллекции</h4>
+            <p>Как мы уже видели, childNodes похож на массив. На самом деле это не массив, а коллекция – особый
+                перебираемый объект-псевдомассив, следствием этого является:
+            <ol>
+                <li>Можно использовать цикл <code>for...of</code>:
+                    <pre>
+    <code class="language-js">
+for (let node of document.body.childNodes) {
+  alert(node); // покажет все узлы из коллекции
+}        
+    </code>
+</pre>
+                </li>
+                <li>Методы массивов не будут работать, потому что коллекция – это не массив:
+                    <pre><button onclick="alert(document.body.childNodes.filter); // undefined (у коллекции нет метода filter!)">Коллекция не массив:</button>
+    <code class="language-js">
+alert(document.body.childNodes.filter); // undefined (у коллекции нет метода filter!)
+    </code>
+</pre>
+                    Но можно легко сделать массив:
+                    <pre><button onclick="alert( Array.from(document.body.childNodes).filter ); // сделали массив">Сделать массив</button>
+    <code class="language-js">
+alert( Array.from(document.body.childNodes).filter ); // сделали массив        
+    </code>
+</pre>
+                </li>
+            </ol>
+            <blockquote id="onlyread">
+                <h4>DOM-коллекции – только для чтения</h4>
+                <p>
+                    <br>DOM-коллекции, и даже более – все навигационные свойства, перечисленные в этой главе, доступны
+                    только для чтения.
+
+                    <br>Мы не можем заменить один дочерний узел на другой, просто написав childNodes[i] = ....
+
+                    <br>Для изменения DOM требуются другие методы. Мы увидим их в следующей главе.
+                </p>
+            </blockquote>
+            <blockquote id="live">
+                <h4>DOM-коллекции живые</h4>
+                <p>Отражают текущее состояние DOM, обновляются автоматически, потому что elem.childNodes - ссылка!</p>
+            </blockquote>
+            <blockquote id="dontuse">
+                <h4>Не используйте цикл for..in для перебора коллекций</h4>
+                <p>Цикл for..in перебирает все перечисляемые свойства. А у коллекций есть некоторые «лишние», редко
+                    используемые свойства, которые обычно нам не нужны:
+                <pre>
+    <code class="language-js">
+for (let prop in document.body.childNodes) alert(prop); //выводит 0, 1, length, item, values и другие свойства.
+    </code>
+</pre>
+
+
+                </p>
+            </blockquote>
+            </p>
+        </div>
+    </div>
+    <div class="topic" id="neibor">
+        <h3>Соседи и родитель</h3>
+        <p>
+        <ul>
+            <li>Родитель доступен через свойство parentNode</li>
+            <li>Следующий сосед через свойство nextSibling</li>
+            <li>Предыдущий сосед доступен через свойство parentNode</li>
+        </ul>
+        Пример:
+        <pre><button onclick="// родителем &lt;body> является &lt;html>
+alert( document.body.parentNode === document.documentElement ); // выведет true
+
+// после &lt;head> идёт &lt;body>
+alert( document.head.nextSibling ); // HTMLBodyElement
+
+// перед &lt;body> находится &lt;head>
+alert( document.body.previousSibling ); // HTMLHeadElement  ">Получить доступ к родителям и соседям</button>
+            <code class="language-js">
+// родителем &lt;body> является &lt;html>
+alert( document.body.parentNode === document.documentElement ); // выведет true
+
+// после &lt;head> идёт &lt;body>
+alert( document.head.nextSibling ); // HTMLBodyElement
+
+// перед &lt;body> находится &lt;head>
+alert( document.body.previousSibling ); // HTMLHeadElement                
+            </code>
+        </pre>
+        </p>
+    </div>
+    <div class="topic" id="only">
+        <h3>Навигация только по элементам</h3>
+        <p>
+        <ul>
+            <li>children – коллекция детей, которые являются элементами.</li>
+            <li>firstElementChild, lastElementChild – первый и последний дочерний элемент.</li>
+            <li>previousElementSibling, nextElementSibling – соседи-элементы.</li>
+            <li>parentElement – родитель-элемент. </li>
+        </ul>
+
+        Навигация вверх до &lt;html&gt;:
+        <pre>
+        <code class="language-js">
+while(elem = elem.parentElement) { // идти наверх до <html>
+  alert( elem );
+}            
+        </code>
+    </pre>
+        Изменим один из примеров выше: заменим childNodes на children. Теперь цикл выводит только элементы:
+        <pre><button onclick="    for (let elem of document.body.children) {
+      alert(elem); // DIV, UL, DIV, SCRIPT
+    }">Цикл</button>
+    <code class="language-js">
+    for (let elem of document.body.children) {
+      alert(elem); // DIV, UL, DIV, SCRIPT
+    }        
+
+    </code>
+</pre>
+
+        </p>
+    </div>
+    <div class="topic" id="more">
+        <h3>Ещё немного ссылок: таблицы</h3>
+        <p>
+            Элемент &lt;table>, в дополнение к свойствам, о которых речь шла выше, поддерживает следующие:
+        <ul>
+            <li>table.rows – коллекция строк &lt;tr> таблицы.</li>
+            <li>table.caption/tHead/tFoot – ссылки на элементы таблицы &lt;caption>, &lt;thead>, &lt;tfoot>.</li>
+            <li>table.tBodies – коллекция элементов таблицы &lt;tbody> (по спецификации их может быть больше одного).
+            </li>
+        </ul>
+        &lt;thead>, &lt;tfoot>, &lt;tbody> предоставляют свойство rows:
+        <ul>
+            <li>tbody.rows – коллекция строк &lt;tr> секции.</li>
+        </ul>
+        &lt;tr&gt;:
+        <ul>
+            <li>tr.cells – коллекция &lt;td> и &lt;th> ячеек, находящихся внутри строки &lt;tr>.</li>
+            <li>tr.sectionRowIndex – номер строки <tr> в текущей секции &lt;thead>/&lt;tbody>/&lt;tfoot>.</li>
+            <li>tr.rowIndex – номер строки &lt;tr> в таблице (включая все строки таблицы).</li>
+
+        </ul>
+        &lt;td> and &lt;th>:
+        <ul>
+            <li>td.cellIndex – номер ячейки в строке &lt;tr>.</li>
+        </ul>
+        Так же можно доступаться до ячейки:
+        <pre>
+    <code class="language-js">
+alert( table.rows[0].cells[1].innerHTML )        
+    </code>
+</pre>
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Есть два основных набора ссылок:
+        <ul>
+            <li>Для всех узлов: parentNode, childNodes, firstChild, lastChild, previousSibling, nextSibling.</li>
+            <li>Только для узлов-элементов: parentElement, children, firstElementChild, lastElementChild,
+                previousElementSibling, nextElementSibling.</li>
+
+        </ul>
+        </p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <iframe src="dom-navTask1.html" frameborder="1">Задача 1</iframe>
+            <p>Я сделал так, посмотреть как доступится к элементу в средства разработчика:
+<pre>
+    <code class="language-js">
+        alert(document.querySelector("body > ul > li:nth-child(1)").innerHTML)
+        alert(document.querySelector("body > ul > li:nth-child(2)").innerHTML)        
+    </code>
+</pre>
+
+            </p>
+        </div>
+        <div id="task3">
+            <h4>Задача 3</h4>
+            <iframe src="dom-navTask2.html" frameborder="1"></iframe>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
