@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="widtd=device-width, initial-scale=1.0">
+    <title>Свойства узлов: тип, тег и содержимое</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#prop">Свойства узлов: тип, тег и содержимое</a></h2>
+        <ul>
+            <li><a href="#classes">Классы DOM-узлов</a></li>
+            <li><a href="#nodeType">Свойство «nodeType»</a></li>
+            <li><a href="#nodeName">Тег: nodeName и tagName</a></li>
+            <li><a href="#innerHTML">innerHTML: содержимое элемента</a></li>
+            <li><a href="#outerHTML">outerHTML: HTML элемента целиком</a></li>
+            <li><a href="#nodeValue">nodeValue/data: содержимое текстового узла</a></li>
+            <li><a href="#textContent">textContent: просто текст</a></li>
+            <li><a href="#hidden">Свойство «hidden»</a></li>
+            <li><a href="#other">Другие свойства</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+
+        </ul>
+    </div>
+    <div class="topic" id="prop">
+        <h2><a href="https://learn.javascript.ru/basic-dom-node-properties">Свойства узлов: тип, тег и содержимое</a>
+        </h2>
+        <p>Подробное рассмотрение узлов</p>
+    </div>
+    <div class="topic" id="classes">
+        <h3><a href="https://learn.javascript.ru/basic-dom-node-properties#klassy-dom-uzlov">Классы DOM-узлов</a></h3>
+        <p>Ниже идёт описание классов на <a
+                href="https://ru.wikipedia.org/wiki/%D0%AF%D0%B7%D1%8B%D0%BA_%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F_%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81%D0%BE%D0%B2">специальном
+                языке</a> похожем на C#++, но это не язык програмирования.</p>
+        <p>
+            Диаграмма наследования классов:
+            <br><img src="diaclasses.jpeg" alt="">
+        </p>
+        <p>
+            Для того, чтобы узнать имя класса DOM-узла, вспомним, что обычно у объекта есть свойство constructor. Оно
+            ссылается на конструктор класса, и в свойстве constructor.name содержится его имя:
+            <br>…Или мы можем просто привести его к строке:
+        <pre>
+                <code class="language-js">
+alert( document.body.constructor.name ); // HTMLBodyElement
+alert( document.body ); // [object HTMLBodyElement]                    
+                </code>
+            </pre>
+        Так же можно проверить цепочку наследования:
+        <pre>
+                <code class="language-js">
+alert( document.body instanceof HTMLBodyElement ); // true
+alert( document.body instanceof HTMLElement ); // true
+alert( document.body instanceof Element ); // true
+alert( document.body instanceof Node ); // true
+alert( document.body instanceof EventTarget ); // true                    
+                </code>
+            </pre>
+        <blockquote>
+            <h4> console.dir(elem) выводит элемент в виде DOM-объекта, что удобно для анализа его свойств.</h4>
+            <button onclick="console.dir(document)">Проверить console.dir</button>
+        </blockquote>
+        </p>
+    </div>
+    <div class="topic" id="nodeType">
+        <h3><a href="https://learn.javascript.ru/basic-dom-node-properties#svoystvo-nodetype">Свойство «nodeType»</a>
+        </h3>
+        <p>Есть ещё один способ узнать тип Node-узла:
+        <ul>
+            <li>elem.nodeType == 1 для узлов-элементов,</li>
+            <li>elem.nodeType == 3 для текстовых узлов,</li>
+            <li>elem.nodeType == 9 для объектов документа, </li>
+        </ul>
+        <a href="https://dom.spec.whatwg.org/#node">В специкации</a> можно посмотреть основные значения.
+        </p>
+        <p>В современных скриптах, чтобы узнать тип узла, мы можем использовать метод instanceof и другие способы
+            проверить класс, но иногда nodeType проще использовать. Мы не можем изменить значение nodeType, только
+            прочитать его.</p>
+    </div>
+    <div class="topic" id="nodeName">
+        <h3>Тег: nodeName и tagName</h3>
+        <p>Например:
+        <pre>
+    <code class="language-js">
+alert( document.body.nodeName ); // BODY
+alert( document.body.tagName ); // BODY        
+    </code>
+</pre>
+        Разница в том, что nodeName возвращает имя ноды, а tagName имя тега, если его нет, то возвращается undefined.
+        </p>
+    </div>
+    <div class="topic" id="innerHTML">
+        <h3><a href="https://learn.javascript.ru/basic-dom-node-properties#innerhtml-soderzhimoe-elementa">innerHTML:
+                содержимое элемента</a></h3>
+        <p>Получение содержимого в виде строки, если там есть теги, то покажет и их:
+            <button onclick="alert( document.body.innerHTML );">alert( document.body.innerHTML );</button>
+        <blockquote>
+            <h4> Скрипты не выполнятся</h4>
+            Если innerHTML вставляет в документ тег &lt;script> – он становится частью HTML, но не запускается.
+        </blockquote>
+        </p>
+        <h4>Будьте внимательны: «innerHTML+=» осуществляет перезапись</h4>
+        <p>Так как содержимое «обнуляется» и переписывается заново, все изображения и другие ресурсы будут
+            перезагружены.</p>
+    </div>
+    <div class="topic" id="outerHTML">
+        <h3><a href="https://learn.javascript.ru/basic-dom-node-properties#outerhtml-html-elementa-tselikom">outerHTML:
+                HTML элемента целиком</a></h3>
+        <p>Свойство outerHTML содержит HTML элемента целиком. Это как innerHTML плюс сам элемент.
+            <button onclick="alert(prop.outerHTML)">alert(prop.outerHTML)</button>
+            <br>Попытка вывести текущий раздел привела к undefined
+
+        <h4>Будьте осторожны: в отличие от innerHTML, запись в outerHTML не изменяет элемент. Вместо этого элемент
+            заменяется целиком во внешнем контексте.</h4>
+        <div id="test1">Привет мир</div>
+        <br><button onclick="test1.outerHTML = '<p>Новый элемент</p>'">Заменить test1.outerHTML = '&lt;p>Новый
+            элемент&lt;/p></button>
+        <br>После нажатия кнопки изменится элемент с div на p и так как id там нет, то и переменная такая исчезнет.
+        </p>
+        <p>Здесь легко сделать ошибку: заменить div.outerHTML, а потом продолжить работать с div, как будто там новое
+            содержимое. Но это не так. Подобное верно для innerHTML, но не для outerHTML.</p>
+
+        <p>Мы можем писать в elem.outerHTML, но надо иметь в виду, что это не меняет элемент, в который мы пишем. Вместо
+            этого создаётся новый HTML на его месте. Мы можем получить ссылки на новые элементы, обратившись к DOM.</p>
+    </div>
+    <div class="topic" id="nodeValue">
+        <h3><a href="https://learn.javascript.ru/basic-dom-node-properties#nodevalue-data-soderzhimoe-tekstovogo-uzla">nodeValue/data:
+                содержимое текстового узла</a></h3>
+        <p>nodeValue/data: содержимое текстового узла У других типов узлов, в частности, у текстовых, есть свои аналоги:
+            свойства nodeValue и data.
+            <br><iframe src="basic-dom-expl1.html" frameborder="0"></iframe>
+        </p>
+    </div>
+    <div class="topic" id="textContent">
+        <h3>textContent: просто текст</h3>
+        <p>Свойство textContent предоставляет доступ к тексту внутри элемента за вычетом всех &lt;тегов>.
+            <button onclick="alert(prop.textContent)">Например alert(prop.textContent)</button>
+        </p>
+        <p>
+            На практике редко появляется необходимость читать текст таким образом.
+
+            <br>Намного полезнее возможность записывать текст в textContent, т.к. позволяет писать текст «безопасным
+            способом».
+        </p>
+        <p>Разница с innerHTML:
+        <ul>
+            <li>С innerHTML вставка происходит «как HTML», со всеми HTML-тегами.</li>
+            <li>С textContent вставка получается «как текст», все символы трактуются буквально. </li>
+        </ul>
+        <div id="elem1"></div>
+        <div id="elem2"></div>
+        <br><button onclick="  let name = prompt('Введите ваше имя?', '<b>Винни-пух!</b>');
+
+  elem1.innerHTML = name;
+  elem2.textContent = name;">Тест</button>
+        <pre>
+      <code class="language-js">
+  let name = prompt("Введите ваше имя?", "&lt;b>Винни-пух!&lt;/b>");
+
+  elem1.innerHTML = name;
+  elem2.textContent = name;          
+      </code>
+  </pre>
+        </p>
+    </div>
+    <div class="topic" id="hidden">
+        <h3>Свойство «hidden»</h3>
+        <p>Атрибут и DOM-свойство «hidden» указывает на то, видим ли мы элемент или нет.
+            можно просто указывать например <code>div hidden</code>, а можно манипулировать этим свойством через
+            javascript:
+        <div id="elem3">Мигающий текст</div>
+        <button onclick="setInterval(() => elem3.hidden = !elem3.hidden, 1000);">Мигать текстом</button>
+        <pre>
+    <code class="language-js">
+setInterval(() => elem3.hidden = !elem3.hidden, 1000)        
+    </code>
+</pre>
+        Как понятно это значение типа boolean.
+        </p>
+    </div>
+    <div class="topic" id="other">
+        <h3>Другие свойства</h3>
+        <p>Свойств много, посмотреть можно через console.dir(elem), и прочитать все свойства. Или исследовать «свойства
+            DOM» во вкладке Elements браузерных инструментов разработчика.</p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>
+            Главные свойства DOM-узла:
+        <ul>
+            <li>nodeType
+                <br>Свойство nodeType позволяет узнать тип DOM-узла. Его значение – числовое: 1 для элементов,3 для
+                текстовых узлов, и т.д. Только для чтения.
+            </li>
+            <li>nodeName/tagName
+                <br>Для элементов это свойство возвращает название тега (записывается в верхнем регистре, за исключением
+                XML-режима). Для узлов-неэлементов nodeName описывает, что это за узел. Только для чтения.
+            </li>
+            <li>innerHTML
+                <br>Внутреннее HTML-содержимое узла-элемента. Можно изменять.
+            </li>
+            <li>outerHTML
+                <br>Полный HTML узла-элемента. Запись в elem.outerHTML не меняет elem. Вместо этого она заменяет его во
+                внешнем контексте.
+            </li>
+            <li>nodeValue/data
+                <br>Содержимое узла-неэлемента (текст, комментарий). Эти свойства практически одинаковые, обычно мы
+                используем data. Можно изменять.
+            </li>
+            <li>textContent
+                <br>Текст внутри элемента: HTML за вычетом всех <тегов>. Запись в него помещает текст в элемент, при
+                    этом все специальные символы и теги интерпретируются как текст. Можно использовать для защиты от
+                    вставки произвольного HTML кода.
+            </li>
+            <li>hidden
+                <br>Когда значение установлено в true, делает то же самое, что и CSS display:none.
+            </li>
+
+        </ul>
+
+
+        </p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <p>
+                Пройдём циклом по всем элементам &lt;li>:
+            <pre>
+    <code class="language-js">
+for (let li of document.querySelectorAll('li')) {
+  ...
+}
+    </code>
+</pre>
+            В цикле нам нужно получить текст в каждом элементе li. Мы можем прочитать текстовое содержимое элемента
+            списка из первого дочернего узла li, который будет текстовым узлом:
+            <pre>
+    <code class="language-js">
+for (let li of document.querySelectorAll('li')) {
+  let title = li.firstChild.data;
+
+  // переменная title содержит текст элемента <li>
+}
+    </code>
+</pre>
+            Так мы сможем получить количество потомков как li.getElementsByTagName('li').length.
+            </p>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
