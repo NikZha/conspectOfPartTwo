@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <div data-widget-name="menu">Choose the genre</div>
+
+  <script>
+    function task1(params) {
+        let div = document.querySelector("body > div")
+        console.log(div.dataset.widgetName)
+        console.log(div.innerHTML)
+    }
+  </script>
+  <button onclick="task1()">Задача 1</button>
+</body>
+</html>

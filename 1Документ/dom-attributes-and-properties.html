@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="widtd=device-width, initial-scale=1.0">
+    <title>Атрибуты и свойства</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body something="test" type="test" data-about="Elephants">
+    <div class="contents">
+        <h2><a href="#atr">Атрибуты и свойства</a></h2>
+        <ul>
+            <li><a href="#dom">DOM-свойства</a></li>
+            <li><a href="#htmlart">HTML-атрибуты</a></li>
+            <li><a href="#sync">Синхронизация между атрибутами и свойствами</a></li>
+            <li><a href="#typ">DOM-свойства типизированы</a></li>
+            <li><a href="#dataset">Нестандартные атрибуты, dataset</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="atr">
+        <h2><a href="https://learn.javascript.ru/dom-attributes-and-properties">Атрибуты и свойства</a></h2>
+        <p>Для узлов-элементов большинство стандартных HTML-атрибутов автоматически становятся свойствами DOM-объектов.
+        </p>
+
+        <p>Например, для такого тега
+
+            <body id="page"> у DOM-объекта будет такое свойство body.id="page".
+        </p>
+
+        <p>Но преобразование атрибута в свойство происходит не один-в-один! В этой главе мы уделим внимание различию
+            этих двух понятий, чтобы посмотреть, как работать с ними, когда они одинаковые и когда разные.</p>
+    </div>
+    <div class="topic" id="dom">
+        <h3>DOM-свойства</h3>
+        <p>Как и в случае с объектами javascript можно добавить своё свойство в DOM, например:
+        <pre><button onclick="document.body.myData = {
+  name: 'Caesar',
+  title: 'Imperator'
+};
+
+alert(document.body.myData.title); // Imperator">Добавить свойство</button>
+    <code class="language-js">
+document.body.myData = {
+  name: 'Caesar',
+  title: 'Imperator'
+};
+
+alert(document.body.myData.title); // Imperator        
+    </code>
+</pre>
+        Естественно что можно добавить и метод:
+        <pre><button onclick="document.body.sayTagName = function() {
+  alert(this.tagName);
+};
+
+document.body.sayTagName();">Потестировать метод</button>
+    <code class="language-js">
+document.body.sayTagName = function() {
+  alert(this.tagName);
+};
+
+document.body.sayTagName();        
+    </code>
+</pre>
+        Также можно изменять встроенные прототипы, такие как Element.prototype и добавлять новые методы ко всем
+        элементам:
+        <button onclick="Element.prototype.sayHi = function() {
+  alert(`Hello, I'm ${this.tagName}`);
+};
+
+document.documentElement.sayHi(); // Hello, I'm HTML
+document.body.sayHi(); // Hello, I'm BODY">Метод</button>
+        <pre>
+    <code class="language-js">
+Element.prototype.sayHi = function() {
+  alert(`Hello, I'm ${this.tagName}`);
+};
+
+document.documentElement.sayHi(); // Hello, I'm HTML
+document.body.sayHi(); // Hello, I'm BODY        
+    </code>
+</pre>
+        Итого DOM-свойства ведут себя как объекты javascript:
+        <ul>
+            <li>Им можно присвоить любое значение.</li>
+            <li>Они регистрозависимы (нужно писать elem.nodeType, не elem.NoDeTyPe). </li>
+        </ul>
+        </p>
+    </div>
+    <div class="topic" id="htmlart">
+        <h3>HTML-атрибуты</h3>
+        <p>Нестандартные свойства не создаются например попробуем добавить в body свойство something="test" a затем
+            сделать <button onclick="alert(document.body.something)">alert(document.body.something)</button>. Как видно
+            свойство не создалось.</p>
+        <p>Точно так же не создаться нестандартное свойство для этого тега, например type="test" <button
+                onclick="alert(document.body.type)">alert(document.body.type)</button></p>
+        <p>
+            Однако нестандартные элементы можно создать, получить, удалить и проверить их наличие при помощи методов:
+        <ul>
+            <li>elem.hasAttribute(name) – проверяет наличие атрибута.</li>
+            <li>elem.getAttribute(name) – получает значение атрибута.</li>
+            <li>elem.setAttribute(name, value) – устанавливает значение атрибута.</li>
+            <li>elem.removeAttribute(name) – удаляет атрибут.</li>
+
+        </ul>
+        Например: <button
+            onclick="alert(document.body.getAttribute('something'))">alert(document.body.getAttribute('something'))</button>
+        <br>У HTML-атрибутов есть следующие особенности:
+        <ul>
+            <li>Их имена регистронезависимы (id то же самое, что и ID).</li>
+            <li>Их значения всегда являются строками. </li>
+        </ul>
+        Далее приводится пример расширенной работы:
+        <pre>
+    <code class="language-js">
+    alert( elem.getAttribute('About') ); // (1) 'Elephant', чтение
+
+    elem.setAttribute('Test', 123); // (2), запись
+
+    alert( elem.outerHTML ); // (3), посмотрим, есть ли атрибут в HTML (да)
+
+    for (let attr of elem.attributes) { // (4) весь список
+      alert( `${attr.name} = ${attr.value}` );
+    }        
+    </code>
+</pre>
+        где elem - это соотвествующий id в div. Так же даётся пояснение:
+        <ol>
+            <li>getAttribute('About') – здесь первая буква заглавная, а в HTML – строчная. Но это не важно: имена
+                атрибутов регистронезависимы.</li>
+            <li>Мы можем присвоить что угодно атрибуту, но это станет строкой. Поэтому в этой строчке мы получаем
+                значение "123".</li>
+            <li>Все атрибуты, в том числе те, которые мы установили, видны в outerHTML.</li>
+            <li>Коллекция attributes является перебираемой. В ней есть все атрибуты элемента (стандартные и
+                нестандартные) в виде объектов со свойствами name и value. </li>
+        </ol>
+        </p>
+    </div>
+    <div class="topic" id="sync">
+        <h3>Синхронизация между атрибутами и свойствами</h3>
+        <p>Когда стандартный атрибут изменяется, соответствующее свойство автоматически обновляется. Это работает и в
+            обратную сторону (за некоторыми исключениями). Например</p>
+        <br><input>
+        <pre><button onclick="  let input = document.querySelector('input');
+
+  // атрибут => свойство
+  input.setAttribute('id', 'id');
+  alert(input.id); // id (обновлено)
+
+  // свойство => атрибут
+  input.id = 'newId';
+  alert(input.getAttribute('id')); // newId (обновлено)">Обновить input</button>
+                <code class="language-js">
+  let input = document.querySelector('input');
+
+  // атрибут => свойство
+  input.setAttribute('id', 'id');
+  alert(input.id); // id (обновлено)
+
+  // свойство => атрибут
+  input.id = 'newId';
+  alert(input.getAttribute('id')); // newId (обновлено)                    
+                </code>
+            </pre>
+        <p>Но есть и исключения, например, input.value синхронизируется только в одну сторону – атрибут → значение, но
+            не в обратную:
+        <pre><button onclick="  let input = document.querySelector('input');
+
+  // атрибут => значение
+  input.setAttribute('value', 'text');
+  alert(input.value); // text
+
+  // свойство => атрибут
+  //input.setAttribute('value', 'newValue');
+  input.value = 'newValue';
+  alert(input.getAttribute('value')); // text (не обновилось!)">Изменить текст</button>
+    <code class="language-js">
+  let input = document.querySelector('input');
+
+  // атрибут => значение
+  input.setAttribute('value', 'text');
+  alert(input.value); // text
+
+  // свойство => атрибут
+  input.value = 'newValue';
+  alert(input.getAttribute('value')); // text (не обновилось!)        
+    </code>
+</pre>
+        С последним примером есть одна проблема, атрибут действительно в не меняется, но в окошке ввода идёт newValue.
+        <br>Иногда эта «особенность» может пригодиться, потому что действия пользователя могут приводить к изменениям
+        value, и если после этого мы захотим восстановить «оригинальное» значение из HTML, оно будет в атрибуте.
+        <br>Однако если устанавливать значение при помощи input.setAttribute то происходит смена и там и там.
+
+        </p>
+    </div>
+    <div class="topic" id="typ">
+        <h3>DOM-свойства типизированы</h3>
+        <p>Например, свойство input.checked (для чекбоксов) имеет логический тип: <input type="checkbox" name="Test"
+                id="elemInput" checked>
+            <br><button onclick="expl1()">Test</button>
+            <script>
+                function expl1(params) {
+                    alert(elemInput.getAttribute('checked'))
+                    alert(elemInput.checked);
+                }
+            </script>
+        <pre>
+    <code class="language-js">
+alert(elemInput.getAttribute('checked'))        
+alert(elemInput.checked);        
+    </code>
+</pre>
+        Получается такая неприятная путаница, которая продолжается в Атрибут style – строка, но свойство style является
+        объектом:
+        <div id="div" style="color:red;font-size:120%">Hello</div>
+        <pre><button onclick="  alert(div.getAttribute('style')); // color:red;font-size:120%
+
+  // объект
+  alert(div.style); // [object CSSStyleDeclaration]
+  alert(div.style.color); // red">Проверить объект</button>
+    <code class="language-js">
+  alert(div.getAttribute('style')); // color:red;font-size:120%
+
+  // объект
+  alert(div.style); // [object CSSStyleDeclaration]
+  alert(div.style.color); // red        
+    </code>
+</pre>
+        Большинство атрибутов строки, но некоторые: DOM-свойство href всегда содержит полный URL, даже если атрибут
+        содержит относительный URL или просто #hash.
+        <a id="a1" href="#hello">link</a>
+        <pre><button onclick="  alert(a1.getAttribute('href')); // #hello
+
+  // свойство
+  alert(a1.href ); // полный URL в виде http://site.com/page#hello ">Тест урл</button>
+    <code class="language-js">
+  alert(a1.getAttribute('href')); // #hello
+
+  // свойство
+  alert(a1.href ); // полный URL в виде http://site.com/page#hello        
+    </code>
+</pre>
+        Таким образом при работе с атрибутом DOM-елемента стоит помнить о разнице в получение информации вида elem.atr и
+        elem.getAtribute('atr').
+        </p>
+    </div>
+    <div class="topic" id="dataset">
+        <h3>Нестандартные атрибуты, dataset</h3>
+        <p>Иногда нестандартные атрибуты используются для передачи пользовательских данных из HTML в JavaScript, или
+            чтобы «помечать» HTML-элементы для JavaScript.</p>
+        <br>
+        <div show-info="name"></div>
+        <!-- а здесь возраст "age" -->
+        <br>
+        <div show-info="age"></div>
+        <p>
+        <pre><button onclick="  // код находит элемент с пометкой и показывает запрошенную информацию
+  let user = {
+    name: 'Pete',
+    age: 25
+  };
+
+  for(let div of document.querySelectorAll('[show-info]')) {
+    // вставить соответствующую информацию в поле
+    let field = div.getAttribute('show-info');
+    div.innerHTML = user[field]; // сначала Pete в name, потом 25 в age
+  }">Заполнить div</button>
+        <code class="language-js">
+//Вверху два div с show-info="name" и show-info="age"
+// код находит элемент с пометкой и показывает запрошенную информацию
+  let user = {
+    name: "Pete",
+    age: 25
+  };
+
+  for(let div of document.querySelectorAll('[show-info]')) {
+    // вставить соответствующую информацию в поле
+    let field = div.getAttribute('show-info');
+    div.innerHTML = user[field]; // сначала Pete в name, потом 25 в age
+  }            
+        </code>
+    </pre>
+        Так же при помощи кастомных атрибутов можно рулить оформлением страницы.
+        </p>
+        <h4>Все атрибуты, начинающиеся с префикса «data-», зарезервированы для использования программистами. Они
+            доступны в свойстве dataset.</h4>
+        <p>Например, если у elem есть атрибут "data-about", то обратиться к нему можно как elem.dataset.about.</p>
+        <pre><button onclick="alert(document.body.dataset.about);">Обратиться к data свойству</button>
+    <code class="language-js">
+//body data-about="Elephants"
+alert(document.body.dataset.about);        
+    </code>
+</pre>
+        <p>Пример работы с css посредством установки значения в div</p>
+        <style>
+            .order[data-order-state="new"] {
+                color: green;
+            }
+
+            .order[data-order-state="pending"] {
+                color: blue;
+            }
+
+            .order[data-order-state="canceled"] {
+                color: red;
+            }
+        </style>
+
+        <div id="order" class="order" data-order-state="new">
+            A new order.
+        </div>
+
+        <button onclick="  alert(order.dataset.orderState); // new
+
+  // изменение
+  order.dataset.orderState = 'pending'; 
+  order.innerHTML = 'A pending orger'
+  ">Работа с css</button>
+        <pre>
+      <code class="language-js">
+//div id="order" class="order" data-order-state="new"        
+  .order[data-order-state="new"] {
+    color: green;
+  }
+
+  .order[data-order-state="pending"] {
+    color: blue;
+  }
+
+  .order[data-order-state="canceled"] {
+    color: red;
+  }     
+//Чтение состояния     
+alert(order.dataset.orderState); // new
+
+// изменение состояния
+order.dataset.orderState = 'pending'; 
+order.innerHTML = 'A pending orger'          
+      </code>
+  </pre>
+        <p>Использование data-* атрибутов – валидный, безопасный способ передачи пользовательских данных.
+
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>
+            Методы для работы с атрибутами:
+        <ul>
+            <li>elem.hasAttribute(name) – проверить на наличие.</li>
+            <li>elem.getAttribute(name) – получить значение.</li>
+            <li>elem.setAttribute(name, value) – установить значение.</li>
+            <li>elem.removeAttribute(name) – удалить атрибут.</li>
+            <li>elem.attributes – это коллекция всех атрибутов. </li>
+        </ul>
+        В большинстве ситуаций предпочтительнее использовать DOM-свойства. Нужно использовать атрибуты только тогда,
+        когда DOM-свойства не подходят, когда нужны именно атрибуты, например:
+<ul>
+<li>Нужен нестандартный атрибут. Но если он начинается с data-, тогда нужно использовать dataset.</li>
+<li>Мы хотим получить именно то значение, которое написано в HTML. Значение DOM-свойства может быть другим, например, свойство href – всегда полный URL, а нам может понадобиться получить «оригинальное» значение.    </li>
+</ul>        
+
+        </p>
+    </div>
+<div class="topic" id="tasks">
+    <h3>Задачи</h3>
+    <div id="task1">
+        <h4>Задача 1</h4>
+        <p>Я выбрал селектор:
+            <pre>
+                <code class="language-js">
+let div = document.querySelector("body > div")                    
+                </code>
+            </pre>
+            Автор прелагает по другому выбрать селектор:
+            <pre>
+                <code class="language-js">
+let elem = document.querySelector('[data-widget-name]');                    
+                </code>
+            </pre>
+            Само решение тут: <br><iframe src="dom-atr-task1.html" frameborder="0"></iframe>
+        </p>
+    </div>
+    <div id="task2">
+        <h2>Задача 2</h2>
+<p>Моё решение:
+<pre>
+    <code class="language-js">
+        window.onload = task2
+        function task2(params) {
+            let aS = document.body.querySelectorAll('a')
+            for (a of aS) {
+                if (a.getAttribute('href')) {
+                    if (!a.getAttribute('href').toString().includes("http://") && a.getAttribute('href').toString().includes("://")) {
+                        a.style.color = 'orange';
+                    }
+                }
+            }
+        }        
+    </code>
+    <iframe src="dom-atr-task2.html" frameborder="0"></iframe>
+</pre>
+<a href="https://learn.javascript.ru/dom-attributes-and-properties#sdelayte-vneshnie-ssylki-oranzhevymi">Решение автора.</a>
+</p>
+
+    </div>
+</div>
+
+
+
+</body>
+
+</html>
