@@ -1,0 +1,884 @@
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменение документа</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#change">Изменение документа</a></h2>
+        <ul>
+            <li><a href="#expaml">Пример: показать сообщение</a></li>
+            <li><a href="#make">Создание элемента</a></li>
+            <li><a href="#method">Методы вставки</a></li>
+            <li><a href="#insert">insertAdjacentHTML/Text/Element</a></li>
+            <li><a href="#delete">Удаление узлов</a></li>
+            <li><a href="#clone">Клонирование узлов: cloneNode</a></li>
+            <li><a href="#DocumentFragment">DocumentFragment</a></li>
+            <li><a href="#old">Устаревшие методы вставки/удаления</a></li>
+            <li><a href="#someword">Несколько слов о «document.write»</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="change">
+        <h2><a href="https://learn.javascript.ru/modifying-document">Изменение документа</a></h2>
+        <p>Раздел про создание и модификацию на лету HTML-документов</p>
+    </div>
+    <div class="topic" id="expaml">
+        <h3>Пример: показать сообщение</h3>
+        <p>Идёт пример создания сообщения при помощи css и тегов HTML</p>
+    </div>
+    <div class="topic" id="make">
+        <h3>Создание элемента</h3>
+        <p>
+            DOM-узел можно создать двумя методами:
+        <ol>
+            <li>document.createElement(tag) например:
+                <pre>
+            <code class="language-js">
+let div = document.createElement('div');                
+            </code>
+        </pre>
+            </li>
+            <li>document.createTextNode(text) а тут создаётся тектовый узел:
+                <pre>
+            <code class="language-js">
+let textNode = document.createTextNode('А вот и я');                
+            </code>
+        </pre>
+            </li>
+        </ol>
+        <h4>Создание сообщения</h4>
+        <pre>
+    <code class="language-js">
+let div = document.createElement('div');
+div.className = "alert";
+div.innerHTML = "&lt;strong>Всем привет!&lt;/strong> Вы прочитали важное сообщение.";        
+    </code>
+</pre>
+        </p>
+    </div>
+    <div class="topic" id="method">
+        <h3>Методы вставки</h3>
+        <p>Для вставки элемента есть метод append, в нашем случае: document.body.append(div).
+        <pre>
+    <code class="language-js">
+&lt;style>
+.alert {
+  padding: 15px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+&lt;/style>
+
+&lt;script>
+  let div = document.createElement('div');
+  div.className = "alert";
+  div.innerHTML = "<strong>Всем привет!</strong> Вы прочитали важное сообщение.";
+
+  document.body.append(div);
+&lt;/script>        
+    </code>
+</pre>
+        Полные методы вставки:
+        <ul>
+            <li>node.append(...nodes or strings) – добавляет узлы или строки в конец node,</li>
+            <li>node.prepend(...nodes or strings) – вставляет узлы или строки в начало node,</li>
+            <li>node.before(...nodes or strings) –- вставляет узлы или строки до node,</li>
+            <li>node.after(...nodes or strings) –- вставляет узлы или строки после node,</li>
+            <li>node.replaceWith(...nodes or strings) –- заменяет node заданными узлами или строками.</li>
+        </ul>
+        Например: <button onclick="  ol.before('before'); // вставить строку before перед &lt;ol>
+  ol.after('after'); // вставить строку after после ol>
+
+  let liFirst = document.createElement('li');
+  liFirst.innerHTML = 'prepend';
+  ol.prepend(liFirst); // вставить liFirst в начало ol>
+
+  let liLast = document.createElement('li');
+  liLast.innerHTML = 'append';
+  ol.append(liLast); // вставить liLast в конец ol>">Добавить к ol</button>
+        <br>
+        <ol id="ol">
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+        </ol>
+        <pre>
+    <code class="language-js">
+&lt;ol id="ol">
+  &lt;li>0&lt;/li>
+  &lt;li>1&lt;/li>
+  &lt;li>2&lt;/li>
+&lt;/ol>
+
+&lt;script>
+  ol.before('before'); // вставить строку "before" перед &lt;ol>
+  ol.after('after'); // вставить строку "after" после &lt;ol>
+
+  let liFirst = document.createElement('li');
+  liFirst.innerHTML = 'prepend';
+  ol.prepend(liFirst); // вставить liFirst в начало &lt;ol>
+
+  let liLast = document.createElement('li');
+  liLast.innerHTML = 'append';
+  ol.append(liLast); // вставить liLast в конец &lt;ol>
+&lt;/script>        
+    </code>
+</pre>
+        </p>
+        <p>Вставка будет осуществляться безопасным методом, то есть теги будут вставляться как текст, текст с тегами
+            можно ставить сначала создав элемент потом добавив в него текст, потом только вставив элемент.</p>
+    </div>
+    <div class="topic" id="insert">
+        <h3>insertAdjacentHTML/Text/Element</h3>
+        <p>Со вставкой html текста как string могут помочь метод: <code>elem.insertAdjacentHTML(where, html).</code>
+            where должно быть одним из следующих:
+        <ul>
+            <li> "beforebegin" – вставить html непосредственно перед elem,</li>
+            <li> "afterbegin" – вставить html в начало elem,</li>
+            <li> "beforeend" – вставить html в конец elem,</li>
+            <li> "afterend" – вставить html непосредственно после elem. </li>
+        </ul>
+        Например: <button onclick="  div.insertAdjacentHTML('beforebegin', '<p>Привет</p>');
+  div.insertAdjacentHTML('afterend', '<p>Пока</p>');">Вставить текст</button>
+        <div id="div"></div>
+        <pre>
+    <code class="language-js">
+&lt;div id="div">&lt;/div>
+&lt;script>
+  div.insertAdjacentHTML('beforebegin', '&lt;p>Привет&lt;/p>');
+  div.insertAdjacentHTML('afterend', '&lt;p>Пока&lt;/p>');
+&lt;/script>        
+    </code>
+</pre>
+        У метода есть два брата:
+        <ul>
+            <li>elem.insertAdjacentText(where, text) – такой же синтаксис, но строка text вставляется «как текст»,
+                вместо HTML,</li>
+            <li>elem.insertAdjacentElement(where, elem) – такой же синтаксис, но вставляет элемент elem. </li>
+        </ul>
+        Они существуют, в основном, чтобы унифицировать синтаксис. На практике часто используется только
+        insertAdjacentHTML. Потому что для элементов и текста у нас есть методы append/prepend/before/after – их быстрее
+        написать, и они могут вставлять как узлы, так и текст.
+        </p>
+    </div>
+    <div class="topic" id="delete">
+        <h3>Удаление узлов</h3>
+        <p>Для удаления узла есть методы node.remove(). Например: <br> <iframe src="modifying-document-expl1.html"
+                frameborder="0"></iframe>
+        <pre>
+    <code class="language-js">
+&lt;style>
+.alert {
+  padding: 15px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+&lt;/style>
+
+&lt;script>
+  let div = document.createElement('div');
+  div.className = "alert";
+  div.innerHTML = "&lt;strong>Всем привет!&lt;/strong> Вы прочитали важное сообщение.";
+
+  document.body.append(div);
+  setTimeout(() => div.remove(), 1000);
+&lt;/script>       
+    </code>
+</pre>
+        <p>
+            Если нам нужно переместить элемент в другое место – нет необходимости удалять его со старого.
+
+            Все методы вставки автоматически удаляют узлы со старых мест.
+
+            <button onclick="second.after(first);">Например, давайте поменяем местами элементы:</button>
+            <br>
+        <div id="first">Первый</div>
+        <br>
+        <div id="second">Второй</div>
+        <pre>
+    <code class="language-js">
+&lt;div id="first">Первый&lt;/div>
+&lt;div id="second">Второй&lt;/div>
+&lt;script>
+  // нет необходимости вызывать метод remove
+  second.after(first); // берёт #second и после него вставляет #first
+&lt;/script>        
+    </code>
+</pre>
+        </p>
+    </div>
+    <div class="topic" id="clone">
+        <h3>Клонирование узлов: cloneNode</h3>
+        <p>Вызов elem.cloneNode(true) создаёт «глубокий» клон элемента – со всеми атрибутами и дочерними элементами.
+            Если мы вызовем elem.cloneNode(false), тогда клон будет без дочерних элементов. Например: <br><iframe
+                src="modifying-document-expl-clone.html" frameborder="0"></iframe>
+        <pre>
+    <code class="language-js">
+&lt;div class="alert" id="div">
+  &lt;strong>Всем привет!&lt;/strong> Вы прочитали важное сообщение.
+&lt;/div>
+
+&lt;script>
+  let div2 = div.cloneNode(true); // клонировать сообщение
+  div2.querySelector('strong').innerHTML = 'Всем пока!'; // изменить клонированный элемент
+
+  div.after(div2); // показать клонированный элемент после существующего div
+&lt;/script>        
+    </code>
+</pre>
+        </p>
+
+    </div>
+    <div class="topic" id="DocumentFragment">
+        <h3>DocumentFragment</h3>
+        <p>DocumentFragment является специальным DOM-узлом, который служит обёрткой для передачи списков узлов.
+            Например: <button onclick="function getListContent() {
+  let fragment = new DocumentFragment();
+
+  for(let i=1; i<=3; i++) {
+    let li = document.createElement('li');
+    li.append(i);
+    fragment.append(li);
+  }
+
+  return fragment;
+}
+
+ul.append(getListContent()); // (*)">Добавить фрагмент</button>
+            <br>
+        <ul id="ul"></ul>
+        <pre>
+    <code class="language-js">
+&lt;ul id="ul">&lt;/ul>
+
+&lt;script>
+function getListContent() {
+  let fragment = new DocumentFragment();
+
+  for(let i=1; i<=3; i++) {
+    let li = document.createElement('li');
+    li.append(i);
+    fragment.append(li);
+  }
+
+  return fragment;
+}
+
+ul.append(getListContent()); // (*)
+&lt;/script>        
+    </code>
+</pre>
+        DocumentFragment редко используется. Зачем добавлять элементы в специальный вид узла, если вместо этого мы можем
+        вернуть массив узлов? Переписанный пример:
+        <pre>
+    <code class="language-js">
+&lt;ul id="ul">&lt;/ul>
+
+&lt;script>
+function getListContent() {
+  let result = [];
+
+  for(let i=1; i<=3; i++) {
+    let li = document.createElement('li');
+    li.append(i);
+    result.push(li);
+  }
+
+  return result;
+}
+
+ul.append(...getListContent()); // append + оператор "..." = друзья!
+&lt;/script>        
+    </code>
+</pre>
+        Мы упоминаем DocumentFragment в основном потому, что он используется в некоторых других областях, например, для
+        элемента template, который мы рассмотрим гораздо позже.
+        </p>
+    </div>
+    <div class="topic" id="old">
+        <h3><a href="https://learn.javascript.ru/modifying-document#ustarevshie-metody-vstavki-udaleniya">Устаревшие
+                методы вставки/удаления</a></h3>
+        <p>Коротенечко перечислю:
+        <ul>
+            <li>parentElem.appendChild(node)
+                <br>Добавляет node в конец дочерних элементов parentElem.
+            </li>
+            <li>parentElem.insertBefore(node, nextSibling)
+                <br>Вставляет node перед nextSibling в parentElem.
+            </li>
+            <li>parentElem.replaceChild(node, oldChild)
+                <br>Заменяет oldChild на node среди дочерних элементов parentElem.
+            </li>
+            <li>parentElem.removeChild(node)
+                <br>Удаляет node из parentElem (предполагается, что он родитель node).
+
+            </li>
+        </ul>
+        Автор пишет эти методы уже не нужны, но могут встречаться в скриптах.
+        </p>
+    </div>
+    <div class="topic" id="someword">
+        <h3>Несколько слов о «document.write»</h3>
+        <p>Есть ещё один, очень древний метод добавления содержимого на веб-страницу: document.write.
+        <pre>
+    <code class="language-js">
+  document.write('<b>Привет из JS</b>');        
+    </code>
+</pre>
+        Пишет в то место на которое поставлен, и только на этапе загрузки
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Методы для создания узлов:
+        <ul>
+            <li>document.createElement(tag) – создаёт элемент с заданным тегом,</li>
+            <li>document.createTextNode(value) – создаёт текстовый узел (редко используется),</li>
+            <li>elem.cloneNode(deep) – клонирует элемент, если deep==true, то со всеми дочерними элементами. </li>
+        </ul>
+        Вставка и удаление:
+        <ul>
+            <li>node.append(...nodes or strings) – вставляет в node в конец,</li>
+            <li>node.prepend(...nodes or strings) – вставляет в node в начало,</li>
+            <li>node.before(...nodes or strings) – вставляет прямо перед node,</li>
+            <li>node.after(...nodes or strings) – вставляет сразу после node,</li>
+            <li>node.replaceWith(...nodes or strings) – заменяет node.</li>
+            <li>node.remove() – удаляет node. </li>
+        </ul>
+        Устаревшие методы: <ul>
+            <li>parent.appendChild(node)</li>
+            <li>parent.insertBefore(node, nextSibling)</li>
+            <li>parent.removeChild(node)</li>
+            <li>parent.replaceChild(newElem, node)</li>
+            Все эти методы возвращают node.
+        </ul>
+        Если нужно вставить фрагмент HTML, то elem.insertAdjacentHTML(where, html) вставляет в зависимости от where:
+
+        <ul>
+            <li> "beforebegin" – вставляет html прямо перед elem,</li>
+            <li> "afterbegin" – вставляет html в elem в начало,</li>
+            <li> "beforeend" – вставляет html в elem в конец,</li>
+            <li> "afterend" – вставляет html сразу после elem. </li>
+            Также существуют похожие методы elem.insertAdjacentText и elem.insertAdjacentElement, они вставляют
+            текстовые строки и элементы, но они редко используются
+        </ul>
+        Чтобы добавить HTML на страницу до завершения её загрузки:
+        <ul>
+            <li>document.write(html)</li>
+            После загрузки страницы такой вызов затирает документ. В основном встречается в старых скриптах.
+
+
+        </ul>
+
+        </p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <p>elem.append(document.createTextNode(text)) и elem.textContent = text сработают одинаково то есть добавят
+                текст безопасно.
+            </p>
+        </div>
+        <div id="task2">
+            <h4>Задача 2</h4>
+            <iframe src="modifying-document-task2.html" frameborder="0"></iframe>
+            <pre>мною решено так:
+    <code class="language-js">
+let lis =  elem1.querySelectorAll('li')
+for(let li of lis) li.remove()        
+    </code>
+</pre>
+            <p>Из примечательного автор предлагает за O(1) операций:
+            <pre>
+        <code class="language-js">
+  elem.innerHTML = '';            
+        </code>
+    </pre>
+            </p>
+        </div>
+        <div id="task3">
+            <h4>Задача 3</h4>
+            <iframe src="modifying-document-task3.html" frameborder="0"></iframe>
+            <p>Некорректный HTML - aaa показывается вне таблицы и потому не удаляется.</p>
+        </div>
+        <div id="task4">
+            <h4>Задача 4</h4>
+            <ul id="ulTask1"></ul>
+            <script>
+                function task4(params) {
+                    let liUser = null;
+                    do {
+                        liUser = prompt("Enter something", "something")
+                        let li = document.createElement('li');
+                        if (liUser) {
+                            li.innerHTML = liUser;
+                            ulTask1.append(li);
+                        }
+                    } while (liUser)
+                }
+            </script>
+            <button onclick="task4()">Задача 4</button>
+            <pre>
+                <code class="language-js">
+                function task4(params) {
+                    let liUser = null;
+                    do {
+                        liUser = prompt("Enter something", "something")
+                        let li = document.createElement('li');
+                        if (liUser) {
+                            li.innerHTML = liUser;
+                            ulTask.append(li);
+                        }
+                    } while (liUser)
+                }                    
+                </code>
+            </pre>
+            <p>По сути ф-ция корявая, блокирует интерфейс, излишнаяя проверка, но deepseek тоже ничего толкового не
+                предложил, что могло бы улучшить не раздувая код.</p>
+        </div>
+        <div id="task5">
+            <h4>Задача 5</h4>
+            <div id="container"></div>
+            <script>
+                let data = {
+                    "Рыбы": {
+                        "форель": {},
+                        "лосось": {}
+                    },
+
+                    "Деревья": {
+                        "Огромные": {
+                            "секвойя": {},
+                            "дуб": {}
+                        },
+                        "Цветковые": {
+                            "яблоня": {},
+                            "магнолия": {}
+                        }
+                    }
+                };
+                let container = document.getElementById('container');
+                function createTree(container, data) {
+                    let ul = document.createElement('ul');
+                    container.append(ul);
+                    for (const [key, value] of Object.entries(data)) {
+                        let li = document.createElement('li');
+                        li.innerHTML = key;
+                        ul.append(li)
+                        if (value != {}) createTree(li, value)
+                    }
+
+                }
+                function task5(params) {
+
+                    for (const [key, value] of Object.entries(data)) {
+                        alert(`${key}: ${value}`)
+                        alert(typeof key)
+                    }
+                }
+            </script>
+            <button onclick="createTree(container, data)">Задача 5</button>
+            <pre>
+                <code class="language-js">
+                function createTree(container, data){
+                    let ul = document.createElement('ul');
+                    container.append(ul);
+                    for (const [key, value] of Object.entries(data)) {
+                        let li = document.createElement('li');
+                        li.innerHTML = key;
+                        ul.append(li)
+                        if(value !={}) createTree(li, value)
+                    }
+                    
+                }                    
+                </code>
+            </pre>
+        </div>
+        <div id="task6">
+            <h4>Задача 6</h4>
+            <ul id="six">
+                <li>Животные
+                    <ul>
+                        <li>Млекопитающие
+                            <ul>
+                                <li>Коровы</li>
+                                <li>Ослы</li>
+                                <li>Собаки</li>
+                                <li>Тигры</li>
+                            </ul>
+                        </li>
+                        <li>Другие
+                            <ul>
+                                <li>Змеи</li>
+                                <li>Птицы</li>
+                                <li>Ящерицы</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Рыбы
+                    <ul>
+                        <li>Аквариумные
+                            <ul>
+                                <li>Гуппи</li>
+                                <li>Скалярии</li>
+                            </ul>
+                        </li>
+                        <li>Морские
+                            <ul>
+                                <li>Морская форель</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <script>
+                function task6(elemSix) {
+                    let lis = elemSix.querySelectorAll('li');
+                    for (let li of lis) {
+                        if (li.querySelectorAll('li').length > 0) {
+                            li.firstChild.data += ` [${li.querySelectorAll('li').length}]`
+                            //   task6(li)
+                        };
+                    }
+                }
+            </script>
+            <button onclick="task6(six)">Задача 6</button>
+            <p>К сожалению эта задача решена не полностью, я не запомнил возможность использовать
+                <code>li.firstChild.data</code> a делал
+                <code>li.prepend(` [${li.querySelectorAll('li').length}] `)</code>.
+            <pre>
+                <code class="language-js">
+                function task6(elemSix) {
+                    let lis = elemSix.querySelectorAll('li');
+                    for (let li of lis) {
+                        if (li.querySelectorAll('li').length > 0) {
+                            li.firstChild.data += ` [${li.querySelectorAll('li').length}]`
+                            //   task6(li)
+                        };
+                    }
+                }                    
+                </code>
+            </pre>
+            </p>
+        </div>
+        <div id="task7">
+            <h4>Задача 7</h4>
+            <style>
+                table {
+                    border-collapse: collapse;
+                }
+
+                td,
+                th {
+                    border: 1px solid black;
+                    padding: 3px;
+                    text-align: center;
+                }
+
+                th {
+                    font-weight: bold;
+                    background-color: #E6E6E6;
+                }
+            </style>
+            <p>Задача решена полностью и поправлена по рекомендациям дипсика, его код я не принял, принял три
+                рекомендации
+            <pre>
+    <code class="language-js">
+//Очистка элемента:
+elem.innerHTML = '';
+//+1 день:
+doDate.setDate(doDate.getDate() + 1)
+//Проверка цикла:
+while (doDate < untilDate)
+    </code>
+</pre>
+Полный код:
+<details><summary>Нажми чтобы посмотреть код</summary>
+<pre>
+    <code class="language-js">
+            function createCalendar(elem, year, month) {
+                    elem.innerHTML = '';
+                    let tabLe = document.createElement('table');
+                    elem.append(tabLe);
+                    let tHead = document.createElement('thead');
+                    tabLe.append(tHead);
+                    let trHead = document.createElement('tr');
+                    tHead.append(trHead)
+                    let days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+                    for (let i = 0; i < 7; i++) {
+                        let tH = document.createElement('th');
+                        tH.innerHTML = days[i];
+                        trHead.append(tH)
+                    }
+                    let tBody = document.createElement('tbody')
+                    tabLe.append(tBody)
+                    let trBody = document.createElement('tr')
+                    tBody.append(trBody)
+                    let doDate = new Date(year, month - 1);
+
+                    
+                    for (let i = 0; i < 7; i++) {
+
+                        let td = document.createElement('td')
+                        let day = doDate.getDay() - 1;
+                        if (day == -1) day = 6;
+                        if (day == i) {
+                            td.innerHTML = doDate.getDate();
+                            doDate.setDate(doDate.getDate() + 1)
+                        }
+                        trBody.append(td)
+
+                    }
+                    
+                    let untilDate = new Date(year, month)
+
+                    while (doDate < untilDate) {
+                        let tr = document.createElement('tr')
+                        for (let i = 0; i < 7; i++) {
+
+                            let td = document.createElement('td')
+                            let day = doDate.getDay() - 1;
+                            if (day == -1) day = 6;
+                            td.innerHTML = doDate.getDate();
+                            doDate.setDate(doDate.getDate() + 1)
+
+                            tr.append(td)
+
+                        }
+                        tBody.append(tr)
+                    }
+                }
+    </code>
+</pre>
+</details>
+Кодинг занял примерно полтора часа. HTML-элемент полностью сформирован при помощи js впервые в таком законченном виде.
+            </p>
+
+
+
+
+            <div id="calendar"></div>
+
+            <script>
+                function createCalendar(elem, year, month) {
+                    elem.innerHTML = '';
+                    let tabLe = document.createElement('table');
+                    elem.append(tabLe);
+                    let tHead = document.createElement('thead');
+                    tabLe.append(tHead);
+                    let trHead = document.createElement('tr');
+                    tHead.append(trHead)
+                    let days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+                    for (let i = 0; i < 7; i++) {
+                        let tH = document.createElement('th');
+                        tH.innerHTML = days[i];
+                        trHead.append(tH)
+                    }
+                    let tBody = document.createElement('tbody')
+                    tabLe.append(tBody)
+                    let trBody = document.createElement('tr')
+                    tBody.append(trBody)
+                    let doDate = new Date(year, month - 1);
+
+                    
+                    for (let i = 0; i < 7; i++) {
+
+                        let td = document.createElement('td')
+                        let day = doDate.getDay() - 1;
+                        if (day == -1) day = 6;
+                        if (day == i) {
+                            td.innerHTML = doDate.getDate();
+                            doDate.setDate(doDate.getDate() + 1)
+                        }
+                        trBody.append(td)
+
+                    }
+                    
+                    let untilDate = new Date(year, month)
+
+                    while (doDate < untilDate) {
+                        let tr = document.createElement('tr')
+                        for (let i = 0; i < 7; i++) {
+
+                            let td = document.createElement('td')
+                            let day = doDate.getDay() - 1;
+                            if (day == -1) day = 6;
+                            td.innerHTML = doDate.getDate();
+                            doDate.setDate(doDate.getDate() + 1)
+
+                            tr.append(td)
+
+                        }
+                        tBody.append(tr)
+                    }
+                }
+
+                // createCalendar(calendar, 2012, 10);
+            </script>
+            <input type="button" value="Creat Calendar" onclick="createCalendar(calendar, 2025, 12)">
+            <p>
+
+            </p>
+        </div>
+        <div id="task8">
+            <h4>Задача 8 Цветные часы с использованием setInterval</h4>
+            <p>Задача в целом решена, не доделано только добавление нуля если менее десяти. У автора тоже самое просто
+                if с проверкой на меньше 10 и доводкой до нужного значения.</p>
+            <p><span id="hour" class="hour"></span>:<span id="minute" class="minute"></span>:<span id="seconds"
+                    class="second"></span> </p>
+            <style>
+                .hour {
+                    color: red;
+                }
+
+                .minute {
+                    color: green;
+                }
+
+                .second {
+                    color: blue;
+                }
+            </style>
+            <script>
+                let interval = null
+                function clockStart(params) {
+                    return interval = setInterval(() => {
+                        hour.innerHTML = new Date().getHours();
+                        minute.innerHTML = new Date().getMinutes();
+                        seconds.innerHTML = new Date().getSeconds();
+                    }, 500);
+                }
+                function clockStop(params) {
+                    clearInterval(interval)
+                }
+            </script>
+            <input type="button" onclick="clockStart()" value="Старт">
+
+            <!-- клик по этой кнопке вызовет clockStop() -->
+            <input type="button" onclick="clockStop()" value="Стоп">
+        </div>
+        <div id="task9">
+            <h4>Задача 9 Вставьте HTML в список</h4>
+            <ul id="ulTask">
+                <li id="one">1</li>
+                <li id="two">4</li>
+            </ul>
+            <script>
+                function task9(params) {
+                    let ul = document.querySelector('#ulTask')
+                    console.dir(ul)
+                    let one = document.getElementById('one')
+                    let two = document.createElement('li')
+                    two.innerHTML = '2';
+                    two.setAttribute('id', 'two');
+                    one.append(two);
+                    let three = document.createElement('li')
+                    three.innerHTML = 3;
+                    three.setAttribute('id', 'three')
+                    two.append(three)
+                }
+            </script>
+            <input type="button" value="Добавить элемент" onclick="task9()">
+            <p>Мною был нагорожен огород:
+            <pre>
+    <code class="language-js">
+                function task9(params) {
+                    let ul = document.querySelector('#ulTask')
+                    console.dir(ul)
+                    let one = document.getElementById('one')
+                    let two = document.createElement('li')
+                    two.innerHTML = '2';
+                    two.setAttribute('id', 'two');
+                    one.append(two);
+                    let three = document.createElement('li')
+                    three.innerHTML = 3;
+                    three.setAttribute('id', 'three')
+                    two.append(three)
+                }        
+    </code>
+</pre>
+            А по факту можно в одну строчку коротко:
+            <pre>
+    <code class="language-js">
+one.insertAdjacentHTML('afterend', '&lt;li>2&lt;/li>&lt;li>3&lt;/li>');        
+    </code>
+</pre>
+            </p>
+        </div>
+        <div id="task10">
+            <h4>задача 10 Сортировка таблицы по name</h4>
+            <table id="tableTaskTen">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John</td>
+                        <td>Smith</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Pete</td>
+                        <td>Brown</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Ann</td>
+                        <td>Lee</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                </tbody>
+            </table>
+<script>
+    function task10(params) {
+        //let tr = tableTaskTen.querySelectorAll('tbody > tr')
+        let tbody = tableTaskTen.querySelector('tbody')
+        let tr = tbody.querySelectorAll('tr')
+       // tbody.innerHTML = ''
+        tbody.append(...Array.from(tr).sort((a, b) => (a.querySelector('td').innerHTML > b.querySelector('td').innerHTML ? 1 : -1)))
+    }
+</script>
+<input type="button" value="task 10" onclick="task10()">
+<p>Само решение было подсмотрено, но не до конца, я не понял самой строчки сортировки, а оно должно возвращать не буёвое значание, а -1, 0, 1
+<pre>
+    <code class="language-js">
+    function task10(params) {
+        //let tr = tableTaskTen.querySelectorAll('tbody > tr')
+        let tbody = tableTaskTen.querySelector('tbody')
+        let tr = tbody.querySelectorAll('tr')
+       // tbody.innerHTML = ''
+        tbody.append(...Array.from(tr).sort((a, b) => (a.querySelector('td').innerHTML > b.querySelector('td').innerHTML ? 1 : -1)))
+    }        
+    </code>
+</pre>
+
+</p>
+        </div>
+    </div>
+</body>
+
+</html>

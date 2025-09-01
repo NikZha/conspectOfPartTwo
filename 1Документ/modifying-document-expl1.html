@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="  let div = document.createElement('div');
+  div.className = 'alert';
+  div.innerHTML = '<strong>Всем привет!</strong> Вы прочитали важное сообщение.';
+
+  document.body.append(div);
+  setTimeout(() => div.remove(), 1000);">Добавить и удалить сообщение</button></p>
+<style>
+.alert {
+  padding: 15px;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+</style>
+</body>
+</html>
