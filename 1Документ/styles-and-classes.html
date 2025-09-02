@@ -1,0 +1,290 @@
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стили и классы</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <script>
+
+        function changeLight(colorBackground, colorFont, className) {
+            let divs = document.querySelectorAll('div');
+            document.body.style.background = colorBackground;
+            document.body.style.color = colorFont;
+            // alert(divs.length)
+            for (let div of divs) {
+                div.className = className;
+                div.style.background = colorBackground;
+                div.style.color = colorFont
+            }
+        }
+
+    </script>
+    <input type="button" value="Night ligth" onclick="changeLight('black', 'yellow', 'topic')">
+    <input type="button" value="Day light" onclick="changeLight('none', 'black', 'topic')">
+    <div class="contents">
+        <h2><a href="#styles">Стили и классы</a></h2>
+        <ul>
+            <li><a href="#className">className и classList</a></li>
+            <li><a href="#prop">Свойство style</a></li>
+            <li><a href="#reset">Сброс стилей</a></li>
+            <li><a href="#watch">Следите за единицами измерения</a></li>
+            <li><a href="#getComputedStyle">Вычисленные стили: getComputedStyle</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="styles">
+        <h2><a href="https://learn.javascript.ru/styles-and-classes">Стили и классы</a></h2>
+        <p>Есть пара способов задания стилей HTML-элемента:
+        <pre>
+    <code class="language-js">
+//1 way:
+let top = /* сложные расчёты */;
+let left = /* сложные расчёты */;
+
+elem.style.left = left; // например, '123px', значение вычисляется во время работы скрипта
+elem.style.top = top; // например, '456px'
+
+//2 way use propetry cssText:
+let top = /* сложные расчёты */;
+let left = /* сложные расчёты */;
+
+// полная перезапись стилей elem, используем =
+elem.style.cssText = `
+  top: ${top};
+  left: ${left};
+`;
+
+// добавление новых стилей к существующим стилям elem, используем +=
+elem.style.cssText += `
+  top: ${top};
+  left: ${left};
+`;
+    </code>
+</pre>
+        Если не использовать во втором варианте +=, то стиль будет перезаписан.
+        </p>
+    </div>
+    <div class="topic" id="className">
+        <h3>className и classList</h3>
+        <p>Там сверху сделано игрушечное переключение на день и ночь, по факту сделано криво, просто заменой стилей, но
+            лучше сделать это как раз через className или classList. Добавив необходимые стили в таблицу по классу и
+            просто переключая классы в тегах.</p>
+        <input type="button" value="alert(document.body.className);"
+            onclick="document.body.className='test';alert(document.body.className);">
+        <pre>
+                <code class="language-js">
+document.body.className='test';
+alert(document.body.className);                    
+                </code>
+            </pre>
+        <p>Классовое имя в данном примере изменено в кнопке при помощи document.body.className='test'</p>
+        <p>Другое свойство имеет методы:
+        <ul>
+            <li>elem.classList.add/remove("class") – добавить/удалить класс. Тут надо обратить внимание, что add -
+                именно прибавляет к уже имеющемуся.</li>
+            <li>elem.classList.toggle("class") – добавить класс, если его нет, иначе удалить.</li>
+            <li>elem.classList.contains("class") – проверка наличия класса, возвращает true/false. </li>
+        </ul>
+        <script>
+            function expl1(params) {
+                document.body.classList.add('test')
+                document.body.classList.add('something')
+                for (let name of document.body.classList) {
+                    alert(name); // main, затем page
+                }
+            }    
+        </script>
+        <pre><input type="button" value="Прочитать свойства из body" onclick="expl1()">
+    <code class="language-js">
+    document.body.classList.add('test')
+    document.body.classList.add('something')
+    for (let name of document.body.classList) {
+      alert(name); // main, затем page
+    }        
+    </code>
+</pre>
+        </p>
+    </div>
+    <div class="topic" id="prop">
+        <h3>Свойство style</h3>
+        <p>Чуть выше в детской смене цветов документа это свойство было задействовано. Ряд его свойств пишутся с
+            маленькой буквы, но некоторые camelCase:
+        <pre>
+            <code class="language-js">
+background  => elem.style.background
+top         => elem.style.top
+opacity     => elem.style.opacity
+
+background-color  => elem.style.backgroundColor
+z-index           => elem.style.zIndex
+border-left-width => elem.style.borderLeftWidth
+
+//А некоторые вообще начинаются с большой буквы типа -moz-border-radius, -webkit-border-radius
+button.style.MozBorderRadius = '5px';
+button.style.WebkitBorderRadius = '5px';
+            </code>
+        </pre>
+        </p>
+    </div>
+    <div class="topic" id="reset">
+        <h3>Сброс стилей</h3>
+        <p>Опять же детская смена цветов в документе использует этот приём. Суть заключается в указывании у параметра
+            'none', однако это не всегда работает так с .color такое не прокатывает.</p>
+        <p>Для сокрытия элемента используют Например, чтобы скрыть элемент, мы можем задать elem.style.display = "none".
+            для восстановления elem.style.display = "" пустой символ применит css.
+        <pre><input type="button" value="Исчезнуть" onclick="// если мы запустим этот код, мигнёт
+document.body.style.display = 'none'; // скрыть
+
+setTimeout(() => document.body.style.display = '', 1000); ">
+    <code class="language-js">
+// если мы запустим этот код, <body> "мигнёт"
+document.body.style.display = "none"; // скрыть
+
+setTimeout(() => document.body.style.display = "", 1000);         
+    </code>
+</pre>
+        То есть display влияет на отображение элемента в целом.
+        </p>
+    </div>
+    <div class="topic" id="watch">
+        <h3>Следите за единицами измерения</h3>
+        <p>Именно эта подъёбка будет в задаче, надо указывать единицы измерения:
+        <pre><input type="button" value="Единицы измерения" onclick="    // не работает!
+    document.body.style.margin = 20;
+    alert(document.body.style.margin); // '' (пустая строка, присваивание игнорируется)
+
+    // сейчас добавим единицу измерения (px) - и заработает
+    document.body.style.margin = '20px';
+    alert(document.body.style.margin); // 20px
+
+    alert(document.body.style.marginTop); // 20px
+    alert(document.body.style.marginLeft); // 20px">
+            <code class="language-js">
+    // не работает!
+    document.body.style.margin = 20;
+    alert(document.body.style.margin); // '' (пустая строка, присваивание игнорируется)
+
+    // сейчас добавим единицу измерения (px) - и заработает
+    document.body.style.margin = '20px';
+    alert(document.body.style.margin); // 20px
+
+    alert(document.body.style.marginTop); // 20px
+    alert(document.body.style.marginLeft); // 20px                
+            </code>
+        </pre>
+        На edge внезапно прокатило, но на мобильном браузере такое не катит.
+        </p>
+    </div>
+    <div class="topic" id="getComputedStyle">
+        <h3>Вычисленные стили: getComputedStyle</h3>
+        <p>Чтение информации о стилях происходит при помощи этой функции, оно возвращает объект со стилями:
+        <pre>
+            <code class="language-js">
+body { color: red; margin: 5px } 
+
+    let computedStyle = getComputedStyle(document.body);
+
+    // сейчас мы можем прочитать отступ и цвет
+
+    alert( computedStyle.marginTop ); // 5px
+    alert( computedStyle.color ); // rgb(255, 0, 0)                
+            </code>
+        </pre>
+        Детальный стинтакис такой: <code>getComputedStyle(element, [pseudo])</code>, где
+        <br><strong>element</strong>
+        <br>Элемент, значения для которого нужно получить
+        <br><strong>pseudo</strong>
+        <br>Указывается, если нужен стиль псевдоэлемента, например ::before. Пустая строка или отсутствие аргумента
+        означают сам элемент.
+        </p>
+        <p>Пара замечаний:
+        <ul>
+            <li>в настоящее время getComputedStyle фактически возвращает окончательное значение свойства, для геометрии
+                оно обычно в пикселях.</li>
+            <li>getComputedStyle требует полное свойство! Например: paddingLeft, marginTop, borderTopWidth. При
+                обращении к сокращённому: padding, margin, border – правильный результат не гарантируется.</li>
+            <li>Стили, применяемые к посещённым :visited ссылкам, скрываются!</li>
+        </ul>
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Для управления классами существуют два DOM-свойства:
+        <ul>
+            <li>className – строковое значение, удобно для управления всем набором классов.</li>
+            <li>classList – объект с методами add/remove/toggle/contains, удобно для управления отдельными классами.
+            </li>
+        </ul>
+        </p>
+        <p>Чтобы изменить стили:
+        <ul>
+            <li>Свойство style является объектом со стилями в формате camelCase. Чтение и запись в него работают так же,
+                как изменение соответствующих свойств в атрибуте "style". Чтобы узнать, как добавить в него important и
+                делать некоторые другие редкие вещи – смотрите документацию.</li>
+
+            <li>Свойство style.cssText соответствует всему атрибуту "style", полной строке стилей. </li>
+        </ul>
+        </p>
+        <p>Для чтения окончательных стилей (с учётом всех классов, после применения CSS и вычисления окончательных
+            значений) используется:
+        <ul>
+            <li>Метод getComputedStyle(elem, [pseudo]) возвращает объект, похожий по формату на style. Только для чтения
+            </li>
+        </ul>
+        </p>
+
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <p class="taskOne"><a href="styleTask1.html">Сама задача</a> была решена на работе, осталось непонятные что с
+            отступами, щас это проверим.</p>
+        <script>
+            function showNotification(options) {
+                try {
+                    let div = document.createElement('div')
+                    div.className = "notification"
+
+                    let taskOne = document.querySelector('.taskOne')
+                    taskOne.append(div)
+                    // Устанавливаем позиционирование!
+                    div.style.position = 'absolute';
+                    div.style.right = options.right + 'px'
+                    div.style.top = options.top + 'px'
+                    div.style.background = options.background
+                    div.innerHTML = options.html
+                    setTimeout(() => div.style.background = 'none', 1000)
+                    setTimeout(() => div.remove(), 1500)
+                } catch (e) { alert(e) }
+
+            }
+
+
+            showNotification({
+                top: 10, // 10px от верхней границы окна (по умолчанию 0px)
+                right: 10, // 10px от правого края окна (по умолчанию 0px)
+                html: "Hello!", // HTML-уведомление
+                background: "red",
+                className: "welcome" // дополнительный класс для div (необязательно)
+            });
+        </script>
+        <p>После пояснения дипсика удалось понять, что вся эта байда с позиционирование не работает без:
+            <pre>
+                <code class="language-js">
+        // Устанавливаем позиционирование!
+        div.style.position = 'absolute';                    
+                </code>
+            </pre>
+            Сам скрипт отрабатывает, но надпись появляется в начале документа в самом верху.
+        </p>
+    </div>
+</body>
+
+</html>

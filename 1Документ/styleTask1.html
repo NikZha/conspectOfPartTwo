@@ -1,0 +1,47 @@
+<html>
+
+<head>
+  <title>Task 1</title>
+</head>
+
+<body>
+  <p>test</p>
+  <script>
+    function showNotification(options) {
+      try {
+        let div = document.createElement('div')
+        div.className = "notification"
+        document.body.append(div)
+        // Устанавливаем позиционирование!
+        div.style.position = 'absolute';
+        div.style.right = options.right + 'px'
+        div.style.top = options.top + 'px'
+        div.style.background = options.background
+        div.innerHTML = options.html
+        alert(div.style.top)
+        setTimeout(() => div.style.background = 'none', 1000)
+        setTimeout(() => div.remove(), 1500)
+      } catch (e) { alert(e) }
+
+    }
+
+
+    showNotification({
+      top: 10, // 10px от верхней границы окна (по умолчанию 0px)
+      right: 10, // 10px от правого края окна (по умолчанию 0px)
+      html: "Hello!", // HTML-уведомление
+      background: "red",
+      className: "welcome" // дополнительный класс для div (необязательно)
+    });
+  </script>
+
+
+
+
+</body>
+
+
+
+
+
+</html>
