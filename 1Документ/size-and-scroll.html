@@ -1,0 +1,363 @@
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Размеры и прокрутка элементов</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#size-and-scroll">Размеры и прокрутка элементов</a></h2>
+        <ul>
+            <li><a href="#simpl">Простой пример</a></li>
+            <li><a href="#metrics">Метрики</a></li>
+            <li><a href="#offsetParent">offsetParent, offsetLeft/Top</a></li>
+            <li><a href="#offsetWidth">offsetWidth/Height</a></li>
+            <li><a href="#clientTop">clientTop/Left</a></li>
+            <li><a href="#clientWidth">clientWidth/Height</a></li>
+            <li><a href="#scrollWidth">scrollWidth/Height</a></li>
+            <li><a href="#scrollLeft">scrollLeft/scrollTop</a></li>
+            <li><a href="#donttouchcss">Не стоит брать width/height из CSS</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="size-and-scroll">
+        <h2><a href="https://learn.javascript.ru/size-and-scroll">Размеры и прокрутка элементов</a></h2>
+        <p>В главе речь пойдёт со свойства к котором можно обратится в браузере при помощи javascript и которые отражают
+            различные css-свойства. Называет он это метриками. С помощью этих метрик передвигают и позиционируют
+            HTML-элементы</p>
+        <p>На работе нормально накидать документ не удалось, но читал я эту главу раза 4 и походу в консоли браузера
+            пробовал все эти метрики.</p>
+    </div>
+    <div class="topic" id="simpl">
+        <style>
+            iframe {
+                width: 450;
+                height: 350;
+            }
+        </style>
+        <h3>Простой пример</h3>
+        <iframe src="size-and-scrollExpl1.html" frameborder="1" class="ifame"></iframe>
+        <pre>
+        <code class="language-js">
+&lt;div id="example">
+  ...Текст...
+&lt;/div>
+&lt;style>
+  #example {
+    width: 300px;
+    height: 200px;
+    border: 25px solid #E8C48F;
+    padding: 20px;
+    overflow: auto;
+  }
+&lt;/style>            
+        </code>
+    </pre>
+        <p>Таким образом получается следующее:</p>
+        <img src="scm1.jpeg" alt="схема полей и проч">
+    </div>
+    <div class="topic" id="metrics">
+        <h3>Метрики</h3>
+        <img src="scm2.jpeg" alt="Общая картина метрик">
+        <p>Все эти стрелочки это свойства к которым можно обратиться и получить данные о расположении элемента. Начнём
+            рассматривать все эти свойства одно за другим.</p>
+    </div>
+    <div class="topic" id="offsetParent">
+        <h3>offsetParent, offsetLeft/Top</h3>
+        <p>Используются редко, являются самыми внешними метриками. offsetParent возвращает родительский элемент.</p>
+        <p>То есть, ближайший предок, который удовлетворяет следующим условиям:
+        <ul>
+            <li>Является CSS-позиционированным (CSS-свойство position равно absolute, relative, fixed или sticky),</li>
+            <li>или &lt;td>, &lt;th>, &lt;table>,</li>
+            <li>или &lt;body>. </li>
+        </ul>
+        <p>
+            Существует несколько ситуаций, когда offsetParent равно null:
+        <ol>
+            <li>Для скрытых элементов (с CSS-свойством display:none или когда его нет в документе).</li>
+            <li>Для элементов
+
+                <body> и <html>.
+            </li>
+            <li>Для элементов с position:fixed. </li>
+        </ol>
+
+        </p>
+        Свойства offsetLeft/offsetTop содержат координаты x/y относительно верхнего левого угла offsetParent.
+        Именно предка. в который вложен этот элемент.
+        </p>
+
+    </div>
+    <div class="topic" id="offsetWidth">
+        <h3>offsetWidth/Height</h3>
+        <p>Рассчитывается он достаточно сложно поэтому вот наглядная картинка
+            <br><img src="scm3.jpeg" alt="">
+
+            <br>по примеру в ifame:
+            <br><iframe src="size-and-scrollExpl1.html" frameborder="0"></iframe>
+            <br> и таблице стилей:
+        <pre>
+        <code class="language-js">
+  #example {
+    width: 300px;
+    height: 200px;
+    border: 25px solid #E8C48F;
+    padding: 20px;
+    overflow: auto;
+  }            
+        </code>
+    </pre>
+        То есть как видно это цельный размер с полями, падингами, прокрутками и самим элементом:
+        <ul>
+            <li>offsetWidth = 390 – внешняя ширина блока, её можно получить сложением CSS-ширины (300px), внутренних
+                отступов (2 * 20px) и рамок (2 * 25px).</li>
+            <li>offsetHeight = 290 – внешняя высота блока. </li>
+        </ul>
+        </p>
+        <blockquote>
+            <h4>Метрики для не показываемых элементов равны нулю.</h4>
+            <p>Координаты и размеры в JavaScript устанавливаются только для видимых элементов.
+
+                <br>Если элемент (или любой его родитель) имеет display:none или отсутствует в документе, то все его
+                метрики
+                равны нулю (или null, если это offsetParent).
+
+                <br>Например, свойство offsetParent равно null, а offsetWidth и offsetHeight равны 0, когда мы создали
+                элемент, но ещё не вставили его в документ, или если у элемента (или у его родителя) display:none.
+
+                <br>Мы можем использовать это, чтобы делать проверку на видимость:
+            <pre>
+                <code class="language-js">
+function isHidden(elem) {
+  return !elem.offsetWidth && !elem.offsetHeight;
+}                    
+                </code>
+            </pre>
+            Заметим, что функция isHidden также вернёт true для элементов, которые в принципе показываются, но их
+            размеры равны нулю.
+            </p>
+            <p>Ну то есть, как всегда хуею с точности показаний автора.</p>
+        </blockquote>
+    </div>
+    <div class="topic" id="clientTop">
+        <h3>clientTop/Left</h3>
+        <p>
+            Пойдём дальше. Внутри элемента у нас рамки (border).
+
+            <br>Для них есть свойства-метрики clientTop и clientLeft.
+
+            <br>В нашем примере:
+        <ul>
+            <li>clientLeft = 25 – ширина левой рамки</li>
+            <li>clientTop = 25 – ширина верхней рамки</li>
+        </ul>
+        Однако это растояние от внешней границы, если там будут поля, то оно увеличится по сравнению с тем что написано
+        в css:
+        <br><img src="scm4.jpeg" alt="clientLeft с прокруткой">
+        </p>
+
+    </div>
+    <div class="topic" id="clientWidth">
+        <h3>clientWidth/Height</h3>
+        <p>Эти метрики (свойства) отвечают за получение значений а сколько занимает содержимое элемента в чистов виде,
+            с учётом всяких падинга, но без прокруток и полей. <br><img src="scm5.jpeg" alt="clientWidth"></p>
+        <p>Если нет внутренних отступов padding, то clientWidth/Height в точности равны размеру области содержимого
+            внутри рамок за вычетом полосы прокрутки (если она есть).
+            <br><img src="scm6.jpeg" alt="">
+        </p>
+    </div>
+    <div class="topic" id="scrollWidth">
+        <h3>scrollWidth/Height</h3>
+        <p>Эти свойства – как clientWidth/clientHeight, но также включают в себя прокрученную (которую не видно) часть
+            элемента.</p>
+        <p><img src="scm7.jpeg" alt=""></p>
+        <ul>
+            <li>scrollHeight = 723 – полная внутренняя высота, включая прокрученную область.</li>
+            <li>scrollWidth = 324 – полная внутренняя ширина, в данном случае прокрутки нет, поэтому она равна
+                clientWidth. </li>
+        </ul>
+        <pre>
+            <code class="language-js">
+// распахнуть элемент на всю высоту
+element.style.height = `${element.scrollHeight}px`;                
+            </code>
+        </pre>
+    </div>
+    <div class="topic" id="scrollLeft">
+        <h3>scrollLeft/scrollTop</h3>
+        <p>Свойства scrollLeft/scrollTop – ширина/высота невидимой, прокрученной в данный момент, части элемента слева и
+            сверху.</p>
+        <p><img src="scm8.jpeg" alt="">
+            <br>Другими словами, свойство scrollTop – это «сколько уже прокручено вверх».
+
+        </p>
+        <blockquote>
+            <h4>Свойства scrollLeft/scrollTop можно изменять
+            </h4>
+
+            <div id="bckQt" style="height: 60px; width: 60px; border: 1px solid black; overflow: auto;">
+                Test
+                тест
+                Тест
+                Test
+                тест
+                Тест
+            </div>
+            <input type="button" value="Крутить" onclick="bckQt.scrollTop += 10">
+            <p>Элемент можно изменять, путём <code>elem.scrollTop += 10</code></p>
+            <p>Установка значения scrollTop на 0 или на большое значение, такое как 1e9, прокрутит элемент в самый
+                верх/низ соответственно</p>
+
+        </blockquote>
+    </div>
+    <div class="topic" id="donttouchcss">
+        <h3>Не стоит брать width/height из CSS</h3>
+        <p> Как мы знаем из главы Стили и классы, CSS-высоту и ширину можно извлечь, используя getComputedStyle.
+
+            Так почему бы не получать, к примеру, ширину элемента при помощи getComputedStyle, вот так?(кликабельно)
+        <pre onclick="let elem = document.body;
+
+alert( getComputedStyle(elem).width ); // показывает CSS-ширину elem">
+    <code class="language-js">
+let elem = document.body;
+
+alert( getComputedStyle(elem).width ); // показывает CSS-ширину elem        
+    </code>
+</pre>
+        Почему мы должны использовать свойства-метрики вместо этого? На то есть причины:
+        <ol>
+            <li>Во-первых, CSS-свойства width/height зависят от другого свойства – box-sizing, которое определяет, «что
+                такое», собственно, эти CSS-ширина и высота. Получается, что изменение box-sizing, к примеру, для более
+                удобной вёрстки, сломает такой JavaScript.</li>
+
+            <li>Во-вторых, CSS свойства width/height могут быть равны auto, например,<span id="elem"> для инлайнового
+                    элемента:</span>
+                <pre onclick="  alert( getComputedStyle(elem).width ); // auto">
+    <code class="language-js">
+&lt;span id="elem"> для инлайнового элемента&lt;/span>        
+  alert( getComputedStyle(elem).width ); // auto        
+    </code>
+</pre>
+            </li>
+            <li>Есть и ещё одна причина: полоса прокрутки. Бывает, без полосы прокрутки код работает прекрасно, но стоит
+                ей появиться, как начинают проявляться баги. Так происходит потому, что полоса прокрутки «отъедает»
+                место от области внутреннего содержимого в некоторых браузерах. Таким образом, реальная ширина
+                содержимого меньше CSS-ширины. Как раз это и учитывают свойства clientWidth/clientHeight.
+
+                <br>…Но с getComputedStyle(elem).width ситуация иная. Некоторые браузеры (например, Chrome) возвращают
+                реальную внутреннюю ширину с вычетом ширины полосы прокрутки, а некоторые (например, Firefox) – именно
+                CSS-свойство (игнорируя полосу прокрутки). Эти кроссбраузерные отличия – ещё один повод не использовать
+                getComputedStyle, а использовать свойства-метрики.
+            </li>
+
+        </ol>
+
+
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>У элементов есть следующие геометрические свойства (метрики):
+        <ul>
+            <li>offsetParent – ближайший CSS-позиционированный родитель или ближайший td, th, table, body.</li>
+            <li>offsetLeft/offsetTop – позиция в пикселях верхнего левого угла относительно offsetParent.</li>
+            <li>offsetWidth/offsetHeight – «внешняя» ширина/высота элемента, включая рамки.</li>
+            <li>clientLeft/clientTop – расстояние от верхнего левого внешнего угла до внутренного. Для операционных
+                систем с ориентацией слева-направо эти свойства равны ширинам левой/верхней рамки. Если язык ОС таков,
+                что ориентация справа налево, так что вертикальная полоса прокрутки находится не справа, а слева, то
+                clientLeft включает в своё значение её ширину.</li>
+            <li>clientWidth/clientHeight – ширина/высота содержимого вместе с внутренними отступами padding, но без
+                полосы прокрутки.</li>
+            <li>scrollWidth/scrollHeight – ширина/высота содержимого, аналогично clientWidth/Height, но учитывают
+                прокрученную, невидимую область элемента.</li>
+            <li>scrollLeft/scrollTop – ширина/высота прокрученной сверху части элемента, считается от верхнего левого
+                угла. </li>
+        </ul>
+        <strong>Все свойства доступны только для чтения, кроме scrollLeft/scrollTop, изменение которых заставляет
+            браузер прокручивать элемент.</strong>
+        </p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <p>Решена так:
+            <pre>
+            <code class="language-js">
+let scrollBottom = elem.scrollHeight - (elem.scrollTop + elem.clientHeight); 
+//Author's decision:
+let scrollBottom = elem.scrollHeight - elem.scrollTop - elem.clientHeight;
+            </code>
+        </pre>
+            <iframe src="size-and-scrollTask1.html" frameborder="0"></iframe>
+            </p>
+        </div>
+        <div id="task2">
+            <h4>Задача 2 Узнать ширину полосы прокрутки</h4>
+            <p>Чот у него это решение <a
+                    href="https://learn.javascript.ru/size-and-scroll#uznat-shirinu-polosy-prokrutki">замудрёное</a>
+                я решил так:
+            <pre>
+                <code class="language-js">
+ elem.offsetWidth-elem.clientLeft*2-elem.clientWidth                    
+                </code>
+            </pre>
+            То есть общий вид - поля*2 - текст с падингами
+            <br>Я в курсе про возможное левое поле, но мы не используем иврит. У автора в этом смысле поразумнее. Но у
+            меня можно узнать вертикальный движок прокрутки на готовом элементе, а не на вымученном.
+            <br>Посмотреть выше в первой задаче вторая кнопка.
+            </p>
+        </div>
+        <div id="task3">
+            <h4>Задача 3 Мячик в центр</h4>
+            <p>У автора там какой-то огород, я решил так:</p>
+            <pre>
+                <code class="language-js">
+    function task3(field, ball) {
+        try{
+        let left = field.offsetWidth/2 - ball.offsetWidth+ball.offsetWidth/4
+        let top = field.offsetHeight/2 - ball.offsetHeight+ball.offsetHeight/4
+        console.log(`${left} ${top}`)
+        ball.style.top = top +'px';
+        ball.style.left = left + 'px';
+        }catch(e){alert(e)}
+    }
+//Author's desision:
+ball.style.left = Math.round(field.clientWidth / 2 - ball.offsetWidth / 2) + 'px';
+ball.style.top = Math.round(field.clientHeight / 2 - ball.offsetHeight / 2) + 'px';                    
+                </code>
+            </pre>
+            <p>Но разница в решениях порядка 10 пикселей. Хотя я чот насчитал столько же точек. По высоте и ширине.</p>
+            <iframe src="size-and-scrollTask2.html" frameborder="0"></iframe>
+        </div>
+        <div id="task4">
+            <h4>Задача 4 В чём отличие CSS-свойств width и clientWidth</h4>
+            <p>
+                В чём отличие между getComputedStyle(elem).width и elem.clientWidth?
+            <details>
+                <summary>Ответ</summary>
+                <ul>
+                    <li>clientWidth возвращает число, а getComputedStyle(elem).width – строку с px на конце.</li>
+                    <li>getComputedStyle не всегда даст ширину, он может вернуть, к примеру, "auto" для строчного
+                        элемента.</li>
+                    <li>clientWidth соответствует внутренней области элемента, включая внутренние отступы padding, а
+                        CSS-ширина (при стандартном значении box-sizing) соответствует внутренней области без внутренних
+                        отступов padding.</li>
+                    <li>Если есть полоса прокрутки, и для неё зарезервировано место, то некоторые браузеры вычитают его
+                        из CSS-ширины (т.к. оно больше недоступно для содержимого), а некоторые – нет. Свойство
+                        clientWidth всегда ведёт себя одинаково: оно всегда обозначает размер за вычетом прокрутки, т.е.
+                        реально доступный для содержимого. </li>
+                </ul>
+            </details>
+            </p>
+        </div>
+    </div>
+
+</body>

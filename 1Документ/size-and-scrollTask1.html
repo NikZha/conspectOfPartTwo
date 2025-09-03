@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Task 1 size-and-scroll</title>
+    </head>
+    <body>
+                    <div id="bckQt" style="height: 60px; width: 60px; border: 1px solid black; overflow: auto;">
+                Test
+                тест
+                Тест
+                Test
+                тест
+                Тест
+            </div>
+            <script>
+                function task1(elem) {
+                    let scrollBottom = elem.scrollHeight - (elem.scrollTop+elem.clientHeight);
+                    return scrollBottom                   
+                }
+                function task2(elem) {
+                  return  elem.offsetWidth-elem.clientLeft*2-elem.clientWidth
+                }
+            </script>
+            <input type="button" value="Найти сколько внизу элемента" onclick="alert(task1(bckQt))">
+            <input type="button" value="Найти ширину движка прокрутки" onclick="alert(task2(bckQt))">
+    </body>
+</html>

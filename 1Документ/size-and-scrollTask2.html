@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <style>
+    #field {
+      width: 200px;
+      border: 10px groove black;
+      background-color: #00FF00;
+      position: relative;
+    }
+
+    #ball {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div id="field">
+    <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+<script>
+    function task3(field, ball) {
+        try{
+        let left = field.offsetWidth/2 - ball.offsetWidth+ball.offsetWidth/4
+        let top = field.offsetHeight/2 - ball.offsetHeight+ball.offsetHeight/4
+        console.log(`${left} ${top} ${Math.round(field.clientWidth / 2 - ball.offsetWidth / 2)} ${Math.round(field.clientHeight / 2 - ball.offsetHeight / 2)}`)
+        ball.style.top = top +'px';
+        ball.style.left = left + 'px';
+        }catch(e){alert(e)}
+    }
+    task3(field, ball);
+</script>
+
+</body>
+
+</html>
