@@ -1,0 +1,342 @@
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Координаты</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#coordinates">Координаты</a></h2>
+        <ul>
+            <li><a href="#getBoundingClientRect">Координаты относительно окна: getBoundingClientRect</a></li>
+            <li><a href="#elementFromPoint">elementFromPoint(x, y)</a></li>
+            <li><a href="#fixed">Применение для fixed позиционирования</a></li>
+            <li><a href="#document">Координаты относительно документа</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+
+    <div class="topic" id="coordinates">
+        <h2><a href="https://learn.javascript.ru/coordinates">Координаты</a></h2>
+        <p>Системы координат относительно:
+        <ol>
+            <li>Относительно окна браузера – как position:fixed, отсчёт идёт от верхнего левого угла окна.</li>
+            <ul>
+                <li>мы будем обозначать эти координаты как clientX/clientY, причина выбора таких имён будет ясна позже,
+                    когда мы изучим свойства событий.</li>
+            </ul>
+            <li>Относительно документа – как position:absolute на уровне документа, отсчёт идёт от верхнего левого угла
+                документа.</li>
+            <ul>
+                <li>мы будем обозначать эти координаты как pageX/pageY. </li>
+            </ul>
+        </ol>
+        <img src="coord1.jpeg" alt="">
+        </p>
+        <p>То есть понятно, что <code class="language-js">pageY</code> это координата относительно начала документа, а
+            <code class="language-js">clientY</code> это координата относительное верха окна браузера.
+        </p>
+    </div>
+    <div class="topic" id="getBoundingClientRect">
+        <h3>Координаты относительно окна: getBoundingClientRect</h3>
+        <p>Метод elem.getBoundingClientRect() возвращает координаты в контексте окна для минимального по размеру
+            прямоугольника, который заключает в себе элемент elem, в виде объекта встроенного класса DOMRect.
+            Основные свойства этого объекта:
+        <ul>
+            <li>x/y – X/Y-координаты начала прямоугольника относительно окна,</li>
+            <li>width/height – ширина/высота прямоугольника (могут быть отрицательными). </li>
+        </ul>
+        Дополнительные, «зависимые», свойства:
+        <ul>
+            <li>top/bottom – Y-координата верхней/нижней границы прямоугольника,</li>
+            <li>left/right – X-координата левой/правой границы прямоугольника. </li>
+        </ul>
+        </p>
+        <p>Вот картинка с результатами вызова elem.getBoundingClientRect():
+            <br><img src="cood2.jpeg" alt="">
+        </p>
+        <p>Заметим:
+        <ul>
+            <li>Координаты могут считаться с десятичной частью, например 10.5. Это нормально, ведь браузер использует
+                дроби в своих внутренних вычислениях. Мы не обязаны округлять значения при установке style.left/top.
+            </li>
+            <li>Координаты могут быть отрицательными. Например, если страница прокручена так, что элемент elem ушёл
+                вверх за пределы окна, то вызов elem.getBoundingClientRect().top вернёт отрицательное значение.</li>
+        </ul>
+
+        </p>
+    </div>
+    <div class="topic" id="elementFromPoint">
+        <h3>elementFromPoint(x, y)</h3>
+        <p>Вызов document.elementFromPoint(x, y) возвращает самый глубоко вложенный элемент в окне, находящийся по
+            координатам (x, y).
+        <pre>
+    <code class="language-js">
+let elem = document.elementFromPoint(x, y);        
+    </code>
+</pre>
+        Например, код ниже выделяет с помощью стилей и выводит имя тега элемента, который сейчас в центре окна браузера:
+        <pre>
+    <code class="language-js">
+let centerX = document.documentElement.clientWidth / 2;
+let centerY = document.documentElement.clientHeight / 2;
+
+let elem = document.elementFromPoint(centerX, centerY);
+
+elem.style.background = "red";
+alert(elem.tagName);
+    </code></pre>
+        Вставлять на выполняемый элемент я этот код не буду, он слегка ебанутый. И выделяет красным элемент который
+        сейчас в центре экрана.
+        </p>
+        <blockquote>
+            <h4>Для координат за пределами окна метод elementFromPoint возвращает null </h4>
+            <p> Метод document.elementFromPoint(x,y) работает, только если координаты (x,y) относятся к видимой части
+                содержимого окна.
+
+                Если любая из координат представляет собой отрицательное число или превышает размеры окна, то
+                возвращается null.
+
+                Вот типичная ошибка, которая может произойти, если в коде нет соответствующей проверки:
+            <pre>
+    <code class="language-js">
+let elem = document.elementFromPoint(x, y);
+// если координаты ведут за пределы окна, то elem = null
+elem.style.background = ''; // Ошибка!        
+    </code>
+</pre>
+            </p>
+        </blockquote>
+    </div>
+    <div class="topic" id="fixed">
+        <h3>Применение для fixed позиционирования</h3>
+        <p>Чтобы показать что-то около нужного элемента, мы можем вызвать getBoundingClientRect, чтобы получить его
+            координаты, а затем использовать CSS-свойство position вместе с left/top (или right/bottom).
+            Например, функция createMessageUnder(elem, html) ниже показывает сообщение под элементом elem:
+        <pre>
+            <code class="language-js">
+let elem = document.getElementById("coords-show-mark");
+
+function createMessageUnder(elem, html) {
+  // создаём элемент, который будет содержать сообщение
+  let message = document.createElement('div');
+  // для стилей лучше было бы использовать css-класс здесь
+  message.style.cssText = "position:fixed; color: red";
+
+  // устанавливаем координаты элементу, не забываем про "px"!
+  let coords = elem.getBoundingClientRect();
+
+  message.style.left = coords.left + "px";
+  message.style.top = coords.bottom + "px";
+
+  message.innerHTML = html;
+
+  return message;
+}
+
+// Использование:
+// добавим сообщение на страницу на 5 секунд
+let message = createMessageUnder(elem, 'Hello, world!');
+document.body.append(message);
+setTimeout(() => message.remove(), 5000);                
+            </code>
+        </pre>
+        В примере на сайте надпись появляется после кнопки и висит там вне зависимости от прокрутки. Причина весьма
+        очевидна: сообщение позиционируется с помощью <code class="language-js">position:fixed</code>, поэтому оно
+        остаётся всегда на том же самом месте
+        в окне при прокрутке страницы.
+
+        <br>Чтобы изменить это, нам нужно использовать другую систему координат, где сообщение позиционировалось бы
+        относительно документа, и свойство <code class="language-js">position:absolute.</code>
+        </p>
+    </div>
+    <div class="topic" id="document">
+        <h3>Координаты относительно документа</h3>
+        <p>В такой системе координат отсчёт ведётся от левого верхнего угла документа, не окна. В CSS координаты
+            относительно окна браузера соответствуют свойству position:fixed, а координаты относительно документа –
+            свойству position:absolute на самом верхнем уровне вложенности.</p>
+        <p> Не существует стандартного метода, который возвращал бы координаты элемента относительно документа, но мы
+            можем написать его сами.Две системы координат связаны следующими формулами:
+        <ul>
+            <li>pageY = clientY + высота вертикально прокрученной части документа.</li>
+            <li>pageX = clientX + ширина горизонтально прокрученной части документа. </li>
+        </ul>
+        Функция getCoords(elem) берёт координаты в контексте окна с помощью elem.getBoundingClientRect() и добавляет к
+        ним значение соответствующей прокрутки:
+        <pre>
+            <code class="language-js">
+// получаем координаты элемента в контексте документа
+function getCoords(elem) {
+  let box = elem.getBoundingClientRect();
+
+  return {
+    top: box.top + window.pageYOffset,
+    right: box.right + window.pageXOffset,
+    bottom: box.bottom + window.pageYOffset,
+    left: box.left + window.pageXOffset
+  };
+}                
+            </code>
+        </pre>
+        Если бы в примере выше мы использовали её вместе с position:absolute, то при прокрутке сообщение оставалось бы
+        рядом с элементом.
+
+        Модифицированная функция createMessageUnder:
+        <pre>
+    <code class="language-js">
+function createMessageUnder(elem, html) {
+  let message = document.createElement('div');
+  message.style.cssText = "position:absolute; color: red";
+
+  let coords = getCoords(elem);
+
+  message.style.left = coords.left + "px";
+  message.style.top = coords.bottom + "px";
+
+  message.innerHTML = html;
+
+  return message;
+}        
+    </code>
+</pre>
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>
+            Любая точка на странице имеет координаты:
+        <ul>
+            <li>Относительно окна браузера – <code class="language-js">elem.getBoundingClientRect()</code>.</li>
+            <li>Относительно документа – <code class="language-js">elem.getBoundingClientRect()</code> плюс текущая
+                прокрутка страницы.</li>
+        </ul>
+        Координаты в контексте окна подходят для использования с <code class="language-js">position:fixed</code>, а
+        координаты относительно документа – для использования с <code class="language-js">position:absolute</code> .
+
+        <br>Каждая из систем координат имеет свои преимущества и недостатки. Иногда будет лучше применить одну, а иногда
+        – другую, как это и происходит с позиционированием в CSS, где мы выбираем между absolute и fixed.
+        </p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <iframe src="coordinatesTask1.html" frameborder="0" style="width: 400px;height: 400px;"></iframe>
+            <p>Кроме последней 4 точки у меня решено в точности как у него. Последню точку он предлагает вычислять из
+                первой прибавив внутренние координаты объекта насколько я понял. Моё решение:
+            <pre>
+                <code class="language-js">
+    function task1(params) {
+        let field = document.querySelector('#field')
+        let oneCoord = field.getBoundingClientRect()
+        let div = document.createElement('div')
+        div.setAttribute('id', 'ansvers')
+        document.body.append(div);
+        let oneP = document.createElement('p')
+        oneP.setAttribute('id', 'onepara');
+        div.append(oneP)
+        oneP.innerHTML=(`Coordinats first point is ${oneCoord.left}:${oneCoord.top}`)
+        let twoP = document.createElement('p')
+        div.append(twoP)
+        twoP.setAttribute('id', 'twopara')
+        twoP.innerHTML = (`Coordinats second point is ${oneCoord.right}:${oneCoord.bottom}`)
+        let threeP = document.createElement('p')
+        div.append(threeP)
+        threeP.setAttribute('id', 'threepara')
+        threeP.innerHTML = `Coordinats third point is ${oneCoord.left + field.clientLeft}:${oneCoord.top + field.clientTop}`
+        let fouthP = document.createElement('p')
+        fouthP.setAttribute('id', 'fouthpara')
+        div.append(fouthP)
+        fouthP.innerHTML = `Coordinats fourth point is ${oneCoord.right - field.clientTop}:${oneCoord.bottom - field.clientTop}`
+    }                    
+                </code>
+            </pre>
+            </p>
+        </div>
+        <div id="task2">
+            <h4>Задача 2</h4>
+            <iframe src="coordinatesTask2.html" frameborder="0" style="width: 600; height: 350;"></iframe>
+            <p>Решение такое:
+            <pre>
+                    <code class="language-js">
+    function positionAt(anchor, position, elem) {
+        let coords = anchor.getBoundingClientRect()
+        elem.style.position = "absolute"
+      if(position == "top"){
+        elem.style.top = coords.y - elem.offsetHeight + 'px'
+        elem.style.left = coords.x + 'px'
+      }
+      if(position == 'right'){
+        elem.style.top = coords.y + 'px'
+        elem.style.left = coords.x + anchor.offsetWidth + 'px' 
+      }
+      if(position == 'bottom'){
+        elem.style.top = coords.y + anchor.offsetHeight + 'px'
+        elem.style.left = coords.x + 'px'
+      }
+    }                        
+                    </code>
+                </pre>
+            </p>
+        </div>
+        <div id="task3">
+            <h4>Задача 3</h4>
+            <p>У меня стоит изначально <code class="language-js">elem.style.position = "absolute"</code> иначе элементы
+                остаются привязанными к окну.</p>
+        </div>
+        <div id="task4">
+            <h4>Задача 4</h4>
+            <p>Решено так
+                <br><iframe src="coordinatesTask4.html" frameborder="0" style="width: 600; height: 350;"></iframe>
+            </p>
+            <pre>
+                <code class="language-js">
+        function positionAt(anchor, position, elem) {
+            let coords = anchor.getBoundingClientRect()
+            elem.style.position = "absolute"
+            if (position == "top-out") {
+                elem.style.top = coords.y - elem.offsetHeight + 'px'
+                elem.style.left = coords.x + 'px'
+            }
+            if (position == 'right-out') {
+                elem.style.top = coords.y + 'px'
+                elem.style.left = coords.x + anchor.offsetWidth + 'px'
+            }
+            if (position == 'bottom-out') {
+                elem.style.top = coords.y + anchor.offsetHeight + 'px'
+                elem.style.left = coords.x + 'px'
+            }
+            if (position == "top-in") {
+                elem.style.top = coords.y  + 'px'
+                elem.style.left = coords.x + 'px'
+            }
+            if (position == 'right-in') {
+                elem.style.top = coords.y + 'px'
+                elem.style.left = coords.x + anchor.offsetWidth-elem.offsetWidth + 'px'
+            }
+            if (position == 'bottom-in') {
+                elem.style.top = coords.y + anchor.offsetHeight - elem.offsetHeight + 'px'
+                elem.style.left = coords.x + 'px'
+            }
+        }                    
+                </code>
+            </pre>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</body>
+
+</html>
