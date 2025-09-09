@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Всплытие и погружение</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contens">
+        <h2><a href="#bubbling">Всплытие и погружение</a></h2>
+        <ul>
+            <li><a href="#uping">Всплытие</a></li>
+            <li><a href="#event">event.target</a></li>
+            <li><a href="#stopping">Прекращение всплытия</a></li>
+            <li><a href="#capturing">Погружение</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="bubbling">
+        <h2><a href="https://learn.javascript.ru/bubbling-and-capturing">Всплытие и погружение</a></h2>
+        <p>
+            В этой главе будет рассматриваться проброс событий с нижнего уровня до высшего по вложенности элементов.
+        </p>
+    </div>
+    <div class="topic" id="uping">
+        <h3>Всплытие</h3>
+        <p>Например:
+        <pre>
+    <code class="language-js">
+&lt;style>
+  body * {
+    margin: 10px;
+    border: 1px solid blue;
+  }
+&lt;/style>
+
+&lt;form onclick="alert('form')">FORM
+  &lt;div onclick="alert('div')">DIV
+    &lt;p onclick="alert('p')">P&lt;/p>
+  &lt;/div>
+&lt;/form>        
+    </code>
+</pre>
+        <style>
+            .test {
+                margin: 10px;
+                border: 1px solid blue;
+            }
+        </style>
+
+        <form class="test" onclick="alert('form')">FORM
+            <div class="test" onclick="alert('div')">DIV
+                <p class="test" onclick="alert('p')">P</p>
+            </div>
+        </form>
+        На этом примере наглядно видно, как идёт всплытие события по уровням. Если бы далее были бы обработчики они бы
+        всплыли.
+        </p>
+    </div>
+    <div class="topic" id="event">
+        <h3>event.target</h3>
+        <p>Как следует из названия event.target это свойство которое позволяет узнать где конкретно произошло событие.
+            Отличия от this:
+        <ul>
+            <li>event.target – это «целевой» элемент, на котором произошло событие, в процессе всплытия он неизменен.
+            </li>
+            <li>this – это «текущий» элемент, до которого дошло всплытие, на нём сейчас выполняется обработчик.
+            </li>
+        </ul>
+        Далее приводится пример различия их двух свойств.
+        </p>
+    </div>
+    <div class="topic" id="stopping">
+        <H3>Прекращение всплытия</H3>
+        <p>Всплытие может идти вверх до document и даже window и вызывать все обработчики. Однако при вызове
+            event.stopPropagation() далее всплытие события не идёт. Вызвать можно в любом из обработчиков.</p>
+        <blockquote>
+            <h4>event.stopImmediatePropagation()</h4>
+            <p>Если у элемента есть несколько обработчиков на одно событие, то даже при прекращении всплытия все они
+                будут выполнены.</p>
+
+            <p>То есть, event.stopPropagation() препятствует продвижению события дальше, но на текущем элементе все
+                обработчики будут вызваны.</p>
+
+            <p>Для того, чтобы полностью остановить обработку, существует метод event.stopImmediatePropagation(). Он не
+                только предотвращает всплытие, но и останавливает обработку событий на текущем элементе. </p>
+        </blockquote>
+        <blockquote>
+            <h4>Не прекращайте всплытие без необходимости!</h4>
+        </blockquote>
+    </div>
+    <div class="topic" id="capturing">
+        <h3>Погружение</h3>
+        <p>Стандарт DOM Events описывает 3 фазы прохода события:
+        <ol>
+            <li>Фаза погружения (capturing phase) – событие сначала идёт сверху вниз.</li>
+            <li>Фаза цели (target phase) – событие достигло целевого(исходного) элемента.</li>
+            <li>Фаза всплытия (bubbling stage) – событие начинает всплывать.</li>
+        </ol>
+        Чтобы поймать событие на стадии погружения, нужно использовать третий аргумент capture вот так:
+        <pre>
+    <code class="language-js">
+elem.addEventListener(..., {capture: true})
+// или просто "true", как сокращение для {capture: true}
+elem.addEventListener(..., true)        
+    </code>
+</pre>
+        Далее идёт пример:
+        <pre>
+    <code class="language-js">
+&lt;script>
+  for(let elem of document.querySelectorAll('*')) {
+    elem.addEventListener("click", e => alert(`Погружение: ${elem.tagName}`), true);
+    elem.addEventListener("click", e => alert(`Всплытие: ${elem.tagName}`));
+  }
+&lt;/script>        
+    </code>
+</pre>
+        В котором обработчики всплытия и погружения навешиваются всем элементам в документе и так же они отрабатывают
+        при клике.
+        </p>
+        <blockquote>
+            <h4>Чтобы убрать обработчик removeEventListener, нужна та же фаза
+            </h4>
+            Если мы добавили обработчик вот так addEventListener(..., true), то мы должны передать то же значение
+            аргумента capture в removeEventListener(..., true), когда снимаем обработчик.
+        </blockquote>
+        <blockquote>
+            <h4>На каждой фазе разные обработчики на одном элементе срабатывают в порядке назначения</h4>
+            <pre>
+            <code class="language-js">
+elem.addEventListener("click", e => alert(1)); // всегда сработает перед следующим
+elem.addEventListener("click", e => alert(2));                
+            </code>
+        </pre>
+        </blockquote>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Всплытие это проброс событий с нижнего уровня на высший.</p>
+        <p>Узнать где конкретно произошло событие - <code>event.target</code>.</p>
+        <p>Прекращение всплытия event.stopPropagation() не останавливает обработчики в текущем элементе, а вот
+            event.stopImmediatePropagation() останавливает.</p>
+        <p>Погружение это процесс переноса события с высшего уровня на низший. Даже если оно произошло на низшем уровне, установить:
+<pre>
+    <code class="language-js">
+elem.addEventListener(..., {capture: true})
+// или просто "true", как сокращение для {capture: true}
+elem.addEventListener(..., true)         
+    </code>
+</pre>
+Для elem.removeEventListener нужна та же фаза.
+        </p>
+        <p>Обработчики срабатывают в том порядке, в котором были установлены.</p>
+    </div>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
