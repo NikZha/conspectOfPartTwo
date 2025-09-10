@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Делегирование событий</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#eventdelegation">Делегирование событий</a></h2>
+        <ul>
+            <li><a href="#apply">Применение делегирования: действия в разметке</a></li>
+            <li><a href="#design">Приём проектирования «поведение»</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+
+    <div class="topic" id="eventdelegation">
+        <h2><a href="https://learn.javascript.ru/event-delegation">Делегирование событий</a></h2>
+        <p>Высплытие позволяет создавать в браузере делегирование событий. Смысл его заключается в том, чтобы назначать
+            вышестоящим элементам, например <code>document</code> события низлежайших уровней и перехватывать их при
+            всплытии проверяя где произошло событие при помощи event.target.</p>
+    </div>
+<div class="topic" id="apply">
+    <h3>Применение делегирования: действия в разметке</h3>
+    <div id="menu">
+  <button data-action="save">Сохранить</button>
+  <button data-action="load">Загрузить</button>
+  <button data-action="search">Поиск</button>
+</div>
+
+<script>
+  class Menu {
+    constructor(elem) {
+      elem.onclick = this.onClick.bind(this); // (*)
+    }
+
+    save() {
+      alert('сохраняю');
+    }
+
+    load() {
+      alert('загружаю');
+    }
+
+    search() {
+      alert('ищу');
+    }
+
+    onClick(event) {
+      let action = event.target.dataset.action;
+      if (action) {
+        this[action]();
+      }
+    }
+  }
+
+  new Menu(menu);
+</script>
+    <p>Можно повесить на каждуй кнопку свой отдельный обработчик, а можно сделать по иному:
+<pre><code class="language-js">
+&lt;div id="menu">
+  &lt;button data-action="save">Сохранить</button>
+  &lt;button data-action="load">Загрузить</button>
+  &lt;button data-action="search">Поиск</button>
+&lt;/div>
+
+&lt;script>
+  class Menu {
+    constructor(elem) {
+      elem.onclick = this.onClick.bind(this); // (*)
+    }
+
+    save() {
+      alert('сохраняю');
+    }
+
+    load() {
+      alert('загружаю');
+    }
+
+    search() {
+      alert('ищу');
+    }
+
+    onClick(event) {
+      let action = event.target.dataset.action;
+      if (action) {
+        this[action]();
+      }
+    }
+  }
+
+  new Menu(menu);
+  &lt;/script>    
+</code></pre>
+
+    </p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
