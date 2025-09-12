@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Действия браузера по умолчанию</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#default">Действия браузера по умолчанию</a></h2>
+        <ul>
+            <li><a href="#cansel">Отмена действия браузера</a></li>
+            <li><a href="#passive">Опция «passive» для обработчика</a></li>
+            <li><a href="#event.defaultPrevented">event.defaultPrevented</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="default">
+        <h2><a href="https://learn.javascript.ru/default-browser-action">Действия браузера по умолчанию</a></h2>
+        <p>Ряд событий влекут за собой автоматические действия браузера по умолчанию. Зачастую эти действия можно
+            отменить при помощи javascript.</p>
+    </div>
+    <div class="topic" id="cansel">
+        <h3>Отмена действия браузера</h3>
+        <p>Два способа отмены:</p>
+        <ul>
+            <li><code>onclick="return false"</code> причём подобный возврат в других случаях игнорируется.</li>
+            <li><code>onclick="event.preventDefault()"</code></li>
+        </ul>
+        <a href="/" onclick="return false">Нажми здесь</a>
+        или
+        <a href="/" onclick="event.preventDefault()">здесь</a>
+    </div>
+
+
+
+
+
+
+
+</body>
+
+</html>
