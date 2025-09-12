@@ -176,26 +176,27 @@ function highlight(td) {
       </h4>Чтобы разные обработчики не перезаписывали друг друга.
     </blockquote>
     <h4>Поведение: «Переключатель» (Toggler)</h4>
-    <p>Ещё один пример поведения. Сделаем так, что при клике на элемент с атрибутом data-toggle-id будет скрываться/показываться элемент с заданным id:</p>
+    <p>Ещё один пример поведения. Сделаем так, что при клике на элемент с атрибутом data-toggle-id будет
+      скрываться/показываться элемент с заданным id:</p>
     <button data-toggle-id="subscribe-mail">
-  Показать форму подписки
-</button>
+      Показать форму подписки
+    </button>
 
-<form id="subscribe-mail" hidden>
-  Ваша почта: <input type="email">
-</form>
+    <form id="subscribe-mail" hidden>
+      Ваша почта: <input type="email">
+    </form>
 
-<script>
-  document.addEventListener('click', function(event) {
-    let id = event.target.dataset.toggleId;
-    if (!id) return;
+    <script>
+      document.addEventListener('click', function (event) {
+        let id = event.target.dataset.toggleId;
+        if (!id) return;
 
-    let elem = document.getElementById(id);
+        let elem = document.getElementById(id);
 
-    elem.hidden = !elem.hidden;
-  });
-</script>
-<pre>
+        elem.hidden = !elem.hidden;
+      });
+    </script>
+    <pre>
     <code class="language-js">
 &lt;button data-toggle-id="subscribe-mail">
   Показать форму подписки
@@ -218,224 +219,258 @@ function highlight(td) {
     </code>
 </pre>
   </div>
-<div class="topic" id="total">
-  <h3>Итого</h3>
-  <p>Алгоритм делегирования событий:
-<ol>
-<li>Вешаем обработчик на контейнер.</li>
-<li>В обработчике проверяем исходный элемент event.target.</li>
-<li>Если событие произошло внутри нужного нам элемента, то обрабатываем его.  </li>
-</ol>
-Используем для:
-<ul>
-  <li>Упрощает процесс инициализации и экономит память, одному обработчику множество элементов.</li>
-  <li>При добавлении или удалении элементов не нужно лезь в логику javascript.</li>
-<li>Удобство изменений DOM: можно массово добавлять или удалять элементы путём изменения innerHTML и ему подобных.</li>
+  <div class="topic" id="total">
+    <h3>Итого</h3>
+    <p>Алгоритм делегирования событий:
+    <ol>
+      <li>Вешаем обработчик на контейнер.</li>
+      <li>В обработчике проверяем исходный элемент event.target.</li>
+      <li>Если событие произошло внутри нужного нам элемента, то обрабатываем его. </li>
+    </ol>
+    Используем для:
+    <ul>
+      <li>Упрощает процесс инициализации и экономит память, одному обработчику множество элементов.</li>
+      <li>При добавлении или удалении элементов не нужно лезь в логику javascript.</li>
+      <li>Удобство изменений DOM: можно массово добавлять или удалять элементы путём изменения innerHTML и ему подобных.
+      </li>
 
-</ul>
-Делегирование имеет свои ограничения:
-<ul>
-<li>Некоторые события не всплывают, так же низкоуровневые обработчики не должны вызывать event.stopPropagation(). </li>  
-<li>Делегирование вызывает дополнительную нагрузку, но  как правило она незначительна.</li>
-</ul>
-  </p>
-</div>
-<div class="topic" id="tasks">
-  <h3>Задачи</h3>
-  <div id="task1">
-    <h4>Задача 1</h4>
+    </ul>
+    Делегирование имеет свои ограничения:
+    <ul>
+      <li>Некоторые события не всплывают, так же низкоуровневые обработчики не должны вызывать event.stopPropagation().
+      </li>
+      <li>Делегирование вызывает дополнительную нагрузку, но как правило она незначительна.</li>
+    </ul>
+    </p>
+  </div>
+  <div class="topic" id="tasks">
+    <h3>Задачи</h3>
+    <div id="task1">
+      <h4>Задача 1</h4>
       <div id="container">
         <style>
-h3 {
-  margin: 0;
-  padding-bottom: .3em;
-  padding-right: 20px;
-  font-size: 1.1em;
-}
+          h3 {
+            margin: 0;
+            padding-bottom: .3em;
+            padding-right: 20px;
+            font-size: 1.1em;
+          }
 
-p {
-  margin: 0;
-  padding: 0 0 .5em;
-}
+          p {
+            margin: 0;
+            padding: 0 0 .5em;
+          }
 
-.pane {
-  background: #edf5e1;
-  padding: 10px 20px 10px;
-  border-top: solid 2px #c4df9b;
-  position: relative;
-}
+          .pane {
+            background: #edf5e1;
+            padding: 10px 20px 10px;
+            border-top: solid 2px #c4df9b;
+            position: relative;
+          }
 
-.remove-button {
-  position: absolute;
-  font-size: 110%;
-  top: 0;
-  color: darkred;
-  right: 10px;
-  display: block;
-  width: 24px;
-  height: 24px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-}          
+          .remove-button {
+            position: absolute;
+            font-size: 110%;
+            top: 0;
+            color: darkred;
+            right: 10px;
+            display: block;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+          }
         </style>
-    <div class="pane">
-      <h3>Лошадь</h3>
-      <p>Домашняя лошадь - животное семейства непарнокопытных, одомашненный и единственный сохранившийся подвид дикой лошади, вымершей в дикой природе, за исключением небольшой популяции лошади Пржевальского.</p>
-      <button class="remove-button">[x]</button>
+        <div class="pane">
+          <h3>Лошадь</h3>
+          <p>Домашняя лошадь - животное семейства непарнокопытных, одомашненный и единственный сохранившийся подвид
+            дикой лошади, вымершей в дикой природе, за исключением небольшой популяции лошади Пржевальского.</p>
+          <button class="remove-button">[x]</button>
+        </div>
+        <div class="pane">
+          <h3>Осёл</h3>
+          <p>Домашний осёл или ишак — одомашненный подвид дикого осла, сыгравший важную историческую роль в развитии
+            хозяйства и культуры человека. Все одомашненные ослы относятся к африканским ослам.</p>
+          <button class="remove-button">[x]</button>
+        </div>
+        <div class="pane">
+          <h3>Кошка</h3>
+          <p>Кошка, или домашняя кошка (лат. Félis silvéstris cátus), — домашнее животное, одно из наиболее популярных
+            (наряду с собакой) "животных-компаньонов". С точки зрения научной систематики, домашняя кошка —
+            млекопитающее семейства кошачьих отряда хищных. Ранее домашнюю кошку нередко рассматривали как отдельный
+            биологический вид.
+          </p>
+          <button class="remove-button">[x]</button>
+        </div>
+      </div>
+      <script>
+        function removeElement(event) {
+          if (event.target.className == 'remove-button') event.target.parentNode.style.display = 'none'
+        }
+        document.addEventListener("click", removeElement)
+      </script>
     </div>
-    <div class="pane">
-      <h3>Осёл</h3>
-      <p>Домашний осёл или ишак — одомашненный подвид дикого осла, сыгравший важную историческую роль в развитии хозяйства и культуры человека. Все одомашненные ослы относятся к африканским ослам.</p>
-      <button class="remove-button">[x]</button>
-    </div>
-    <div class="pane">
-      <h3>Кошка</h3>
-      <p>Кошка, или домашняя кошка (лат. Félis silvéstris cátus), — домашнее животное, одно из наиболее популярных (наряду с собакой) "животных-компаньонов". С точки зрения научной систематики, домашняя кошка — млекопитающее семейства кошачьих отряда хищных. Ранее домашнюю кошку нередко рассматривали как отдельный биологический вид.
-      </p>
-      <button class="remove-button">[x]</button>
-    </div>
-  </div>
-  <script>
-    function removeElement(event) {
-      if(event.target.className == 'remove-button') event.target.parentNode.style.display = 'none'
-    }
-    document.addEventListener("click", removeElement)
-  </script>
-  </div>
-  <div id="task2">
-    <h4>Задача 2</h4>
-<style>
-    table {
-       border-collapse: collapse;
-     }
-     th, td {
-       border: 1px solid black;
-       padding: 4px;
-     }
-     th {
-       cursor: pointer;
-     }
-     th:hover {
-       background: yellow;
-     }
-  </style>
-   <table id="grid">
-    <thead>
-      <tr>
-        <th data-type="number">Возраст</th>
-        <th data-type="string">Имя</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>5</td>
-        <td>Вася</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Петя</td>
-      </tr>
-      <tr>
-        <td>12</td>
-        <td>Женя</td>
-      </tr>
-      <tr>
-        <td>9</td>
-        <td>Маша</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Илья</td>
-      </tr>
-    </tbody>
-  </table>
+    <div id="task2">
+      <h4>Задача 2</h4>
 
-  <script>
-    // ...ваш код...
-  </script>
-    
-  </div>
-  <div id="task3">
-    <h4>Задача 3</h4>
-    
-  <ul class="tree" id="tree">
-    <li>Животные
-      <ul>
-        <li>Млекопитающие
+      <ul class="tree" id="tree" style="cursor: pointer;">
+        <li>Животные
           <ul>
-            <li>Коровы</li>
-            <li>Ослы</li>
-            <li>Собаки</li>
-            <li>Тигры</li>
+            <li>Млекопитающие
+              <ul>
+                <li>Коровы</li>
+                <li>Ослы</li>
+                <li>Собаки</li>
+                <li>Тигры</li>
+              </ul>
+            </li>
+            <li>Другие
+              <ul>
+                <li>Змеи</li>
+                <li>Птицы</li>
+                <li>Ящерицы</li>
+              </ul>
+            </li>
           </ul>
         </li>
-        <li>Другие
+        <li>Рыбы
           <ul>
-            <li>Змеи</li>
-            <li>Птицы</li>
-            <li>Ящерицы</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li>Рыбы
-      <ul>
-        <li>Аквариумные
-          <ul>
-            <li>Гуппи</li>
-            <li>Скалярии</li>
-          </ul>
-        </li>
-        <li>Морские
-          <ul>
-            <li>Морская форель</li>
+            <li>Аквариумные
+              <ul>
+                <li>Гуппи</li>
+                <li>Скалярии</li>
+              </ul>
+            </li>
+            <li>Морские
+              <ul>
+                <li>Морская форель</li>
+              </ul>
+            </li>
           </ul>
         </li>
       </ul>
-    </li>
-  </ul>
-  </div>
-  <div id="task4">
-    <h4>Задача 4</h4>
+      <script>
+        function task2(event) {
+          if (event.target.tagName == 'LI') {
+            for (let child of event.target.childNodes) child.hidden = !child.hidden
+          }
+        }
+        tree.addEventListener('click', task2)
+      </script>
+    </div>
+    <div id="task3">
+      <h4>Задача 3</h4>
       <style>
-    body {
-      height: 2000px;
-      /* добавим body прокрутку, подсказка должна работать и с прокруткой */
-    }
+        table {
+          border-collapse: collapse;
+        }
 
-    .tooltip {
-      /* немного стилизуем подсказку, можете использовать свои стили вместо этих */
-      position: fixed;
-      padding: 10px 20px;
-      border: 1px solid #b3c9ce;
-      border-radius: 4px;
-      text-align: center;
-      font: italic 14px/1.3 sans-serif;
-      color: #333;
-      background: #fff;
-      box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
-    }
-  </style>
-</head>
+        th,
+        td {
+          border: 1px solid black;
+          padding: 4px;
+        }
 
-<body>
+        th {
+          cursor: pointer;
+        }
 
-  <p>ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя</p>
-  <p>ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя</p>
+        th:hover {
+          background: yellow;
+        }
+      </style>
+      <table id="grid">
+        <thead>
+          <tr>
+            <th data-type="number">Возраст</th>
+            <th data-type="string">Имя</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>5</td>
+            <td>Вася</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Петя</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Женя</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Маша</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Илья</td>
+          </tr>
+        </tbody>
+      </table>
 
-  <button data-tooltip="эта подсказка должна быть длиннее, чем элемент">Короткая кнопка</button>
-  <button data-tooltip="HTML<br>подсказка">Ещё кнопка</button>
+      <script>
+        function task3(event) {
+          let trs = grid.querySelector('tbody').querySelectorAll('tr')
+          let tbody = grid.querySelector('tbody')
+          if (event.target.dataset.type == 'number') {
+            tbody.innerHTML = ''
+            tbody.append(...Array.from(trs).sort((a, b) => (a.cells[0].innerHTML - b.cells[0].innerHTML)))
+          }
+          if(event.target.dataset.type == 'string'){
+            tbody.append(...Array.from(trs).sort((a, b) => ((a.cells[1].innerHTML).localeCompare(b.cells[1].innerHTML))))
+          }
+        }
+        grid.addEventListener('click', task3)
+      </script>
 
-  <p>Прокрутите страницу, чтобы кнопки оказались у верхнего края, а затем проверьте правильно ли выводятся подсказки.</p>
+    </div>
+
+    <div id="task4">
+      <h4>Задача 4</h4>
+      <style>
+        body {
+          height: 2000px;
+          /* добавим body прокрутку, подсказка должна работать и с прокруткой */
+        }
+
+        .tooltip {
+          /* немного стилизуем подсказку, можете использовать свои стили вместо этих */
+          position: fixed;
+          padding: 10px 20px;
+          border: 1px solid #b3c9ce;
+          border-radius: 4px;
+          text-align: center;
+          font: italic 14px/1.3 sans-serif;
+          color: #333;
+          background: #fff;
+          box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+        }
+      </style>
+      </head>
+
+      <body>
+
+        <p>ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя</p>
+        <p>ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя</p>
+
+        <button data-tooltip="эта подсказка должна быть длиннее, чем элемент">Короткая кнопка</button>
+        <button data-tooltip="HTML<br>подсказка">Ещё кнопка</button>
+
+        <p>Прокрутите страницу, чтобы кнопки оказались у верхнего края, а затем проверьте правильно ли выводятся
+          подсказки.</p>
 
 
-  <script>
-    // ...ваш код...
-  </script>
-
+        <script>
+          let paragraph = document.createElement('p')
+        </script>
+        <div id="technical" style="width: 1000; height: 2000;">
+          <p  style="width: 1000; height: 2000;">test</p>
+        </div>
+    </div>
   </div>
-</div>
 
 
 
