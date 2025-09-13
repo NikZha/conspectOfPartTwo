@@ -17,7 +17,7 @@
         <ul>
             <li><a href="#cansel">Отмена действия браузера</a></li>
             <li><a href="#passive">Опция «passive» для обработчика</a></li>
-            <li><a href="#event.defaultPrevented">event.defaultPrevented</a></li>
+            <li><a href="#eventdefaultPrevented">event.defaultPrevented</a></li>
             <li><a href="#total">Итого</a></li>
             <li><a href="#tasks">Задачи</a></li>
         </ul>
@@ -37,11 +37,70 @@
         <a href="/" onclick="return false">Нажми здесь</a>
         или
         <a href="/" onclick="event.preventDefault()">здесь</a>
+        <p>Далее идёт какой-то мутноватый пример связанный с меню, как изобразить поведение списка ul>li как кнопки
+            меню.
+            Далее происходит перескок на <code>a</code> ссылки и как можно вместо перехода сделать какое-то другое
+            действие.
+        </p>
     </div>
+    <div class="topic" id="passive">
+        <h3>Опция «passive» для обработчика</h3>
+        <p>Необязательная опция passive: true для addEventListener сигнализирует браузеру, что обработчик не собирается
+            выполнять preventDefault().</p>
+        <p>Опция passive: true сообщает браузеру, что обработчик не собирается отменять прокрутку. Тогда браузер
+            начинает её немедленно, обеспечивая максимально плавный интерфейс, параллельно обрабатывая событие.</p>
+    </div>
+<div class="topic" id="eventdefaultPrevented">
+    <h3>event.defaultPrevented</h3>
+    <p>Свойство event.defaultPrevented установлено в true, если действие по умолчанию было предотвращено, и false, если нет.
 
+</p>
+<p>Далее идут какие-то пространные рассуждения, а том, что обработчики могут пересекаться. И приходит все к простому:</p>
+<pre>
+    <code class="language-js">
+&lt;p>Правый клик вызывает меню документа (добавлена проверка event.defaultPrevented)&lt;/p>
+&lt;button id="elem">Правый клик вызывает меню кнопки&lt;/button>
 
+&lt;script>
+  elem.oncontextmenu = function(event) {
+    event.preventDefault();
+    alert("Контекстное меню кнопки");
+  };
 
+  document.oncontextmenu = function(event) {
+    if (event.defaultPrevented) return;
 
+    event.preventDefault();
+    alert("Контекстное меню документа");
+  };
+&lt;/script>        
+    </code>
+</pre>
+<iframe src="event.defaultPrevented.html" frameborder="0" style="width: auto; height: auto;"></iframe>
+<p>То есть к проверке типа: <code>if (event.defaultPrevented)</code>. Спрашивается нахуя шла речь пару разделов об event.target?</p>
+</div>
+<div class="topic" id="total">
+    <h3>Итого</h3>
+<p>Действий браузера по умолчанию достаточно много:</p>
+<ul>
+<li>mousedown – начинает выделять текст (если двигать мышкой).</li>
+<li>click на &lt;input type="checkbox"> – ставит или убирает галочку в input.</li>
+<li>submit – при нажатии на &lt;input type="submit"> или при нажатии клавиши Enter в форме данные отправляются на сервер.</li>
+<li>keydown – при нажатии клавиши в поле ввода появляется символ.</li>
+<li>contextmenu – при правом клике показывается контекстное меню браузера.</li>
+<li>…и многие другие…</li>
+</ul>
+<p>Все эти действия можно отменить, если мы хотим обработать событие исключительно при помощи JavaScript.</p>
+
+<p>Чтобы отменить действие браузера по умолчанию, используйте event.preventDefault() или return false. Второй метод работает, только если обработчик назначен через on<событие>.</p>
+
+<p>Опция passive: true для addEventListener сообщает браузеру, что действие по умолчанию не будет отменено. Это очень полезно для некоторых событий на мобильных устройствах, таких как touchstart и touchmove, чтобы сообщить браузеру, что он не должен ожидать выполнения всех обработчиков, а ему следует сразу приступать к выполнению действия по умолчанию, например, к прокрутке.</p>
+
+<p>Если событие по умолчанию отменено, то значение event.defaultPrevented становится true, иначе false.    </p>
+</div>
+<div class="topic" id="tasks">
+    <h3>Задачи</h3>
+</div>
 
 
 

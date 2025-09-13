@@ -1,0 +1,18 @@
+<body>
+    <p>Правый клик вызывает меню документа (добавлена проверка event.defaultPrevented)</p>
+<button id="elem">Правый клик вызывает меню кнопки</button>
+
+<script>
+  elem.oncontextmenu = function(event) {
+    event.preventDefault();
+    alert("Контекстное меню кнопки");
+  };
+
+  document.oncontextmenu = function(event) {
+    if (event.defaultPrevented) return;
+
+    event.preventDefault();
+    alert("Контекстное меню документа");
+  };
+</script>
+</body>
