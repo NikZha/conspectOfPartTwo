@@ -419,7 +419,7 @@ function highlight(td) {
             tbody.innerHTML = ''
             tbody.append(...Array.from(trs).sort((a, b) => (a.cells[0].innerHTML - b.cells[0].innerHTML)))
           }
-          if(event.target.dataset.type == 'string'){
+          if (event.target.dataset.type == 'string') {
             tbody.append(...Array.from(trs).sort((a, b) => ((a.cells[1].innerHTML).localeCompare(b.cells[1].innerHTML))))
           }
         }
@@ -431,10 +431,7 @@ function highlight(td) {
     <div id="task4">
       <h4><a href="https://learn.javascript.ru/event-delegation#povedenie-podskazka">Задача 4</a></h4>
       <style>
-        body {
-          height: 2000px;
-          /* добавим body прокрутку, подсказка должна работать и с прокруткой */
-        }
+
 
         .tooltip {
           /* немного стилизуем подсказку, можете использовать свои стили вместо этих */
@@ -449,9 +446,9 @@ function highlight(td) {
           box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
         }
       </style>
-      </head>
+      
 
-      <body>
+     
 
         <p>ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя</p>
         <p>ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя ЛяЛяЛя</p>
@@ -465,9 +462,101 @@ function highlight(td) {
 
         <script>
           let paragraph = document.createElement('p')
+          paragraph.className = 'tooltip'
+          function showTooltip(event) {
+            if (event.target.dataset.tooltip) {
+              paragraph.innerHTML = event.target.dataset.tooltip
+              document.body.append(paragraph)
+              paragraph.style.display = ''
+              paragraph.style.position = 'absolute';
+              /* не нужный кусок кода есть все в css
+              paragraph.style.background = 'white'
+              paragraph.style.border = '1px solid black'
+              paragraph.style.borderRadius = '5px'
+              paragraph.style.paddingLeft = '5px'
+              paragraph.style.paddingRight = '5px'
+              paragraph.style.boxShadow = '4px 4px 8px rgba(0, 0, 0, 0.3)'; */
+              paragraph.style.top = event.target.offsetTop - paragraph.offsetHeight - 2 + 'px'
+              paragraph.style.left = event.target.offsetLeft + 'px'
+            }
+          }
+          function removeToolTip(event) {
+            if (event.target.dataset.tooltip) paragraph.style.display = 'none';
+          }
+          document.addEventListener('mouseover', showTooltip)
+          document.addEventListener('mouseout', removeToolTip)
         </script>
         <div id="technical" style="width: 1000; height: 2000;">
-          <p  style="width: 1000; height: 2000;">test</p>
+          В целом задача решена. Дипсик предложил использовать авторский css и я понял что он реально прав, так же удаление у него через:
+          <pre>
+              <code class="language-js">
+let currentTooltip = null;
+
+function showTooltip(event) {
+    const tooltipText = event.target.dataset.tooltip;
+    if (!tooltipText) return;
+    
+    // Удаляем предыдущую подсказку
+    if (currentTooltip) {
+        currentTooltip.remove();
+    }
+    
+    // Создаем новую подсказку
+    currentTooltip = document.createElement('div');
+    currentTooltip.className = 'tooltip'; // Используем CSS из стилей
+    currentTooltip.textContent = tooltipText; // Безопасно, не HTML
+    
+    document.body.append(currentTooltip);
+    
+    // Позиционирование относительно viewport (с учетом прокрутки)
+    const rect = event.target.getBoundingClientRect();
+    currentTooltip.style.top = (rect.top - currentTooltip.offsetHeight - 5) + 'px';
+    currentTooltip.style.left = rect.left + 'px';
+}
+
+function removeToolTip(event) {
+    if (event.target.dataset.tooltip && currentTooltip) {
+        currentTooltip.remove();
+        currentTooltip = null;
+    }
+}
+
+// Вешаем обработчики
+document.addEventListener('mouseover', showTooltip);
+document.addEventListener('mouseout', removeToolTip);                  
+              </code>
+          </pre>
+          Его версия кода. Одно из замечаний быстрое мигание, как по мне не очень существенно.
+          <br>Моя версия
+          <pre>
+              <code class="language-js">
+          let paragraph = document.createElement('p')
+          paragraph.className = 'tooltip'
+          function showTooltip(event) {
+            if (event.target.dataset.tooltip) {
+              paragraph.innerHTML = event.target.dataset.tooltip
+              document.body.append(paragraph)
+              paragraph.style.display = ''
+              paragraph.style.position = 'absolute';
+              /* не нужный кусок кода есть все в css
+              paragraph.style.background = 'white'
+              paragraph.style.border = '1px solid black'
+              paragraph.style.borderRadius = '5px'
+              paragraph.style.paddingLeft = '5px'
+              paragraph.style.paddingRight = '5px'
+              paragraph.style.boxShadow = '4px 4px 8px rgba(0, 0, 0, 0.3)'; */
+              paragraph.style.top = event.target.offsetTop - paragraph.offsetHeight - 2 + 'px'
+              paragraph.style.left = event.target.offsetLeft + 'px'
+            }
+          }
+          function removeToolTip(event) {
+            if (event.target.dataset.tooltip) paragraph.style.display = 'none';
+          }
+          document.addEventListener('mouseover', showTooltip)
+          document.addEventListener('mouseout', removeToolTip)                  
+              </code>
+          </pre>
+          Не решено: проверка на видимость подскаки и перенос её вниз. В некотором смысле мне лень. Оставляю до будущих проработок.
         </div>
     </div>
   </div>
