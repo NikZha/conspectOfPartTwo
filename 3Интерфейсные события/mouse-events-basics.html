@@ -57,13 +57,121 @@
             </li>
         </ul>
     </div>
-<div class="topic" id="order">
-    <h3>Порядок событий</h3>
-    <p> Обработчики событий вызываются в следующем порядке: mousedown → mouseup → click. Потом обрабатывается dblclick</p>
-</div>
+    <div class="topic" id="order">
+        <h3>Порядок событий</h3>
+        <p> Обработчики событий вызываются в следующем порядке: mousedown → mouseup → click. Потом обрабатывается
+            dblclick</p>
+    </div>
+    <div class="topic" id="buttons">
+        <h3>Кнопки мыши</h3>
+        <p>Значения кнопок мыши:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Состояние кнопки </th>
+                    <th>event.button</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Левая кнопка (основная) </td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Средняя кнопка (вспомогательная) </td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Правая кнопка (вторичная) </td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Кнопка X1 (назад) </td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Кнопка X2 (вперёд) </td>
+                    <td>4</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Сенсорные устройства также генерируют аналогичные события, когда кто-то нажимает на них.</p>
+        <p>Также есть свойство event.buttons, в котором все нажатые в данный момент кнопки представлены в виде целого
+            числа, по одному биту на кнопку. На практике это свойство используется очень редко, вы можете найти
+            подробную информацию по адресу <a
+                href="https://developer.mozilla.org/ru/docs/Web/api/MouseEvent/buttons">MDN</a>, если вам это
+            когда-нибудь понадобится.</p>
+        <blockquote>
+            <h4>Устаревшее свойство event.which</h4>
+            <p>В старом коде вы можете встретить event.which свойство – это старый нестандартный способ получения кнопки
+                с возможными значениями:</p>
+            <ul>
+                <li>event.which == 1 – левая кнопка,</li>
+                <li>event.which == 2 – средняя кнопка,</li>
+                <li>event.which == 3 – правая кнопка.</li>
+            </ul>
+            <p>
+                На данный момент event.which устарел, нам не следует его использовать.</p>
 
 
+        </blockquote>
+    </div>
+    <div class="topic" id="mods">
+        <h3>Модификаторы: shift, alt, ctrl и meta</h3>
+        <p>Свойства события:</p>
+        <ul>
+            <li>shiftKey: Shift</li>
+            <li>altKey: Alt (или Opt для Mac)</li>
+            <li>ctrlKey: Ctrl</li>
+            <li>metaKey: Cmd для Mac </li>
+        </ul>
+        <p>
+            Они равны true, если во время события была нажата соответствующая клавиша.
 
+            Например, кнопка внизу работает только при комбинации Alt+Shift+клик:</p>
+        <pre>
+                <code class="language-js">
+&lt;button id="button">Нажми Alt+Shift+Click на мне!&lt;/button>
+
+&lt;script>
+  button.onclick = function(event) {
+    if (event.altKey && event.shiftKey) {
+      alert('Ура!');
+    }
+  };
+&lt;/script>                    
+                </code>
+            </pre>
+        <div>
+            <button id="button">Нажми Alt+Shift+Click на мне!</button>
+
+            <script>
+                button.onclick = function (event) {
+                    if (event.altKey && event.shiftKey) {
+                        alert('Ура!');
+                    }
+                };
+            </script>
+        </div>
+        <p>То есть как видно из кода повешена функция на onclick и внутри функции проверяются нажатия клавиш.</p>
+    </div>
+    <div class="topic" id="coords">
+        <h3>Координаты: clientX/Y, pageX/Y</h3>
+        <p>Все события мыши имеют координаты двух видов:
+        <ol>
+            <li>Относительно окна: clientX и clientY.</li>
+            <li>Относительно документа: pageX и pageY.</li>
+        </ol>
+        В конспекте есть <a href="../1Документ/coordinates.html">глава о координатах</a> где это подробно рассматривается.
+        </p>
+        <input onmousemove="this.value=event.clientX+':'+event.clientY" value="Наведи на меня мышь">
+        <pre>
+            <code class="language-js">
+&lt;input onmousemove="this.value=event.clientX+':'+event.clientY" value="Наведи на меня мышь">                
+            </code>
+        </pre>
+        
+    </div>
 
 
 
