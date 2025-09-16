@@ -100,7 +100,18 @@ parent.onmouseover = function(event) {
         <p>Или же можно использовать другие события: mouseenter и mouseleave, которые мы сейчас изучим, с ними такая
             проблема не возникает. </p>
     </div>
+    <div class="topic" id="mouseenter">
+        <h3>События mouseenter и mouseleave</h3>
+        <p>Отличия <code>mouseenter/mouseleave</code> от <code>mouseover/mouseout</code>:</p>
+        <ol>
+            <li>Переходы внутри элемента, на его потомки и с них, не считаются.</li>
+            <li>События mouseenter/mouseleave не всплывают. </li>
+        </ol>
+        <p>Когда указатель появляется над элементом – генерируется mouseenter, причём не имеет значения, где именно
+            указатель: на самом элементе или на его потомке.</p>
 
+        <p>Событие mouseleave происходит, когда курсор покидает элемент.</p>
+    </div>
 
 
 
