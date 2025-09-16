@@ -221,11 +221,69 @@ oncopy="alert('Копирование запрещено!');return false"
             <li>Координаты относительно документа: pageX/pageY.</li>
         </ul>
 
-       <p> Действие по умолчанию события mousedown – начало выделения, если в интерфейсе оно скорее мешает, его можно
-        отменить.</p>
+        <p> Действие по умолчанию события mousedown – начало выделения, если в интерфейсе оно скорее мешает, его можно
+            отменить.</p>
 
         <p>В следующей главе мы поговорим о событиях, которые возникают при передвижении мыши, и об отслеживании смены
-        элементов под указателем.</p>
+            элементов под указателем.</p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <div id="task1">
+            <iframe src="mouse-events-basicsTask1.html" frameborder="0" style="width: auto; height: auto;"></iframe>
+            <p>Задача решена на основе массива:
+            <pre><code class="language-js">
+        let arrLi = []
+        function selectLi(event) {            
+            if (event.target.tagName == 'LI') {
+                if (event.ctrlKey) {
+                    event.target.className = 'selected'
+                    arrLi.push(event.target);
+                } else {
+                    for (li of arrLi) li.className = '';
+                    arrLi = []
+                    event.target.className = 'selected'
+                    arrLi.push(event.target);
+                }
+            }
+        }
+        document.addEventListener('click', selectLi)                    
+                </code></pre>
+            </p>
+            <p>
+                У автора решение другое:
+            <pre><code class="language-js">
+    ul.onclick = function(event) {
+      if (event.target.tagName != "LI") return;
+
+      if (event.ctrlKey || event.metaKey) {
+        toggleSelect(event.target);
+      } else {
+        singleSelect(event.target);
+      }
+
+    }
+
+    // предотвращает ненужное выделение элементов списка при клике
+    ul.onmousedown = function() {
+      return false;
+    };
+
+    function toggleSelect(li) {
+      li.classList.toggle('selected');
+    }
+
+    function singleSelect(li) {
+      let selected = ul.querySelectorAll('.selected');
+      for(let elem of selected) {
+        elem.classList.remove('selected');
+      }
+      li.classList.add('selected');
+    }                    
+                </code></pre>
+            А тут создаётся массив из элементов и так же очищается. Помоему излишнее усложнение.
+            </p>
+        </div>
     </div>
 
 
