@@ -162,7 +162,8 @@
             <li>Относительно окна: clientX и clientY.</li>
             <li>Относительно документа: pageX и pageY.</li>
         </ol>
-        В конспекте есть <a href="../1Документ/coordinates.html">глава о координатах</a> где это подробно рассматривается.
+        В конспекте есть <a href="../1Документ/coordinates.html">глава о координатах</a> где это подробно
+        рассматривается.
         </p>
         <input onmousemove="this.value=event.clientX+':'+event.clientY" value="Наведи на меня мышь">
         <pre>
@@ -170,10 +171,62 @@
 &lt;input onmousemove="this.value=event.clientX+':'+event.clientY" value="Наведи на меня мышь">                
             </code>
         </pre>
-        
+
     </div>
+    <div class="topic" id="off">
+        <h3>Отключаем выделение</h3>
+        <p>В целом вешать событие на dblclick не является хорошей идеей.</p>
+        <br><span ondblclick="alert('dblclick')">Сделайте двойной клик на мне</span>
+        <pre><code class="language-js">
+&lt;span ondblclick="alert('dblclick')">Сделайте двойной клик на мне&lt;/span>        
+    </code></pre>
+        <p>Так как это событие выключает выделение объекта. Что является неудобным с точки зрения пользователя. Но в
+            некоторых случаях это может являтся желательным поведением.</p>
+        <p>
+            До...
+            <b ondblclick="alert('Клик!')" onmousedown="return false">
+                Сделайте двойной клик на мне
+            </b>
+            ...После
+        </p>
+        <pre><code class="language-js">
+До...
+&lt;b ondblclick="alert('Клик!')" onmousedown="return false">
+  Сделайте двойной клик на мне
+&lt;/b>
+...После    
+</code></pre>
+        <p>Достикается это как становится понятно <code>onmousedown="return false"</code>. Но выделить текст все равно
+            можно, выделять нужно до этого текста или в консоли разработчика.</p>
+        <blockquote>
+            <h4>Предотвращение копирования</h4>
+            <p>Тоже самое касается и запрещение копирования путём установки свойства элемента:</p>
+            <pre><code class="language-js">
+oncopy="alert('Копирование запрещено!');return false"        
+    </code></pre>
+        </blockquote>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        События мыши имеют следующие свойства:
+        <ul>
+            <li>Кнопка: button.</li>
 
+            <li>Клавиши-модификаторы (true если нажаты): altKey, ctrlKey, shiftKey и metaKey (Mac).</li>
 
+            <li>Если вы планируете обработать Ctrl, то не забудьте, что пользователи Mac обычно используют Cmd, поэтому
+                лучше проверить if (e.metaKey || e.ctrlKey).</li>
+            <li>Координаты относительно окна: clientX/clientY.</li>
+
+            <li>Координаты относительно документа: pageX/pageY.</li>
+        </ul>
+
+       <p> Действие по умолчанию события mousedown – начало выделения, если в интерфейсе оно скорее мешает, его можно
+        отменить.</p>
+
+        <p>В следующей главе мы поговорим о событиях, которые возникают при передвижении мыши, и об отслеживании смены
+        элементов под указателем.</p>
+    </div>
 
 
 
