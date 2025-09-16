@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Движение мыши: mouseover/out, mouseenter/leave</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#mouse">Движение мыши: mouseover/out, mouseenter/leave</a></h2>
+        <ul>
+            <li><a href="#mouseover">События mouseover/mouseout, relatedTarget</a></li>
+            <li><a href="#pass">Пропуск элементов</a></li>
+            <li><a href="#mouseout">Событие mouseout при переходе на потомка</a></li>
+            <li><a href="#mouseenter">События mouseenter и mouseleave</a></li>
+            <li><a href="#delegation">Делегирование событий</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="mouse">
+        <h2><a href="https://learn.javascript.ru/mousemove-mouseover-mouseout-mouseenter-mouseleave">Движение мыши:
+                mouseover/out, mouseenter/leave</a></h2>
+        <p>В этой главе мы более подробно рассмотрим события, возникающие при движении указателя мыши над элементами
+            страницы.</p>
+    </div>
+    <div class="topic" id="mouseover">
+        <h3>События mouseover/mouseout, relatedTarget</h3>
+        <p>Событие mouseover происходит в момент, когда курсор оказывается над элементом, а событие mouseout – в момент,
+            когда курсор уходит с элемента.</p>
+        <p>
+            Эти события являются особенными, потому что у них имеется свойство relatedTarget. Оно «дополняет» target.
+            Когда мышь переходит с одного элемента на другой, то один из них будет target, а другой relatedTarget.
+
+            Для события mouseover:
+        <ul>
+            <li><code>event.target</code> – это элемент, на который курсор перешёл.</li>
+            <li><code>event.relatedTarget</code> – это элемент, с которого курсор ушёл (relatedTarget → target). </li>
+        </ul>
+        </p>
+        <p>Для события <code>mouseout</code> будет соотвественно наоборот:
+        <ul>
+            <li><code>event.target</code> – это элемент, с которого курсор ушёл.</li>
+            <li><code>event.relatedTarget</code> – это элемент, на который курсор перешёл (target → relatedTarget).
+            </li>
+        </ul>
+        </p>
+        <blockquote>
+            <h4>relatedTarget может быть null</h4>
+            Курсор может уйти за пределы окна, и прийти из-за пределов окна.
+        </blockquote>
+    </div>
+    <div class="topic" id="pass">
+        <h3>Пропуск элементов</h3>
+        <p>Событие mousemove происходит при движении мыши. Однако, это не означает, что указанное событие генерируется
+            при прохождении каждого пикселя.</p>
+        <p>Элементы могут пропускаться если указатель мыши двигается быстро. В таком случае <code>relatedTarget</code>
+            может быть null. И на пропущенных элементах не сгенерируется никаких событий.</p>
+        <blockquote>
+            <h4>Если был mouseover, то будет и mouseout</h4>
+            Несмотря на то, что при быстрых переходах промежуточные элементы могут игнорироваться, в одном мы можем быть
+            уверены: элемент может быть пропущен только целиком.
+
+            Если указатель «официально» зашёл на элемент, то есть было событие mouseover, то при выходе с него
+            обязательно будет mouseout.
+        </blockquote>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
