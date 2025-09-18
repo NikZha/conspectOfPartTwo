@@ -26,10 +26,10 @@
         <h2><a href="https://learn.javascript.ru/mouse-drag-and-drop">Drag'n'Drop с событиями мыши</a></h2>
         <p>Перестаскивание мышкой способ улучшить интефейс, но с оговорками:</p>
         <ul>
-            <li>Нельзя ограничить область.</li>
-            <li>Нельзя сделать перенос только по вертикали или только по горизонтали</li>
+
             <li>Может не работать или странно работать на мобильных устройствах</li>
         </ul>
+        <p>Перетаскивание мышкой можно ограничить в одной из координат, можно задать область переноса.</p>
         <p>В современном стандарте HTML5 есть раздел о Drag and Drop – и там есть специальные события именно для
             Drag’n’Drop переноса, такие как dragstart, dragend и так далее.
 
@@ -265,8 +265,50 @@ function onMouseMove(event) {
             </div>
 
             <script>
-                // ...ваш код...
+                let thumb = document.querySelector('.thumb')
+                let rightBorder = document.body.offsetWidth - (document.body.offsetWidth - slider.offsetWidth - slider.offsetLeft / 3)
+
+                thumb.onmousedown = function (event) {
+                    let shiftX = event.clientX - thumb.getBoundingClientRect().left;
+                    let shiftY = slider.offsetTop - thumb.offsetHeight / 5
+                    thumb.style.position = 'absolute';
+                    thumb.style.zIndex = 1000;
+
+                    document.body.append(thumb);
+
+                    moveAt(event.pageX, shiftY);
+
+                    function moveAt(pageX, pageY) {
+
+                        if ((pageX - shiftX) < slider.offsetLeft) {
+                            thumb.style.left = slider.offsetLeft + 'px';
+                        } else if ((pageX - shiftX) > rightBorder) {
+                            thumb.style.left = rightBorder + 'px'
+                        } else {
+                            thumb.style.left = pageX - shiftX + 'px';
+                        }
+                        thumb.style.top = pageY + 'px'
+                    }
+                    function onMouseMove(event) {
+                        moveAt(event.pageX, shiftY)
+                    }
+                    document.addEventListener('mousemove', onMouseMove);
+
+
+                    thumb.onmouseup = function () {
+                        document.removeEventListener('mousemove', onMouseMove);
+                        thumb.onmouseup = null
+                    };
+
+                };
+
+                thumb.ondragstart = function () {
+                    return false;
+                };
+
             </script>
+            <p>В целом задача решена, правда херовенько, перенос сделан относительно документа, автор пишет что надо
+                относительно слайдера. Этот багоглюк в котором ползунок глючит если выйти за пределы области переноса.</p>
         </div>
         <div id="task2">
             <h4>Задача 2</h4>
