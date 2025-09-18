@@ -10,29 +10,171 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 </head>
+
 <body>
-<div class="contents">
-    <h2><a href="#keyboard">Клавиатура: keydown и keyup</a></h2>
-    <ul>
-        <li><a href="#test">Тестовый стенд</a></li>
-        <li><a href="#keydownkeyup">События keydown и keyup</a></li>
-        <li><a href="#autorepeat">Автоповтор</a></li>
-        <li><a href="#default">Действия по умолчанию</a></li>
-        <li><a href="#longtimeago">«Дела минувших дней»</a></li>
-        <li><a href="#total">Итого</a></li>
-        <li><a href="#tasks">Задача</a></li>
-    </ul>
-</div>
+    <div class="contents">
+        <h2><a href="#keyboard">Клавиатура: keydown и keyup</a></h2>
+        <ul>
+            <li><a href="#test">Тестовый стенд</a></li>
+            <li><a href="#keydownkeyup">События keydown и keyup</a></li>
+            <li><a href="#autorepeat">Автоповтор</a></li>
+            <li><a href="#default">Действия по умолчанию</a></li>
+            <li><a href="#longtimeago">«Дела минувших дней»</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="keyboard">
+        <h2><a href="https://learn.javascript.ru/keyboard-events">Клавиатура: keydown и keyup</a></h2>
+        <p>В целом сделано это для отслеживания нажатия клавиш на странице, с целью получения нажатия горячих клавиш.
+        </p>
+        <p>Так же есть отдельные методы которые отслеживают нажатие клавиш в <code>input</code>.</p>
+    </div>
+    <div class="topic" id="test">
+        <h3><a href="https://learn.javascript.ru/keyboard-events#keyboard-test-stand">Тестовый стенд</a></h3>
+        <p>Топик представляет собой тестовое поле в котором после нажатия клавиш выводится "нажато", "отжато", что
+            нажато и сканкод.</p>
+    </div>
+    <div class="topic" id="keydownkeyup">
+        <h3>События keydown и keyup</h3>
+        <p>Событие keydown происходит при нажатии клавиши, а keyup – при отпускании.</p>
+        <h4>event.code и event.key</h4>
+        <p>Свойство key объекта события позволяет получить символ, а свойство code – «физический код клавиши».</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Клавиша</th>
+                    <th> event.key</th>
+                    <th> event.code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Z</td>
+                    <td>z (нижний регистр)</td>
+                    <td> KeyZ</td>
+                </tr>
+                <tr>
+                    <td>Shift+Z</td>
+                    <td>Z (Верхний регистр)</td>
+                    <td> KeyZ</td>
+                </tr>
+            </tbody>
+        </table>
+        <blockquote>
+            <h4>«KeyZ» и другие клавишные коды</h4>
+            <ul>
+                <li>Буквенные клавиши имеют коды по типу "Key<буква>": "KeyA", "KeyB" и т.д.</li>
+                <li>Коды числовых клавиш строятся по принципу: "Digit<число>": "Digit0", "Digit1" и т.д.</li>
+                <li>Код специальных клавиш – это их имя: "Enter", "Backspace", "Tab" и т.д. </li>
+            </ul>
+        </blockquote>
+        <blockquote>
+            <h4>Регистр важен: "KeyZ", а не "keyZ"</h4>
+            <p>Пожалуйста, избегайте опечаток: правильно KeyZ, а не keyZ. Условие event.code=="keyZ" работать не будет:
+                первая буква в слове "Key" должна быть заглавная.</p>
+        </blockquote>
+        <table>
+            <thead>
+                <tr>
+                    <th>Клавиша</th>
+                    <th>event.key</th>
+                    <th>event.code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>F1</td>
+                    <td> F1</td>
+                    <td>F1</td>
+                </tr>
+                <tr>
+                    <td>Backspace</td>
+                    <td> Backspace</td>
+                    <td>Backspace</td>
+                </tr>
+                <tr>
+                    <td>Shift</td>
+                    <td> Shift</td>
+                    <td>ShiftRight или ShiftLeft</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Пример обратобки клавиш на странице:</p>
+        <pre><code class="language-js">
+document.addEventListener('keydown', function(event) {
+  if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
+    alert('Отменить!')
+  }
+});            
+        </code></pre>
+        <p>Однако с тем что использовать <code>code</code> или <code>key</code> есть нюансы связанные с тем, что в
+            разных языках они могут быть разными. И могут быть разными раскладки.</p>
+    </div>
+    <div class="topic" id="autorepeat">
+        <h3>Автоповтор</h3>
+        <p>keydown срабатывает снова и снова, и когда клавишу отпускают, то отрабатывает keyup. Так что ситуация, когда
+            много keydownи один keyup, абсолютно нормальна.</p>
+
+        <p>Для событий, вызванных автоповтором, у объекта события свойство event.repeat равно true. </p>
+    </div>
+    <div class="topic" id="default">
+        <h3>Действия по умолчанию</h3>
+        <ul>
+            <li>Появление символа (самое очевидное).</li>
+            <li>Удаление символа (клавиша Delete).</li>
+            <li>Прокрутка страницы (клавиша PageDown).</li>
+            <li>Открытие диалогового окна браузера «Сохранить» (Ctrl+S)</li>
+            <li>…и так далее. </li>
+        </ul>
+        <p>Предотвращение стандартного действия с помощью <code>event.preventDefault()</code> работает практически во
+            всех сценариях,
+            кроме тех, которые происходят на уровне операционной системы. Например, комбинация Alt+F4 инициирует
+            закрытие браузера в Windows, что бы мы ни делали в JavaScript.</p>
+        <pre><code class="language-js">
+&lt;script>
+function checkPhoneKey(key) {
+  return (key >= '0' && key <= '9') || key == '+' || key == '(' || key == ')' || key == '-';
+}
+&lt;/script>
+&lt;input onkeydown="return checkPhoneKey(event.key)" placeholder="Введите телефон" type="tel">                
+            </code></pre>
+        <script>
+            function checkPhoneKey(key) {
+                return (key >= '0' && key <= '9') || key == '+' || key == '(' || key == ')' || key == '-';
+            }
+        </script>
+        <input onkeydown="return checkPhoneKey(event.key)" placeholder="Введите телефон" type="tel">
+        <p>Но это несколько некорректный пример, посколько ничего кроме означенных в функции клавиш работать не будет.
+        </p>
+        <p>Но надёжностью такой фильтр все же обладать не будет, поскольку в поле можно вставить любую инфу из
+            контекстного меню. Таким образом лучше использовать постфакт проверку указывая пользователю на ошибки ввода.
+        </p>
+    </div>
+    <div class="topic" id="longtimeago">
+        <h3>«Дела минувших дней»</h3>
+        <p>В прошлом существовало также событие keypress, а также свойства keyCode, charCode, which у объекта события.
+            Сейчас смысла использовать это событие нет.</p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>События клавиатуры:</p>
+        <ul>
+            <li>keydown – при нажатии на клавишу (если клавиша остаётся нажатой, происходит автоповтор),</li>
+            <li>keyup – при отпускании клавиши. </li>
+        </ul>
+        <p>Главные свойства для работы с клавиатурными событиями:</p>
+        <ul>
+            <li>code – «код клавиши» ("KeyA", "ArrowLeft" и так далее), особый код, привязанный к физическому
+                расположению клавиши на клавиатуре.</li>
+            <li>key – символ ("A", "a" и так далее), для не буквенно-цифровых групп клавиш (таких как Esc) обычно имеет
+                то же значение, что и code. </li>
+        </ul>
+    </div>
 
 
 
 
+</body>
 
-
-
-
-
-
-
-    </body>
 </html>
