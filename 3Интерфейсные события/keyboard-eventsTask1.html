@@ -23,8 +23,20 @@
             "KeyQ",
             "KeyW"
         );
-        alert(arrKeyCode)
-        funcArray[0]()
+        let arrCodes = []
+        function onKeyDown(event) {
+            let keyCode = event.code;
+            if(arrKeyCode.includes(keyCode) && !arrCodes.includes(keyCode)){
+                arrCodes.push(keyCode)
+                if(arrKeyCode.length == arrCodes.length){
+                    funcArray[0]();
+                    arrCodes = []
+                }
+            }else{
+                arrCodes = []
+            }
+        }
+        document.addEventListener('keydown', onKeyDown)
 
     </script>
 </body>
