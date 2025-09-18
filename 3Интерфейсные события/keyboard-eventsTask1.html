@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задач к keyboard-events.html</title>
+</head>
+
+<body>
+    <p>Нажмите "Q" и "W" вместе (язык значения не играет).</p>
+    <script>
+        let arrKeyCode = []
+        let funcArray = []
+        function runOnKeys(...arr) {
+            if (arr.length < 2) return
+            funcArray = arr.splice(0, 1)
+            arrKeyCode = arr;
+        }
+        runOnKeys(
+            () => alert("Привет!"),
+            "KeyQ",
+            "KeyW"
+        );
+        alert(arrKeyCode)
+        funcArray[0]()
+
+    </script>
+</body>
+
+</html>
