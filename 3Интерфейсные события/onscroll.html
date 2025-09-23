@@ -66,6 +66,32 @@ window.addEventListener('scroll', function() {
         window.addEventListener('scroll', onScroll)            
         </code></pre>
     </div>
+    <div id="task2">
+        <h4>Задача 2</h4>
+        <iframe src="onscrollTask2.html" frameborder="0"></iframe>
+        <p>Решение:</p>
+        <pre><code class="language-js">
+       let arrowTop = document.querySelector('#arrowTop')
+       arrowTop.onclick = function (event) {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            })
+        }
+
+        function showArrow(event) {
+            let windowScroll = window.innerHeight;
+            let currentScroll = pageYOffset
+            if(windowScroll > currentScroll){
+                arrowTop.style.display = 'none'
+            }else{
+                arrowTop.style.display = ''
+            }
+        }
+        window.addEventListener('scroll', showArrow)            
+        </code></pre>
+    </div>
 </div>
 
 
