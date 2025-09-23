@@ -51,6 +51,21 @@ window.addEventListener('scroll', function() {
     </div>
 <div class="topic" id="tasks">
     <h3>Задачи</h3>
+    <div id="task1">
+        <h4>Задача 1</h4>
+        <iframe src="onscrollTask1.html" frameborder="0"></iframe>
+        <p>Простейщий скрипт:</p>
+        <pre><code class="language-js">
+        function onScroll(event) {
+            let paragraph = document.createElement('p')
+            paragraph.innerHTML = new Date()
+            document.body.append(paragraph)
+        }
+        for (let i = 0; i &lt; 15; i++) onScroll();
+
+        window.addEventListener('scroll', onScroll)            
+        </code></pre>
+    </div>
 </div>
 
 
