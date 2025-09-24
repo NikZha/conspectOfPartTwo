@@ -12,24 +12,279 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#prop">Свойства и методы формы</a></h2>
-    <ul>
-        <li><a href="#nav">Навигация: формы и элементы</a></li>
-        <li><a href="#revers">Обратная ссылка: element.form</a></li>
-        <li><a href="#elements">Элементы формы</a></li>
-        <li><a href="#links">Ссылки</a></li>
-        <li><a href="#total">Итого</a></li>
-        <li><a href="#tasks">Задача</a></li>
-    </ul>
-</div>
+    <div class="contents">
+        <h2><a href="#prop">Свойства и методы формы</a></h2>
+        <ul>
+            <li><a href="#nav">Навигация: формы и элементы</a></li>
+            <li><a href="#revers">Обратная ссылка: element.form</a></li>
+            <li><a href="#elements">Элементы формы</a></li>
+            <li><a href="#links">Ссылки</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="prop">
+        <h2><a href="https://learn.javascript.ru/form-elements">Свойства и методы формы</a></h2>
+        <p>Рассматривается работа с формами из javascript.</p>
+    </div>
+    <div class="topic" id="nav">
+        <h3>Навигация: формы и элементы</h3>
+        <p>Формы в документе входят в специальную коллекцию document.forms.</p>
+        <pre><code class="language-js">
+document.forms.my - форма с именем "my" (name="my")
+document.forms[0] - первая форма в документе        
+    </code></pre>
+        <p>Когда получена форма любой эдемент доступен в виде коллекиии <code>perem.elements.*</code></p>
+        <form name="my">
+            <input name="one" value="1">
+            <input name="two" value="2">
+        </form>
 
+        <script>
+            // получаем форму
+            let form = document.forms.my; // <form name="my"> element
 
+            // получаем элемент
+            let elem = form.elements.one; // <input name="one"> element
 
+            function onclick() {
+                alert(elem.value); // 1
+            }
+            my.addEventListener('click', onclick)
+        </script>
+        <pre><code class="language-js">
+        &lt;form name="my">
+            &lt;input name="one" value="1">
+            &lt;input name="two" value="2">
+        &lt;/form>
 
+        &lt;script>
+            // получаем форму
+            let form = document.forms.my; // &lt;form name="my"> element
 
+            // получаем элемент
+            let elem = form.elements.one; // &lt;input name="one"> element
 
+            function onclick() {
+                alert(elem.value); // 1
+            }
+            my.addEventListener('click', onclick)
+        &lt;/script>
+        </code></pre>
+        <p>Может быть несколько элементов с одним и тем же именем, это часто бывает с кнопками-переключателями radio.
+        </p>
 
+        <p>В этом случае form.elements[name] является коллекцией, например:</p>
+        <pre><code class="language-js">
+&lt;form>
+  &lt;input type="radio" name="age" value="10">
+  &lt;input type="radio" name="age" value="20">
+&lt;/form>
+
+&lt;script>
+let form = document.forms[0];
+
+let ageElems = form.elements.age;
+
+alert(ageElems[0]); // [object HTMLInputElement]
+&lt;/script>            
+        </code></pre>
+        <p>Все элементы управления формы, как бы глубоко они не находились в форме, доступны в коллекции form.elements.
+        </p>
+        <blockquote>
+            <h4><code>&lt;fieldset></code> как «подформа»</h4>
+
+            <p>Форма может содержать один или несколько элементов
+                &lt;fieldset> внутри себя. Они также поддерживают свойство elements, в котором находятся элементы
+                управления внутри
+                них.</p>
+            <pre><code class="language-js">
+  &lt;form id="form">
+    &lt;fieldset name="userFields">
+      &lt;legend>info&lt;/legend>
+      &lt;input name="login" type="text">
+    &lt;/fieldset>
+  &lt;/form>
+
+  &lt;script>
+    alert(form.elements.login); // &lt;input name="login">
+
+    let fieldset = form.elements.userFields;
+    alert(fieldset); // HTMLFieldSetElement
+
+    // мы можем достать элемент по имени как из формы, так и из fieldset с ним
+    alert(fieldset.elements.login == form.elements.login); // true
+  &lt;/script>
+
+</code></pre>
+        </blockquote>
+        <blockquote>
+            <h4>Сокращённая форма записи: form.name</h4>
+            Но по факту с подводными камнями:
+            <pre><code class="language-js">
+&lt;form id="form">
+  &lt;input name="login">
+&lt;/form>
+
+&lt;script>
+  alert(form.elements.login == form.login); // true, ведь это одинаковые <input>
+
+  form.login.name = "username"; // изменяем свойство name у элемента input
+
+  // form.elements обновили свои имена:
+  alert(form.elements.login); // undefined
+  alert(form.elements.username); // input
+
+  // а в form мы можем использовать оба имени: новое и старое
+  alert(form.username == form.login); // true
+&lt;/script>            
+        </code></pre>
+        </blockquote>
+    </div>
+    <div class="topic" id="revers">
+        <h3>Обратная ссылка: element.form</h3>
+        <p>По сути элементы формы являются двусвязанным списком и каждый ссылается ещё на родительский элемент:</p>
+        <pre><code class="language-js">
+&lt;form id="form">
+  &lt;input type="text" name="login">
+&lt;/form>
+
+&lt;script>
+  // form -> element
+  let login = form.login;
+
+  // element -> form
+  alert(login.form); // HTMLFormElement
+&lt;/script>            
+        </code></pre>
+    </div>
+    <div class="topic" id="elements">
+        <h3>Элементы формы</h3>
+        <div id="inputandtextarea">
+            <h4>input и textarea</h4>
+            <pre><code class="language-js">
+input.value = "Новое значение";
+textarea.value = "Новый текст";
+
+input.checked = true; // для чекбоксов и переключателей        
+    </code></pre>
+            <blockquote>
+                <h4>Используйте textarea.value вместо textarea.innerHTML</h4>
+                <p>Там хранится только тот HTML, который был изначально на странице, а не текущее значение.</p>
+            </blockquote>
+        </div>
+        <div id="selectandoption">
+            <h4>select и option</h4>
+            <p>Элемент &lt;select> имеет 3 важных свойства:
+
+            </p>
+            <ol>
+                <li>select.options – коллекция из подэлементов &lt;option>,</li>
+                <li>select.value – значение выбранного в данный момент &lt;option>,</li>
+                <li>select.selectedIndex – номер выбранного &lt;option>. </li>
+            </ol>
+            <p>&lt;select> позволяет выбирать несколько позиций если стоит атрибут <code>multiple</code>:</p>
+            <pre><code class="language-js">
+&lt;select id="select" multiple>
+  &lt;option value="blues" selected>Блюз&lt;/option>
+  &lt;option value="rock" selected>Рок&lt;/option>
+  &lt;option value="classic">Классика&lt;/option>
+&lt;/select>
+
+&lt;script>
+  // получаем все выбранные значения из select с multiple
+  let selected = Array.from(select.options)
+    .filter(option => option.selected)
+    .map(option => option.value);
+
+  alert(selected); // blues,rock
+&lt;/script>    
+</code></pre>
+            <p>Полное описание доступно в <a
+                    href="https://html.spec.whatwg.org/multipage/forms.html#the-select-element.">спецификации</a>.</p>
+        </div>
+        <div id="newOption">
+            <h4>new Option</h4>
+            <p>красивый короткий синтаксис для создания элемента &lt;option>:</p>
+            <pre><code class="language-js">
+option = new Option(text, value, defaultSelected, selected);                
+            </code></pre>
+            <p>где:</p>
+            <ul>
+                <li>text – текст внутри &lt;option>,</li>
+                <li>value – значение,</li>
+                <li>defaultSelected – если true, то ставится HTML-атрибут selected,</li>
+                <li>selected – если true, то элемент &lt;option> будет выбранным. </li>
+            </ul>
+            <p>Элементы &lt;option> имеют свойства:</p>
+            <ul>
+                <li><code>option.selected</code>
+                    Выбрана ли опция.</li>
+                <li><code>option.index</code>
+                    Номер опции среди других в списке &lt;select>.</li>
+                <li><code>option.value</code>
+                    Значение опции.</li>
+                <li><code>option.text</code>
+                    Содержимое опции (то, что видит посетитель). </li>
+            </ul>
+            Таким образом свойства select можно полность создавать из javascript и получать выбранные значения в них
+            пользователем.
+        </div>
+    </div>
+    <div class="topic" id="links">
+        <h3>Ссылки</h3>
+        <p><a href="https://html.spec.whatwg.org/multipage/forms.html">Спецификация</a>.</p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Свойства для навигации по формам:</p>
+
+        <p><code>document.forms</code>
+            Форма доступна через <code>document.forms[name/index]</code>.</p>
+        <p><code>form.elements</code>
+            Элементы формы доступны через <code>form.elements[name/index]</code>, или можно просто использовать
+            <code>form[name/index]. </code>Свойство elements также работает для &lt;fieldset>.
+        </p>
+        <p><code>element.form</code>
+            Элементы хранят ссылку на свою форму в свойстве form.</p>
+        <p>Значения элементов формы доступны через <code>input.value, textarea.value, select.value</code> и т.д. либо
+            <code>input.checked</code> для чекбоксов и переключателей.
+        </p>
+
+        Для элемента &lt;select> мы также можем получить индекс выбранного пункта через
+        <code>select.selectedIndex</code>, либо используя коллекцию пунктов <code>select.options</code>.
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <select id="genres">
+            <option value="rock">Рок</option>
+            <option value="blues" selected>Блюз</option>
+        </select>
+        <script>
+            function getSelected(elem) {
+                for (let op of elem) if (op.selected) alert(`${op.value} ${op.text}`)
+            }
+            function makeOption(elem, value, text) {
+                let op = new Option(text, value);
+                elem.append(op)
+            }
+            function makeSelection(elem, value) {
+                for (let op of elem) {
+                    if (op.value != value) op.selected = false;
+                    else op.selected = true;
+                }
+
+            }
+            function makeAllTogether(elem, value, text) {
+                getSelected(elem);
+                makeOption(elem, value, text);
+                makeSelection(elem, value);
+                getSelected(elem);
+            }   
+            genres.addEventListener('dblclick', ()=> makeAllTogether(genres, 'classic', 'Классика'))
+        </script>
+        <p>Обработчик повещен на двойной клик по элементу.</p>
+    </div>
 
 
 
@@ -43,4 +298,5 @@
 
 
 </body>
+
 </html>
