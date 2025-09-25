@@ -12,24 +12,248 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#focus">Фокусировка: focus/blur</a></h2>
-    <ul>
-        <li><a href="#happen">События focus/blur</a></li>
-        <li><a href="#method">Методы focus/blur</a></li>
-        <li><a href="#on">Включаем фокусировку на любом элементе: tabindex</a></li>
-        <li><a href="#in">События focusin/focusout</a></li>
-        <li><a href="#total">Итого</a></li>
-        <li><a href="#tasks">Задачи</a></li>
-    </ul>
+    <div class="contents">
+        <h2><a href="#focus">Фокусировка: focus/blur</a></h2>
+        <ul>
+            <li><a href="#happen">События focus/blur</a></li>
+            <li><a href="#method">Методы focus/blur</a></li>
+            <li><a href="#on">Включаем фокусировку на любом элементе: tabindex</a></li>
+            <li><a href="#in">События focusin/focusout</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="focus">
+        <h2><a href="https://learn.javascript.ru/focus-blur">Фокусировка: focus/blur</a></h2>
+        <p>Используется для валидации данных в момент получения и потери фокуса.</p>
+        <p>Имеется атрибут <code>autofocus</code> а так же возможность запрещать и устанавливать фокус средствами html.
+        </p>
+    </div>
+    <div class="topic" id="happen">
+        <h3>События focus/blur</h3>
+        <p>Событие focus вызывается в момент фокусировки, а blur – когда элемент теряет фокус. Например:</p>
+        <pre><code class="language-js">
+&lt;style>
+  .invalid { border-color: red; }
+  #error { color: red }
+&lt;/style>
+
+Ваш email: &lt;input type="email" id="input">
+
+&lt;div id="error">&lt;/div>
+
+&lt;script>
+input.onblur = function() {
+  if (!input.value.includes('@')) { // не email
+    input.classList.add('invalid');
+    error.innerHTML = 'Пожалуйста, введите правильный email.'
+  }
+};
+
+input.onfocus = function() {
+  if (this.classList.contains('invalid')) {
+    // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
+    this.classList.remove('invalid');
+    error.innerHTML = "";
+  }
+};
+&lt;/script>        
+    </code></pre>
+        <style>
+            .invalid {
+                border-color: red;
+            }
+
+            #error {
+                color: red
+            }
+        </style>
+
+        Ваш email: <input type="email" id="input">
+
+        <div id="error"></div>
+
+        <script>
+            input.onblur = function () {
+                if (!input.value.includes('@')) { // не email
+                    input.classList.add('invalid');
+                    error.innerHTML = 'Пожалуйста, введите правильный email.'
+                }
+            };
+
+            input.onfocus = function () {
+                if (this.classList.contains('invalid')) {
+                    // удаляем индикатор ошибки, т.к. пользователь хочет ввести данные заново
+                    this.classList.remove('invalid');
+                    error.innerHTML = "";
+                }
+            };
+        </script>
+        <p>Надо заметить, что современный HTML позволяет делать валидацию с помощью атрибутов required, pattern и т.д.
+        </p>
+    </div>
+    <div class="topic" id="method">
+        <h3>Методы focus/blur</h3>
+        <p>Методы elem.focus() и elem.blur() устанавливают/снимают фокус. Например:</p>
+        <pre><code class="language-js">
+&lt;style>
+  .error {
+    background: red;
+  }
+&lt;/style>
+
+Ваш email: &lt;input type="email" id="input">
+&lt;input type="text" style="width:280px" placeholder="введите неверный email и кликните сюда">
+
+&lt;script>
+  input.onblur = function() {
+    if (!this.value.includes('@')) { // не email
+      // показать ошибку
+      this.classList.add("error");
+      // ...и вернуть фокус обратно
+      input.focus();
+    } else {
+      this.classList.remove("error");
+    }
+  };
+&lt;/script>        
+    </code></pre>
+        <style>
+            .error {
+                background: red;
+            }
+        </style>
+
+        Ваш email: <input type="email" id="input1">
+        <input type="text" style="width:280px" placeholder="введите неверный email и кликните сюда">
+
+        <script>
+            input1.onblur = function () {
+                if (!this.value.includes('@')) { // не email
+                    // показать ошибку
+                    this.classList.add("error");
+                    // ...и вернуть фокус обратно
+                    input1.focus();
+                } else {
+                    this.classList.remove("error");
+                }
+            };
+        </script>
+        <p>То есть тут js не даёт переключится на другую форму, если в первой форме ошибки.</p>
+        <p>Так же надо иметь в виду, что подобное поведение может быть нежелательным из-за потери фокуса в форме не
+            из-за пользователя. <br>И возможно стоит дать пользователю заполнить форму целиком, а потом вернуться к
+            ошибкам.</p>
+    </div>
+    <div class="topic" id="on">
+        <h3>Включаем фокусировку на любом элементе: tabindex</h3>
+        <p>Ряд элементов поддерживает фокусировку, ряд не поддерживает. Однако можно включить возможность фокусировки
+            при помощи <code>tabindex</code> который имеет значения :</p>
+        <ul>
+            <li><code>tabindex="0"</code> ставит элемент в один ряд с элементами без <code>tabindex</code>. То есть, при
+                переключении такие элементы будут после элементов с <code>tabindex ≥ 1</code>.</li>
+
+            Обычно используется, чтобы включить фокусировку на элементе, но не менять порядок переключения. Чтобы
+            элемент мог участвовать в форме наравне с обычными &lt;input>.
+
+            <li><code>tabindex="-1"</code> позволяет фокусироваться на элементе только программно. Клавиша Tab
+                проигнорирует такой элемент, но метод <code>elem.focus()</code> будет действовать.</li>
+        </ul>
+        <p>Порядок такой: 1 - 2 - 0.</p>
+        <blockquote>
+            <h4>Свойство elem.tabIndex тоже работает</h4>
+            Мы можем добавить tabindex из JavaScript, используя свойство elem.tabIndex. Это даст тот же эффект.
+        </blockquote>
+    </div>
+    <div class="topic" id="in">
+        <h3>События focusin/focusout</h3>
+        <p>События focus и blur не всплывают. У этой проблемы два решения.
+            Первое: забавная особенность – <code>focus/blur</code> не всплывают, но передаются вниз на фазе перехвата.
+
+        </p>
+        <pre><code class="language-js">
+&lt;form id="form">
+  &lt;input type="text" name="name" value="Имя">
+  &lt;input type="text" name="surname" value="Фамилия">
+&lt;/form>
+
+&lt;style> .focused { outline: 1px solid red; } &lt;/style>
+
+&lt;script>
+  // установить обработчик на фазе перехвата (последний аргумент true)
+  form.addEventListener("focus", () => form.classList.add('focused'), true);
+  form.addEventListener("blur", () => form.classList.remove('focused'), true);
+&lt;/script>    
+</code></pre>
+        <form id="form">
+            <input type="text" name="name" value="Имя">
+            <input type="text" name="surname" value="Фамилия">
+        </form>
+
+        <style>
+            .focused {
+                outline: 1px solid red;
+            }
+        </style>
+
+        <script>
+            // установить обработчик на фазе перехвата (последний аргумент true)
+            form.addEventListener("focus", () => form.classList.add('focused'), true);
+            form.addEventListener("blur", () => form.classList.remove('focused'), true);
+        </script>
+        <p>Второе решение: события focusin и focusout – такие же, как и focus/blur, но они всплывают.</p>
+
+        <p>Заметьте, что эти события должны использоваться с elem.addEventListener, но не с on&lt;event>.</p>
+        <pre><code class="language-js">
+&lt;form id="form">
+  &lt;input type="text" name="name" value="Имя">
+  &lt;input type="text" name="surname" value="Фамилия">
+&lt;/form>
+
+&lt;style> .focused { outline: 1px solid red; } &lt;/style>
+
+&lt;script>
+  form.addEventListener("focusin", () => form.classList.add('focused'));
+  form.addEventListener("focusout", () => form.classList.remove('focused'));
+&lt;/script>    
+</code></pre>
+        <form id="form1">
+            <input type="text" name="name" value="Имя">
+            <input type="text" name="surname" value="Фамилия">
+        </form>
+
+        <style>
+            .focused {
+                outline: 1px solid red;
+            }
+        </style>
+
+        <script>
+            form1.addEventListener("focusin", () => form1.classList.add('focused'));
+            form1.addEventListener("focusout", () => form1.classList.remove('focused'));
+        </script>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>События <code>focus</code> и <code>blur</code> срабатывают на фокусировке/потере фокуса элемента.
+
+        </p>
+        <ul>
+            <li>Они не всплывают. Но можно использовать фазу перехвата или <code>focusin/focusout</code>.</li>
+            <li>Большинство элементов не поддерживают фокусировку по умолчанию. Используйте <code>tabindex</code>, чтобы
+                сделать фокусируемым любой элемент. </li>
+        </ul>
+        <p>Текущий элемент с фокусом можно получить из <code>document.activeElement</code>.
+
+        </p>
+    </div>
+<div class="topic" id="tasks">
+    <h3>Задачи</h3>
+    <div id="task1">
+        <h4>Задача 1</h4>
+        <p>В целом решена, желания вылизывать нет.</p>
+        <iframe src="focusTask/task1.html" frameborder="0"></iframe>
+    </div>
 </div>
-
-
-
-
-
-
-
 
 
 
