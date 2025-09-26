@@ -39,8 +39,93 @@
         <p>Для других элемментов типа <code>select, input type=checkbox, radio</code> событие срабатывает сразу после
             изменения значения.</p>
     </div>
+    <div class="topic" id="input">
+        <h3>Событие: input</h3>
+        <p>Срабатывает на каждое изменение, лучший способ отследить каждое изменение:</p>
+        <pre><code class="language-js">
+&lt;input type="text" id="input"> oninput: &lt;span id="result">&lt;/span>
+&lt;script>
+  input.oninput = function() {
+    result.innerHTML = input.value;
+  };
+&lt;/script>            
+        </code></pre>
+        <input type="text" id="input1"> oninput: <span id="result"></span>
+        <script>
+            input1.oninput = function () {
+                result.innerHTML = input1.value;
+            };
+        </script>
+        <blockquote>
+            <h4>Нельзя ничего предотвратить в <code>oninput</code></h4>
+            <p>Событие <code>input</code> происходит после изменения значения.</p>
 
+            <p>Поэтому мы не можем использовать <code>event.preventDefault()</code> там – будет уже слишком поздно,
+                никакого эффекта
+                не будет.</p>
+        </blockquote>
+    </div>
+    <div class="topic" id="cut">
+        <h3>События: cut, copy, paste</h3>
+        <p>Эти события происходят при вырезании/копировании/вставке данных.</p>
 
+        <p>Они относятся к классу <a
+                href="https://www.w3.org/TR/clipboard-apis/#clipboard-event-interfaces">ClipboardEvent</a> и
+            обеспечивают доступ к копируемым/вставляемым данным.</p>
+
+        <p>Мы также можем использовать <code>event.preventDefault()</code> для предотвращения действия по умолчанию, и в
+            итоге ничего
+            не скопируется/не вставится. </p>
+        <p>В качестве примера, скрипт который запрещает вставлять и копировать и показывает тип event'a с тем что
+            скопировано вставлено:</p>
+        <pre><code class="language-js">
+&lt;input type="text" id="input">
+&lt;script>
+  input.oncut = input.oncopy = input.onpaste = function(event) {
+    alert(event.type + ' - ' + event.clipboardData.getData('text/plain'));
+    return false;
+  };
+&lt;/script>                
+            </code></pre>
+        <input type="text" id="input2">
+        <script>
+            input2.oncut = input2.oncopy = input2.onpaste = function (event) {
+                alert(event.type + ' - ' + event.clipboardData.getData('text/plain'));
+                return false;
+            };
+        </script>
+        <a href="https://www.w3.org/TR/clipboard-apis/#dfn-datatransfer">Спецификация на работу с буфером.</a>
+        <p>Браузеры могут запрещать с ним работать или разрешать только на специфические event'ы.</p>
+    </div>
+<div class="topic" id="total">
+    <h3>Итого</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Событие</th>
+                <th>Описание</th>
+                <th>Особенности</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>change</code></td>
+                <td>	Значение было изменено.</td>
+                <td>	Для текстовых полей срабатывает при потере фокуса.</td>
+            </tr>
+            <tr>
+                <td><code>input</code></td>
+                <td>Срабатывает при каждом изменении значения.</td>
+                <td>Запускается немедленно, в отличие от <code>change</code>.</td>
+            </tr>
+            <tr>
+                <td><code>cut/copy/paste</code></td>
+                <td>	Действия по вырезанию/копированию/вставке.</td>
+                <td>Действие можно предотвратить. Свойство <code>event.clipboardData</code> предоставляет доступ на чтение/запись в буфер обмена…</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 
 </html>
