@@ -12,19 +12,35 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#events">События: change, input, cut, copy, paste</a></h2>
-    <ul>
-        <li><a href="#change">Событие: change</a></li>
-        <li><a href="#input">Событие: input</a></li>
-        <li><a href="#cut">События: cut, copy, paste</a></li>
-        <li><a href="#total">Итого</a></li>
-        <li><a href="#tasks">Задача</a></li>
-    </ul>
-</div>
-
-
+    <div class="contents">
+        <h2><a href="#events">События: change, input, cut, copy, paste</a></h2>
+        <ul>
+            <li><a href="#change">Событие: change</a></li>
+            <li><a href="#input">Событие: input</a></li>
+            <li><a href="#cut">События: cut, copy, paste</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="events">
+        <h2><a href="https://learn.javascript.ru/events-change-input">События: change, input, cut, copy, paste</a></h2>
+        <p>Рассмотрение соотвествующих событий.</p>
+    </div>
+    <div class="topic" id="change">
+        <h3>Событие: change</h3>
+        <p>Срабатывает по окончатнию измнения документа, для полей ввода типа <code>&lt;input&gt;</code> означает потерю
+            фокуса:</p>
+        <pre><code class="language-js">
+&lt;input type="text" onchange="alert(this.value)">
+&lt;input type="button" value="Button">        
+    </code></pre>
+        <input type="text" onchange="alert(this.value)">
+        <input type="button" value="Button">
+        <p>Для других элемментов типа <code>select, input type=checkbox, radio</code> событие срабатывает сразу после
+            изменения значения.</p>
+    </div>
 
 
 </body>
+
 </html>
