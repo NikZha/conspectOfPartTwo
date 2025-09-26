@@ -97,35 +97,116 @@
         <a href="https://www.w3.org/TR/clipboard-apis/#dfn-datatransfer">Спецификация на работу с буфером.</a>
         <p>Браузеры могут запрещать с ним работать или разрешать только на специфические event'ы.</p>
     </div>
-<div class="topic" id="total">
-    <h3>Итого</h3>
-    <table>
-        <thead>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Событие</th>
+                    <th>Описание</th>
+                    <th>Особенности</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>change</code></td>
+                    <td> Значение было изменено.</td>
+                    <td> Для текстовых полей срабатывает при потере фокуса.</td>
+                </tr>
+                <tr>
+                    <td><code>input</code></td>
+                    <td>Срабатывает при каждом изменении значения.</td>
+                    <td>Запускается немедленно, в отличие от <code>change</code>.</td>
+                </tr>
+                <tr>
+                    <td><code>cut/copy/paste</code></td>
+                    <td> Действия по вырезанию/копированию/вставке.</td>
+                    <td>Действие можно предотвратить. Свойство <code>event.clipboardData</code> предоставляет доступ на
+                        чтение/запись в буфер обмена…</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <style>
+            td select,
+            td input {
+                width: 150px;
+            }
+
+            #diagram td {
+                vertical-align: bottom;
+                text-align: center;
+                padding: 10px;
+            }
+
+            #diagram div {
+                margin: auto;
+            }
+        </style>
+        Депозитный калькулятор.
+
+        <form name="calculator">
+            <table>
+                <tr>
+                    <td>Первоначальный депозит</td>
+                    <td>
+                        <input name="money" type="number" value="10000" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Срок вклада?</td>
+                    <td>
+                        <select name="months">
+                            <option value="3">3 (минимум)</option>
+                            <option value="6">6 (полгода)</option>
+                            <option value="12" selected>12 (год)</option>
+                            <option value="18">18 (1.5 года)</option>
+                            <option value="24">24 (2 года)</option>
+                            <option value="30">30 (2.5 года)</option>
+                            <option value="36">36 (3 года)</option>
+                            <option value="60">60 (5 лет)</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Годовая процентная ставка?</td>
+                    <td>
+                        <input name="interest" type="number" value="5" required>
+                    </td>
+                </tr>
+            </table>
+
+
+        </form>
+
+
+        <table id="diagram">
             <tr>
-                <th>Событие</th>
-                <th>Описание</th>
-                <th>Особенности</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><code>change</code></td>
-                <td>	Значение было изменено.</td>
-                <td>	Для текстовых полей срабатывает при потере фокуса.</td>
+                <th>Было:</th>
+                <th>Станет:</th>
             </tr>
             <tr>
-                <td><code>input</code></td>
-                <td>Срабатывает при каждом изменении значения.</td>
-                <td>Запускается немедленно, в отличие от <code>change</code>.</td>
+                <th id="money-before"></th>
+                <th id="money-after"></th>
             </tr>
-            <tr>
-                <td><code>cut/copy/paste</code></td>
-                <td>	Действия по вырезанию/копированию/вставке.</td>
-                <td>Действие можно предотвратить. Свойство <code>event.clipboardData</code> предоставляет доступ на чтение/запись в буфер обмена…</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            <td>
+                <div style="background: red;width:40px;height:100px"></div>
+            </td>
+            <td>
+                <div style="background: green;width:40px;height:0" id="height-after"></div>
+            </td>
+        </table>
+
+        <script>
+
+            let form = document.forms.calculator;
+
+            // ваш код
+        </script>
+
+    </div>
 </body>
 
 </html>
