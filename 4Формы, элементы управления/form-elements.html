@@ -71,10 +71,10 @@ document.forms[0] - первая форма в документе
             my.addEventListener('click', onclick)
         &lt;/script>
         </code></pre>
-        <p>Может быть несколько элементов с одним и тем же именем, это часто бывает с кнопками-переключателями radio.
+        <p>Может быть несколько элементов с одним и тем же именем, это часто бывает с кнопками-переключателями <code>radio</code>.
         </p>
 
-        <p>В этом случае form.elements[name] является коллекцией, например:</p>
+        <p>В этом случае <code>form.elements[name]</code> является коллекцией, например:</p>
         <pre><code class="language-js">
 &lt;form>
   &lt;input type="radio" name="age" value="10">
@@ -89,13 +89,13 @@ let ageElems = form.elements.age;
 alert(ageElems[0]); // [object HTMLInputElement]
 &lt;/script>            
         </code></pre>
-        <p>Все элементы управления формы, как бы глубоко они не находились в форме, доступны в коллекции form.elements.
+        <p>Все элементы управления формы, как бы глубоко они не находились в форме, доступны в коллекции <code>form.elements</code>.
         </p>
         <blockquote>
             <h4><code>&lt;fieldset></code> как «подформа»</h4>
 
             <p>Форма может содержать один или несколько элементов
-                &lt;fieldset> внутри себя. Они также поддерживают свойство elements, в котором находятся элементы
+                <code>&lt;fieldset></code> внутри себя. Они также поддерживают свойство <code>elements</code>, в котором находятся элементы
                 управления внутри
                 них.</p>
             <pre><code class="language-js">
@@ -119,7 +119,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
 </code></pre>
         </blockquote>
         <blockquote>
-            <h4>Сокращённая форма записи: form.name</h4>
+            <h4>Сокращённая форма записи: <code>form.name</code></h4>
             Но по факту с подводными камнями:
             <pre><code class="language-js">
 &lt;form id="form">
@@ -142,7 +142,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
         </blockquote>
     </div>
     <div class="topic" id="revers">
-        <h3>Обратная ссылка: element.form</h3>
+        <h3>Обратная ссылка: <code>element.form</code></h3>
         <p>По сути элементы формы являются двусвязанным списком и каждый ссылается ещё на родительский элемент:</p>
         <pre><code class="language-js">
 &lt;form id="form">
@@ -161,7 +161,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
     <div class="topic" id="elements">
         <h3>Элементы формы</h3>
         <div id="inputandtextarea">
-            <h4>input и textarea</h4>
+            <h4><code>input</code> и <code>textarea</code></h4>
             <pre><code class="language-js">
 input.value = "Новое значение";
 textarea.value = "Новый текст";
@@ -169,7 +169,7 @@ textarea.value = "Новый текст";
 input.checked = true; // для чекбоксов и переключателей        
     </code></pre>
             <blockquote>
-                <h4>Используйте textarea.value вместо textarea.innerHTML</h4>
+                <h4>Используйте <code>textarea.value</code> вместо <code>textarea.innerHTML</code></h4>
                 <p>Там хранится только тот HTML, который был изначально на странице, а не текущее значение.</p>
             </blockquote>
         </div>
@@ -179,11 +179,11 @@ input.checked = true; // для чекбоксов и переключателе
 
             </p>
             <ol>
-                <li>select.options – коллекция из подэлементов &lt;option>,</li>
-                <li>select.value – значение выбранного в данный момент &lt;option>,</li>
-                <li>select.selectedIndex – номер выбранного &lt;option>. </li>
+                <li><code>select.options</code> – коллекция из подэлементов <code>&lt;option></code>,</li>
+                <li><code>select.value</code> – значение выбранного в данный момент <code>&lt;option></code>,</li>
+                <li><code>select.selectedIndex</code> – номер выбранного <code>&lt;option></code>. </li>
             </ol>
-            <p>&lt;select> позволяет выбирать несколько позиций если стоит атрибут <code>multiple</code>:</p>
+            <p><code>&lt;select></code> позволяет выбирать несколько позиций если стоит атрибут <code>multiple</code>:</p>
             <pre><code class="language-js">
 &lt;select id="select" multiple>
   &lt;option value="blues" selected>Блюз&lt;/option>
@@ -205,18 +205,18 @@ input.checked = true; // для чекбоксов и переключателе
         </div>
         <div id="newOption">
             <h4>new Option</h4>
-            <p>красивый короткий синтаксис для создания элемента &lt;option>:</p>
+            <p>красивый короткий синтаксис для создания элемента <code>&lt;option></code>:</p>
             <pre><code class="language-js">
 option = new Option(text, value, defaultSelected, selected);                
             </code></pre>
             <p>где:</p>
             <ul>
-                <li>text – текст внутри &lt;option>,</li>
-                <li>value – значение,</li>
-                <li>defaultSelected – если true, то ставится HTML-атрибут selected,</li>
-                <li>selected – если true, то элемент &lt;option> будет выбранным. </li>
+                <li><code>text</code> – текст внутри <code>&lt;option></code>,</li>
+                <li><code>value</code> – значение,</li>
+                <li><code>defaultSelected</code> – если true, то ставится HTML-атрибут <code>selected</code>,</li>
+                <li><code>selected</code> – если true, то элемент <code>&lt;option></code> будет выбранным. </li>
             </ul>
-            <p>Элементы &lt;option> имеют свойства:</p>
+            <p>Элементы <code>&lt;option></code> имеют свойства:</p>
             <ul>
                 <li><code>option.selected</code>
                     Выбрана ли опция.</li>
@@ -227,7 +227,7 @@ option = new Option(text, value, defaultSelected, selected);
                 <li><code>option.text</code>
                     Содержимое опции (то, что видит посетитель). </li>
             </ul>
-            Таким образом свойства select можно полность создавать из javascript и получать выбранные значения в них
+            Таким образом свойства <code>select</code> можно полность создавать из javascript и получать выбранные значения в них
             пользователем.
         </div>
     </div>
@@ -251,7 +251,7 @@ option = new Option(text, value, defaultSelected, selected);
             <code>input.checked</code> для чекбоксов и переключателей.
         </p>
 
-        Для элемента &lt;select> мы также можем получить индекс выбранного пункта через
+        Для элемента <code>&lt;select></code> мы также можем получить индекс выбранного пункта через
         <code>select.selectedIndex</code>, либо используя коллекцию пунктов <code>select.options</code>.
     </div>
     <div class="topic" id="tasks">
@@ -296,7 +296,7 @@ option = new Option(text, value, defaultSelected, selected);
 
 
 
-
+<script src="../scripts.js"></script>
 </body>
 
 </html>
