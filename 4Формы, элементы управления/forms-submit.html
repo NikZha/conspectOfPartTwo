@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отправка формы: событие и метод submit</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+    <div class="contents">
+        <h2><a href="#submit">Отправка формы: событие и метод submit</a></h2>
+        <ul>
+            <li><a href="#event">Событие: submit</a></li>
+            <li><a href="#method">Метод: submit</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="submit">
+        <h2><a href="https://learn.javascript.ru/forms-submit">Отправка формы: событие и метод submit</a></h2>
+        <p>При отправке формы срабатывает событие <code>submit</code>. Которое можно использовать для валидации данных
+            отправляемых пользователем. Отправить форму можно при помощи <code>form.submit()</code>.</p>
+    </div>
+    <div class="topic" id="event">
+        <h3>Событие: submit</h3>
+        <p>Два основных способа отправить форму:</p>
+        <ul>
+            <li>Нажать на кнопку <code>&lt;input type="submit"></code> или <code>&lt;input type="image"></code></li>
+            <li>Нажать кнопку Enter в любом поле формы.</li>
+        </ul>
+        <p>Оба действия сгенерируют событие submit на форме. Обработчик может проверить данные, и если есть ошибки,
+            показать их и вызвать <code>event.preventDefault()</code>, тогда форма не будет отправлена на сервер.</p>
+        <pre><code class="language-js">
+&lt;form onsubmit="alert('submit!');return false">
+  Первый пример: нажмите Enter: &lt;input type="text" value="Текст">&lt;br>
+  Второй пример: нажмите на кнопку "Отправить": &lt;input type="submit" value="Отправить">
+&lt;/form>                
+            </code></pre>
+        <form onsubmit="alert('submit!');return false">
+            Первый пример: нажмите Enter: <input type="text" value="Текст"><br>
+            Второй пример: нажмите на кнопку "Отправить": <input type="submit" value="Отправить">
+        </form>
+        <p>Оба действия показывают <code>alert</code> и форма не отправится благодаря <code>return false</code>.</p>
+        <blockquote><h4>Взаимосвязь между <code>submit</code> и <code>click</code></h4>
+        <p>Событие <code>submit</code> инициирует событие <code>click</code>. Хотя никакого клика может и не быть.</p></blockquote>
+    </div>
+<div class="topic" id="method">
+    <h3>Метод: submit</h3>
+    <p>Чтобы отправить форму из javascript надо вызвать на ней метод <code>submit()</code>.</p>
+    <pre><code class="language-js">
+let form = document.createElement('form');
+form.action = 'https://google.com/search';
+form.method = 'GET';
+
+form.innerHTML = '&lt;input name="q" value="test">';
+
+// перед отправкой формы, её нужно вставить в документ
+document.body.append(form);
+
+form.submit();        
+    </code></pre>
+</div>
+
+
+
+
+
+
+
+
+    <script src="../scripts.js"></script>
+</body>
+
+</html>
