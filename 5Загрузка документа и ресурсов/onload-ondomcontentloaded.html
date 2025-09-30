@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
 </head>
+
 <body>
     <div class="contents">
         <h2><a href="#loaded">Страница: DOMContentLoaded, load, beforeunload, unload</a></h2>
@@ -22,6 +23,81 @@
             <li><a href="#total">Итого</a></li>
         </ul>
     </div>
+    <div class="topic" id="loaded">
+        <h2><a href="https://learn.javascript.ru/onload-ondomcontentloaded">Страница: DOMContentLoaded, load,
+                beforeunload, unload</a></h2>
+        <p>Жизненный цикл HTML-странички:</p>
+        <ul>
+            <li><code>DOMContentLoaded</code> – браузер полностью загрузил HTML, было построено DOM-дерево, но внешние
+                ресурсы, такие
+                как картинки <code>&lt;img></code> и стили, могут быть ещё не загружены.</li>
+            <li><code>load</code> – браузер загрузил HTML и внешние ресурсы (картинки, стили и т.д.).</li>
+            <li><code>beforeunload/unload</code> – пользователь покидает страницу. </li>
+        </ul>
+        <p>События жизненного цикла:</p>
+        <ul>
+            <li>Событие <code>DOMContentLoaded</code> – DOM готов, так что обработчик может искать DOM-узлы и
+                инициализировать интерфейс.</li>
+            <li>Событие <code>load</code> – внешние ресурсы были загружены, стили применены, размеры картинок известны и
+                т.д.</li>
+            <li>Событие <code>beforeunload</code> – пользователь покидает страницу. Мы можем проверить, сохранил ли он
+                изменения и спросить, на самом ли деле он хочет уйти.</li>
+            <li><code>unload</code> – пользователь почти ушёл, но мы всё ещё можем запустить некоторые операции,
+                например, отправить статистику. </li>
+        </ul>
+    </div>
+    <div class="topic" id="DOMContentLoaded">
+        <h3>DOMContentLoaded
+        </h3>
+        <p>Событие <code>DOMContentLoaded</code> срабатывает на объекте <code>document</code>. Событие вешается через
+            <code>addEventListener</code>.
+        </p>
+        <pre><code class="language-js">
+document.addEventListener("DOMContentLoaded", ready);
+// не "document.onDOMContentLoaded = ..."            
+        </code></pre>
+        <p>Операты внутри скрипта будут запускаться до загрузки кантента и потому могут показывать параметры которые не
+            будут соответствовать загруженному кантенту.</p>
+        <div id="loadedscripts">
+            <h4><a href="https://learn.javascript.ru/onload-ondomcontentloaded#domcontentloaded-i-skripty">DOMContentLoaded
+                    и скрипты</a></h4>
+            <p>Нюанс этого события в том, что сначала срабатывают другие скрипты на страничке, а потом это событие</p>
+            <blockquote>
+                <h5>Скрипты, которые не блокируют DOMContentLoaded</h5>
+                <ol>
+                    <li>Не блокируют <code>async</code> скрипты.</li>
+                    <li>Так же не блокируют скрипты созданные и добавленные на страницу при помощи
+                        <code>document.createElement('script')</code>.
+                    </li>
+                </ol>
+            </blockquote>
+        </div>
+        <div id="styles">
+            <h5><a href="https://learn.javascript.ru/onload-ondomcontentloaded#domcontentloaded-i-stili">DOMContentLoaded
+                    и стили</a></h5>
+            <p>Внешние таблицы стилей не затрагивают DOM, поэтому DOMContentLoaded их не ждёт.</p>
+
+            <p>Но здесь есть подводный камень. Если после стилей у нас есть скрипт, то этот скрипт должен дождаться,
+                пока загрузятся стили.</p>
+        </div>
+        <div id="autocomplet">
+            <h5><a href="https://learn.javascript.ru/onload-ondomcontentloaded#vstroennoe-v-brauzer-avtozapolnenie">Встроенное
+                    в браузер автозаполнение</a></h5>
+            <p>Firefox, Chrome и Opera автоматически заполняют поля при наступлении DOMContentLoaded.</p>
+
+            <p>Например, если на странице есть форма логина и пароля и браузер запомнил значения, то при наступлении
+                DOMContentLoaded он попытается заполнить их (если получил разрешение от пользователя).</p>
+
+            <p>Так что, если DOMContentLoaded откладывается из-за долгой загрузки скриптов, в свою очередь –
+                откладывается автозаполнение. Вы наверняка замечали, что на некоторых сайтах (если вы используете
+                автозаполнение в браузере) поля логина и пароля не заполняются мгновенно, есть некоторая задержка до
+                полной загрузки страницы. Это и есть ожидание события DOMContentLoaded. </p>
+        </div>
+    </div>
+<div class="topic" id="windowonload">
+    <h3><a href="https://learn.javascript.ru/onload-ondomcontentloaded#window-onload">window.onload</a></h3>
+<p>Событие срабатывает только тогда когда страница целиком загружена, если будет задержка в загрузке изображений, то событие будет это ждать.</p>
+</div>
 
 
 
@@ -31,8 +107,7 @@
 
 
 
-
-
-<script src="../scripts.js"></script>
+    <script src="../scripts.js"></script>
 </body>
+
 </html>
