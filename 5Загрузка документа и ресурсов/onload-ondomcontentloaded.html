@@ -132,13 +132,40 @@ window.onbeforeunload = function() {
     </code></pre>
         <p>Так же ранее пользователю можно показать какое-либо сообщение, можно было но мудаки все обосрали и теперь
             этот код не сработает:</p>
-            <pre><code class="language-js">
+        <pre><code class="language-js">
 window.onbeforeunload = function() {
   return "Есть несохранённые изменения. Всё равно уходим?";
 };                
             </code></pre>
     </div>
+    <div class="topic" id="readyState">
+        <h3>readyState</h3>
+        <p>Свойство <code>document.readyState</code> возвращает состояние загрузки документа:</p>
+        <ul>
+            <li><code>"loading"</code> – документ загружается.</li>
+            <li><code>"interactive"</code> – документ был полностью прочитан.</li>
+            <li><code>"complete"</code> – документ был полностью прочитан и все ресурсы (такие как изображения) были
+                тоже загружены.
+            </li>
+        </ul>
+        <p>Использовать предполагается так:</p>
+        <pre><code class="language-js">
+function work() { /*...*/ }
 
+if (document.readyState == 'loading') {
+  // ещё загружается, ждём события
+  document.addEventListener('DOMContentLoaded', work);
+} else {
+  // DOM готов!
+  work();
+}        </code></pre>
+        <p>Также есть событие <code>readystatechange</code>, которое генерируется при изменении состояния:</p>
+        <pre><code class="language-js">
+// вывести изменения состояния
+document.addEventListener('readystatechange', () => console.log(document.readyState));            
+        </code></pre>
+        <p>Результатом работы этого обработчика будет вывод в консоль состояния загрузки документа.</p>
+    </div>
 
 
 
