@@ -94,11 +94,34 @@ document.addEventListener("DOMContentLoaded", ready);
                 полной загрузки страницы. Это и есть ожидание события DOMContentLoaded. </p>
         </div>
     </div>
-<div class="topic" id="windowonload">
-    <h3><a href="https://learn.javascript.ru/onload-ondomcontentloaded#window-onload">window.onload</a></h3>
-<p>Событие срабатывает только тогда когда страница целиком загружена, если будет задержка в загрузке изображений, то событие будет это ждать.</p>
-</div>
+    <div class="topic" id="windowonload">
+        <h3><a href="https://learn.javascript.ru/onload-ondomcontentloaded#window-onload">window.onload</a></h3>
+        <p>Событие срабатывает только тогда когда страница целиком загружена, если будет задержка в загрузке
+            изображений, то событие будет это ждать.</p>
+    </div>
+    <div class="topic" id="windowonunload">
+        <h3>window.onunload</h3>
+        <p>Когда пользователь покидает страничку на объекте <code>window</code> генерируется событие
+            <code>unload</code>. Обычно в этот момент отсылают статистику.
+            Для этого существует специальный метод <code>navigator.sendBeacon(url, data)</code>, описанный в <a
+                href="https://w3c.github.io/beacon/">спецификации</a> Он отсылает данные в фоне не задерживая браузер на
+            страничке. Как пример:
+        </p>
+        <pre><code class="language-js">
+let analyticsData = { /* объект с собранными данными */ };
 
+window.addEventListener("unload", function() {
+  navigator.sendBeacon("/analytics", JSON.stringify(analyticsData));
+});            
+        </code></pre>
+        <ul>
+            <li>Отсылается POST-запрос.</li>
+            <li>Мы можем послать не только строку, но так же формы и другие форматы, как описано в главе Fetch, но
+                обычно это строковый объект.</li>
+            <li>Размер данных ограничен 64 Кб. </li>
+        </ul>
+        <p>Заебать пользователя отменив его переход в этом событии не получится, есть другое событие для этого:</p>
+    </div>
 
 
 
