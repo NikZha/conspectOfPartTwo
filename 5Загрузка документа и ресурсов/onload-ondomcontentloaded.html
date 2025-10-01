@@ -122,7 +122,22 @@ window.addEventListener("unload", function() {
         </ul>
         <p>Заебать пользователя отменив его переход в этом событии не получится, есть другое событие для этого:</p>
     </div>
-
+    <div class="topic" id="onbeforeunload">
+        <h3>window.onbeforeunload</h3>
+        <p>Обработчик <code>beforeunload</code> просит подтверждение перед тем как уйти. Эта хуйня не даёт уйти:</p>
+        <pre><code class="language-js">
+window.onbeforeunload = function() {
+  return false;
+};        
+    </code></pre>
+        <p>Так же ранее пользователю можно показать какое-либо сообщение, можно было но мудаки все обосрали и теперь
+            этот код не сработает:</p>
+            <pre><code class="language-js">
+window.onbeforeunload = function() {
+  return "Есть несохранённые изменения. Всё равно уходим?";
+};                
+            </code></pre>
+    </div>
 
 
 
