@@ -83,6 +83,14 @@ document.body.append(script); // (*)
         <li>Скрипт начнёт загружаться как только будет добавлен на страницу <code>(*)</code></li>
         <li>По умолчанию такой скрипт является <code>async</code></li>
     </ol>
+    <p>Убрать <code>async</code> можно при помощи <code>script.async = false</code>:
+let script = document.createElement('script');
+script.src = "/article/script-async-defer/long.js";
+
+script.async = false;
+
+document.body.append(script);    
+    </p>
 </div>
 
 
