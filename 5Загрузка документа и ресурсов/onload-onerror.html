@@ -32,6 +32,67 @@
     </ol>
     <p>Соотвественно есть два события на которые можно назначить обработчики <code>onload</code> и <code>onerror</code>.</p>
 </div>
+<div class="topic" id="onload">
+    <h3>Загрузка скриптов</h3>
+    <p>При добавлении скрипта:</p>
+    <pre><code class="language-js">
+let script = document.createElement('script');
+script.src = "my.js";
+
+document.head.append(script);        
+    </code></pre>
+    <p>Работать с тем что внутри можно по событию загрузки <code>script.onload=...</code></p>
+    <div id="scriptonload">
+        <h4>script.onload</h4>
+        <p>Например:</p>
+        <pre><input type="button" value="Тест кода" onclick="let script = document.createElement('script');
+
+// мы можем загрузить любой скрипт с любого домена
+script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js'
+document.head.append(script);
+
+script.onload = function() {
+  // в скрипте создаётся вспомогательная переменная с именем '_'
+  alert(_.VERSION); // отображает версию библиотеки
+};">
+            <code class="language-js">
+let script = document.createElement('script');
+
+// мы можем загрузить любой скрипт с любого домена
+script.src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"
+document.head.append(script);
+
+script.onload = function() {
+  // в скрипте создаётся вспомогательная переменная с именем "_"
+  alert(_.VERSION); // отображает версию библиотеки
+};            
+        </code></pre>
+    </div>
+    <div id="scriptonerror">
+        <h4>script.onerror</h4>
+        <p>Обработчик <code>onerror</code>:</p>
+        <pre><input type="button" value="Тест onerror" onclick="let script = document.createElement('script');
+script.src = 'https://example.com/404.js'; // такого файла не существует
+document.head.append(script);
+
+script.onerror = function() {
+  alert('Ошибка загрузки ' + this.src); // Ошибка загрузки https://example.com/404.js
+};">
+            <code class="language-js">
+let script = document.createElement('script');
+script.src = "https://example.com/404.js"; // такого файла не существует
+document.head.append(script);
+
+script.onerror = function() {
+  alert("Ошибка загрузки " + this.src); // Ошибка загрузки https://example.com/404.js
+};
+        </code></pre>
+        <p>Но понять какая ошибка произошла 400, 500 или что-то ещё не возможно.</p>
+        <blockquote><h4>Ошибки в скриптах отслеживаются через <code>window.onerror</code></h4>
+        <code>obj.onerror</code> отслеживает только процесс загрузки.
+        </blockquote>
+    </div>
+</div>
 </body>
 
 </html>
