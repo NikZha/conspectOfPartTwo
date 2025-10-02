@@ -68,30 +68,39 @@
             </code></pre>
         <blockquote>
             <h4>Атрибут <code>async</code> предназначен только для внешних скриптов</h4>
-            Как и в случае с <code>defer</code>, атрибут async будет проигнорирован, если в теге <code>&lt;script></code> нет src.
+            Как и в случае с <code>defer</code>, атрибут async будет проигнорирован, если в теге
+            <code>&lt;script></code> нет src.
         </blockquote>
     </div>
-<div class="topic" id="dynamic">
-    <h3>Динамически загружаемые скрипты</h3>
-    <p>Скрипты можно добавлять на страницу динамически из кода других скриптов:</p>
-    <pre><code class="language-js">
+    <div class="topic" id="dynamic">
+        <h3>Динамически загружаемые скрипты</h3>
+        <p>Скрипты можно добавлять на страницу динамически из кода других скриптов:</p>
+        <pre><code class="language-js">
 let script = document.createElement('script');
 script.src = "/article/script-async-defer/long.js";
 document.body.append(script); // (*)        
     </code></pre>
-    <ol>
-        <li>Скрипт начнёт загружаться как только будет добавлен на страницу <code>(*)</code></li>
-        <li>По умолчанию такой скрипт является <code>async</code></li>
-    </ol>
-    <p>Убрать <code>async</code> можно при помощи <code>script.async = false</code>:
-let script = document.createElement('script');
-script.src = "/article/script-async-defer/long.js";
+        <ol>
+            <li>Скрипт начнёт загружаться как только будет добавлен на страницу <code>(*)</code></li>
+            <li>По умолчанию такой скрипт является <code>async</code></li>
+        </ol>
+        <p>Убрать <code>async</code> можно при помощи <code>script.async = false</code>:
+            let script = document.createElement('script');
+            script.src = "/article/script-async-defer/long.js";
 
-script.async = false;
+            script.async = false;
 
-document.body.append(script);    
-    </p>
-</div>
+            document.body.append(script);
+        </p>
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>На практике <code>defer</code> используется для скриптов, которым требуется доступ ко всему <code>DOM</code>
+            и/или важен их относительный порядок выполнения.</p>
+
+        <p>А <code>async</code> хорош для независимых скриптов, например счётчиков и рекламы, относительный порядок
+            выполнения которых не играет роли.</p>
+    </div>
 
 
 
