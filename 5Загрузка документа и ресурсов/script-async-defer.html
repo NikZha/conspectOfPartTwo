@@ -29,7 +29,7 @@
             <li>Блокируют загрузку контента ниже.</li>
             <li>"Не видят" контент ниже.</li>
         </ol>
-        <p>Это та самая проблема с которой я столкнулся на выходных когда писал скрипт наскрашивающий отдельно стоящие
+        <p>Это та самая проблема с которой я столкнулся на выходных когда писал скрипт раскрашивающий отдельно стоящие
             блоки <code>&lt;code&gt;</code> получая просто странные мистические ошибки. Решением этой проблемы и
             являются астрибуты <code>defer</code> и <code>async</code> в скриптах.</p>
     </div>
@@ -85,12 +85,14 @@ document.body.append(script); // (*)
             <li>По умолчанию такой скрипт является <code>async</code></li>
         </ol>
         <p>Убрать <code>async</code> можно при помощи <code>script.async = false</code>:
+            <pre><code class="lang">
             let script = document.createElement('script');
             script.src = "/article/script-async-defer/long.js";
 
             script.async = false;
 
             document.body.append(script);
+            </code></pre>
         </p>
     </div>
     <div class="topic" id="total">
