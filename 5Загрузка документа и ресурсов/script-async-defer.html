@@ -71,7 +71,19 @@
             Как и в случае с <code>defer</code>, атрибут async будет проигнорирован, если в теге <code>&lt;script></code> нет src.
         </blockquote>
     </div>
-
+<div class="topic" id="dynamic">
+    <h3>Динамически загружаемые скрипты</h3>
+    <p>Скрипты можно добавлять на страницу динамически из кода других скриптов:</p>
+    <pre><code class="language-js">
+let script = document.createElement('script');
+script.src = "/article/script-async-defer/long.js";
+document.body.append(script); // (*)        
+    </code></pre>
+    <ol>
+        <li>Скрипт начнёт загружаться как только будет добавлен на страницу <code>(*)</code></li>
+        <li>По умолчанию такой скрипт является <code>async</code></li>
+    </ol>
+</div>
 
 
 
