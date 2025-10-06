@@ -106,6 +106,40 @@ observer.observe(elem, {
         <h3>Использование для интеграции</h3>
         <p><code>MutationObserver</code> используется для отслеживания изменения DOM сторонними скриптами.</p>
     </div>
+    <div class="topic" id="useforacr">
+        <h3>Использование для архитектуры</h3>
+        <p>Использование присходит методом отслеживания изменения которые возвщает этот класс и изменения нужных тегов.
+        </p>
+        <h4>Пример динамической подсветки синтаксиса</h4>
+        <pre><code class="language-js">
+let observer = new MutationObserver(mutations => {
+
+  for(let mutation of mutations) {
+    // проверим новые узлы, есть ли что-то, что надо подсветить?
+
+    for(let node of mutation.addedNodes) {
+      // отслеживаем только узлы-элементы, другие (текстовые) пропускаем
+      if (!(node instanceof HTMLElement)) continue;
+
+      // проверить, не является ли вставленный элемент примером кода
+      if (node.matches('pre[class*="language-"]')) {
+        Prism.highlightElement(node);
+      }
+
+      // или, может быть, пример кода есть в его поддереве?
+      for(let elem of node.querySelectorAll('pre[class*="language-"]')) {
+        Prism.highlightElement(elem);
+      }
+    }
+  }
+
+});
+
+let demoElem = document.getElementById('highlight-demo');
+
+observer.observe(demoElem, {childList: true, subtree: true});            
+        </code></pre>
+    </div>
 
 
 
