@@ -24,11 +24,84 @@
             <li><a href="#total">Итого</a></li>
         </ul>
     </div>
-<div class="topic" id="MutationObserver">
-    <h2><a href="https://learn.javascript.ru/mutation-observer"><code>MutationObserver</code>: наблюдатель за изменениями</a></h2>
-    <p>Объект-наблюдатель за изменениями в нодах принимающий при создании объекта функцию callback.</p>
-</div>
+    <div class="topic" id="MutationObserver">
+        <h2><a href="https://learn.javascript.ru/mutation-observer"><code>MutationObserver</code>: наблюдатель за
+                изменениями</a></h2>
+        <p>Объект-наблюдатель за изменениями в нодах принимающий при создании объекта функцию callback.</p>
+    </div>
+    <div class="topic" id="syntax">
+        <h3>Синтаксис</h3>
+        <pre><code class="language-js">
+let observer = new MutationObserver(callback);
+observer.observe(node, config);        
+    </code></pre>
+        <p><code>config</code> – это объект с булевыми параметрами «на какие изменения реагировать»:</p>
+        <ul>
+            <li><code>childList</code> – изменения в непосредственных детях <code>node</code>,</li>
+            <li><code>subtree</code> – во всех потомках <code>node</code>,</li>
+            <li><code>attributes</code> – в атрибутах <code>node</code>,</li>
+            <li><code>attributeFilter</code> – массив имён атрибутов, чтобы наблюдать только за выбранными.</li>
+            <li><code>characterData</code> – наблюдать ли за <code>node.data</code> (текстовое содержимое),</li>
+            <li><code>characterDataOldValue</code> – если <code>true</code>, будет передавать и старое, и новое значение
+                <code>node.data</code> в колбэк (см далее), иначе только новое (также требуется опция
+                <code>characterData</code>),
+            </li>
+            <li><code>attributeOldValue</code> – если <code>true</code>, будет передавать и старое, и новое значение
+                атрибута в колбэк (см далее), иначе только новое (также требуется опция <code>attributes</code>). </li>
+        </ul>
+        <p>Затем, после изменений, выполняется <code>callback</code>, в который изменения передаются первым аргументом
+            как список объектов <code>MutationRecord</code>, а сам наблюдатель идёт вторым аргументом. Объект
+            <code>MutationRecord</code> имеет следующие свойства:
+        </p>
+        <ul>
+            <li>type – тип изменения, один из:</li>
+            <ul>
+                <li><code>"attributes"</code> изменён атрибут,</li>
+                <li><code>"characterData"</code> изменены данные <code>elem.data</code>, это для текстовых узлов</li>
+                <li><code>"childList"</code> добавлены/удалены дочерние элементы,</li>
+            </ul>
+            <li><code>target</code> – где произошло изменение: элемент для <code>"attributes"</code> , текстовый узел
+                для <code>"characterData"</code> или элемент для <code>"childList"</code> ,</li>
+            <li><code>addedNodes/removedNodes</code> – добавленные/удалённые узлы,</li>
+            <li><code>previousSibling/nextSibling</code> – предыдущий или следующий одноуровневый элемент для
+                добавленных/удалённых элементов,</li>
+            <li><code>attributeName/attributeNamespace</code> – имя/пространство имён (для XML) изменённого атрибута,
+            </li>
+            <li><code>oldValue</code> – предыдущее значение, только для изменений атрибута или текста, если включена
+                соответствующая опция <code>attributeOldValue/characterDataOldValue</code>.</li>
+        </ul>
+        <p>В качестве примера - изменения, точнее объект, видны в консоли:</p>
+        <pre><code class="language-js">
+&lt;div contentEditable id="elem">Отредактируй &lt;b>меня&lt;/b>, пожалуйста&lt;/div>
 
+&lt;script>
+let observer = new MutationObserver(mutationRecords => {
+  console.log(mutationRecords); // console.log(изменения)
+});
+
+// наблюдать за всем, кроме атрибутов
+observer.observe(elem, {
+  childList: true, // наблюдать за непосредственными детьми
+  subtree: true, // и более глубокими потомками
+  characterDataOldValue: true // передавать старое значение в колбэк
+});
+&lt;/script>            
+        </code></pre>
+        <div contentEditable id="elem">Отредактируй <b>меня</b>, пожалуйста</div>
+
+        <script>
+            let observer = new MutationObserver(mutationRecords => {
+                console.log(mutationRecords); // console.log(изменения)
+            });
+
+            // наблюдать за всем, кроме атрибутов
+            observer.observe(elem, {
+                childList: true, // наблюдать за непосредственными детьми
+                subtree: true, // и более глубокими потомками
+                characterDataOldValue: true // передавать старое значение в колбэк
+            });
+        </script>
+    </div>
 
 
 
