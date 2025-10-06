@@ -140,7 +140,11 @@ let demoElem = document.getElementById('highlight-demo');
 observer.observe(demoElem, {childList: true, subtree: true});            
         </code></pre>
     </div>
-
+    <div class="topic" id="more">
+        <h3>Дополнительные методы</h3>
+        <p><code>observer.disconnect()</code> – останавливает наблюдение.</p>
+        <p><code>mutationRecords = observer.takeRecords()</code> – получает список необработанных записей изменений, которые произошли, но колбэк для них ещё не выполнился.</p>
+    </div>
 
 
 
