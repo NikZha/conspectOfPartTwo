@@ -13,24 +13,92 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#selra">Selection и Range</a></h2>
-    <ul>
-        <li><a href="#Range">Range</a></li>
-        <li><a href="#methods">Методы Range</a></li>
-        <li><a href="#Selection">Selection</a></li>
-        <li><a href="#prop">Свойства Selection</a></li>
-        <li><a href="#events">События при выделении</a></li>
-        <li><a href="#methodsel">Методы Selection</a></li>
-        <li><a href="#alloc">Выделение в элементах форм</a></li>
-        <li><a href="#unalloc">Сделать что-то невыделяемым</a></li>
-        <li><a href="#links">Ссылки</a></li>
-        <li><a href="#total">Итого</a></li>
-    </ul>
-</div>
-
-
-
+    <div class="contents">
+        <h2><a href="#selra">Selection и Range</a></h2>
+        <ul>
+            <li><a href="#Range">Range</a></li>
+            <li><a href="#methods">Методы Range</a></li>
+            <li><a href="#Selection">Selection</a></li>
+            <li><a href="#prop">Свойства Selection</a></li>
+            <li><a href="#events">События при выделении</a></li>
+            <li><a href="#methodsel">Методы Selection</a></li>
+            <li><a href="#alloc">Выделение в элементах форм</a></li>
+            <li><a href="#unalloc">Сделать что-то невыделяемым</a></li>
+            <li><a href="#links">Ссылки</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="selra">
+        <h2><a href="https://learn.javascript.ru/selection-range">Selection и Range</a></h2>
+        <p>Два класса которые позволяют выделять текст в документе.</p>
+    </div>
+    <div class="topic" id="Range">
+        <h3>Range</h3>
+        <p>Создание объекта и установка границ:</p>
+        <pre><code class="language-js">
+let range = new Range();
+range.setStart(node, offset)
+range.setEnd(node, offset)        
+    </code></pre>
+        <p>Пример:</p>
+        <pre><code class="lang">
+        &lt;div id="range1">&lt;span>У&lt;/span> попа была <span>собака&lt;/span>&lt;/div>
+        &lt;script>
+            function selRange(node) {
+                let range = new Range();
+                range.setStart(node, 0)
+                range.setEnd(node, 3)
+                alert(range)       
+        }
+        &lt;/script>
+        &lt;input type="button" value="Выбрать диапазон" onclick="selRange(range1)">            
+        </code></pre>
+        <div id="range1"><span>У</span> попа была <span>собака</span></div>
+        <script>
+            function selRange(node) {
+                let range = new Range();
+                range.setStart(node, 0)
+                range.setEnd(node, 3)
+                alert(range)
+            }
+        </script>
+        <input type="button" value="Выбрать диапазон" onclick="selRange(range1)">
+    </div>
+    <div class="topic" id="methods">
+        <h3><a href="https://learn.javascript.ru/selection-range#metody-range">Методы Range</a></h3>
+        <p>Начало диапазона:</p>
+        <ul>
+            <li><code>setStart(node, offset)</code> установить начальную границу в позицию offset в node</li>
+            <li><code>setStartBefore(node)</code> установить начальную границу прямо перед node</li>
+            <li><code>setStartAfter(node)</code> установить начальную границу прямо после node </li>
+        </ul>
+        <p>Конец диапазона:</p>
+        <ul>
+            <li><code>setEnd(node, offset)</code> установить конечную границу в позицию offset в node</li>
+            <li><code>setEndBefore(node)</code> установить конечную границу прямо перед node</li>
+            <li><code>setEndAfter(node)</code> установить конечную границу прямо после node </li>
+        </ul>
+        <p>Другие:</p>
+        <ul>
+            <li><code>selectNode(node)</code> выделить node целиком</li>
+            <li><code>selectNodeContents(node)</code> выделить всё содержимое node</li>
+            <li><code>collapse(toStart)</code> если указано toStart=true, установить конечную границу в начало, иначе
+                установить начальную границу в конец, схлопывая таким образом диапазон</li>
+            <li><code>cloneRange()</code> создать новый диапазон с идентичными границами </li>
+        </ul>
+        <p>Для манипуляции содержимым:</p>
+        <ul>
+            <li><code>deleteContents()</code> – удалить содержимое диапазона из документа</li>
+            <li><code>extractContents()</code> – удалить содержимое диапазона из документа и вернуть как
+                <code>DocumentFragment</code></li>
+            <li><code>cloneContents()</code> – склонировать содержимое диапазона и вернуть как <code>DocumentFragment</code></li>
+            <li><code>insertNode(node)</code> – вставить node в документ в начале диапазона</li>
+            <li><code>surroundContents(node)</code> – обернуть node вокруг содержимого диапазона. Чтобы этот метод
+                сработал, диапазон должен содержать как открывающие, так и закрывающие теги для всех элементов внутри
+                себя: не допускаются частичные диапазоны по типу &lt;i>abc. </li>
+        </ul>
+        <p>Примеры использования по ссылке. Манипулирование на самом деле гибкое.</p>
+    </div>
 
 
 
