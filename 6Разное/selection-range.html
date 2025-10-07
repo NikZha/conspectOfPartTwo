@@ -127,6 +127,16 @@ range.setEnd(node, offset)
             Мышь и другие методы позволяют выделять, как слева-на-право, так и справа-на-лево.
         </blockquote>
     </div>
+    <div class="topic" id="events">
+        <h3><a href="https://learn.javascript.ru/selection-range#sobytiya-pri-vydelenii">События при выделении</a></h3>
+        <ul>
+<li>elem.onselectstart – когда с elem начинается выделение, например пользователь начинает двигать мышкой с зажатой кнопкой.
+<p><code>preventDefault()</code> отменяет начало выделения.</p></li>
+<li><code>document.onselectionchange</code> – когда выделение изменено.
+<p>Заметьте: этот обработчик можно поставить только на <code>document</code>.            </p></li>
+        </ul>
+        <p>Примеры перепечатывать не буду.</p>
+    </div>
 
 
 
