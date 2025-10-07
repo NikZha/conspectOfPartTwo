@@ -90,8 +90,11 @@ range.setEnd(node, offset)
         <ul>
             <li><code>deleteContents()</code> – удалить содержимое диапазона из документа</li>
             <li><code>extractContents()</code> – удалить содержимое диапазона из документа и вернуть как
-                <code>DocumentFragment</code></li>
-            <li><code>cloneContents()</code> – склонировать содержимое диапазона и вернуть как <code>DocumentFragment</code></li>
+                <code>DocumentFragment</code>
+            </li>
+            <li><code>cloneContents()</code> – склонировать содержимое диапазона и вернуть как
+                <code>DocumentFragment</code>
+            </li>
             <li><code>insertNode(node)</code> – вставить node в документ в начале диапазона</li>
             <li><code>surroundContents(node)</code> – обернуть node вокруг содержимого диапазона. Чтобы этот метод
                 сработал, диапазон должен содержать как открывающие, так и закрывающие теги для всех элементов внутри
@@ -99,7 +102,13 @@ range.setEnd(node, offset)
         </ul>
         <p>Примеры использования по ссылке. Манипулирование на самом деле гибкое.</p>
     </div>
-
+    <div class="topic" id="Selection">
+        <h3>Selection</h3>
+        <p><code>Selection</code> это класс для визуального выделения, объект которого можно получить при помощи
+            методов: <code>window.getSelection()</code> или <code>document.getSelection()</code>.</p>
+        <p>Особенностью выделения является то что в firefox можно получить при помощи <code>Ctrl+click</code> несколько диапазонов, а во всех
+            остальных браузерах можно выделить 1 диапазон.</p>
+    </div>
 
 
 
