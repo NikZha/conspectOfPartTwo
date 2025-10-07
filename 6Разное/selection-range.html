@@ -106,10 +106,27 @@ range.setEnd(node, offset)
         <h3>Selection</h3>
         <p><code>Selection</code> это класс для визуального выделения, объект которого можно получить при помощи
             методов: <code>window.getSelection()</code> или <code>document.getSelection()</code>.</p>
-        <p>Особенностью выделения является то что в firefox можно получить при помощи <code>Ctrl+click</code> несколько диапазонов, а во всех
+        <p>Особенностью выделения является то что в firefox можно получить при помощи <code>Ctrl+click</code> несколько
+            диапазонов, а во всех
             остальных браузерах можно выделить 1 диапазон.</p>
     </div>
-
+    <div class="topic" id="prop">
+        <h3>Свойства Selection</h3>
+        <p>Основные свойства выделения:</p>
+        <ul>
+            <li><code>anchorNode</code> – узел, с которого начинается выделение,</li>
+            <li><code>anchorOffset</code> – смещение в anchorNode, где начинается выделение,</li>
+            <li><code>focusNode</code> – узел, на котором выделение заканчивается,</li>
+            <li><code>focusOffset</code> – смещение в focusNode, где выделение заканчивается,</li>
+            <li><code>isCollapsed</code> – true, если диапазон выделения пуст или не существует.</li>
+            <li><code>rangeCount</code> – количество диапазонов в выделении, максимум 1 во всех браузерах, кроме
+                Firefox. </li>
+        </ul>
+        <blockquote>
+            <h4>Конец выделения может быть в документе до его начала</h4>
+            Мышь и другие методы позволяют выделять, как слева-на-право, так и справа-на-лево.
+        </blockquote>
+    </div>
 
 
 
