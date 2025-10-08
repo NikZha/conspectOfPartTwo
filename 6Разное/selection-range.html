@@ -137,7 +137,34 @@ range.setEnd(node, offset)
         </ul>
         <p>Примеры перепечатывать не буду.</p>
     </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Получить выделение</p>
+        <pre><code class="language-js">
+let selection = document.getSelection();
 
+let cloned = /* элемент, в который мы хотим скопировать выделенные узлы */;
+
+// затем применяем методы Range к selection.getRangeAt(0)
+// или, как здесь, ко всем диапазонам, чтобы поддерживать множественное выделение
+for (let i = 0; i < selection.rangeCount; i++) {
+  cloned.append(selection.getRangeAt(i).cloneContents());
+}            
+        </code></pre>
+        <p>Установить выделение:</p>
+<pre><code class="language-js">
+let selection = document.getSelection();
+
+// напрямую:
+selection.setBaseAndExtent(...from...to...);
+
+// или можно создать диапазон range и:
+selection.removeAllRanges();
+selection.addRange(range);    
+</code></pre>
+<p>Часть урока не за конспектирована в виду бесполезности на данном этапе.</p>
+
+    </div>
 
 
 
