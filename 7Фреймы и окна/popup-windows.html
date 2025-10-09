@@ -43,6 +43,12 @@ window.open('https://javascript.info/')
                 testdiv.innerHTML = await respons.text()
             }
         </script>
+        <pre><code class="language-js">
+            async function expl1(params) {
+                let respons = await fetch('../README.HTML');
+                testdiv.innerHTML = await respons.text()
+            }            
+        </code></pre>
         <div id="testdiv" onclick="expl1()">Кликни на меня</div>
         <p>Однако для ряда задач pop-up может использоваться, поскольку:</p>
         <ol>
@@ -65,7 +71,7 @@ button.onclick = () => {
   window.open('https://javascript.info');
 };            
         </code></pre>
-        <p>Хотя кто менает повесить подобное на просто клики по документы, на
+        <p>Хотя кто мешает повесить подобное на просто клики по документы, на
             mousemove-mouseover-mouseout-mouseenter-mouseleave и тд.</p>
     </div>
 
