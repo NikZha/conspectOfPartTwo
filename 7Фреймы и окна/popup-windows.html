@@ -52,7 +52,22 @@ window.open('https://javascript.info/')
             <li>Попап может производить навигацию (менять URL) и отсылать сообщения в основное окно.</li>
         </ol>
     </div>
+    <div class="topic" id="block">
+        <h3>Блокировка попапов</h3>
+        <p>Поскольку эффективные менеджеры засрали вообще все, то по крайней мере ff крайне неохотно открывает любые
+            попапы, но</p>
+        <pre><code class="language-js">
+// попап заблокирован
+window.open('https://javascript.info');
 
+// попап будет показан
+button.onclick = () => {
+  window.open('https://javascript.info');
+};            
+        </code></pre>
+        <p>Хотя кто менает повесить подобное на просто клики по документы, на
+            mousemove-mouseover-mouseout-mouseenter-mouseleave и тд.</p>
+    </div>
 
 
 
