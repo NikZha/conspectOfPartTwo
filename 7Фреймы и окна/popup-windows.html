@@ -152,7 +152,48 @@ open('/', 'test', params);
                 предыдущее открытое окно. </li>
         </ul>
     </div>
+    <div class="topic" id="accsess">
+        <h3>Доступ к попапу из основного окна</h3>
+        <p>Вся бы эта возня не стоила бы и копейки, если бы между окнами нельзя было бы осуществлять общение. И его так
+            осуществлять можно:</p>
+        <pre><code class="lang">
+let newWin = window.open('about:blank', 'hello', 'width=200,height=200');
 
+newWin.document.write('Hello, world!');            
+        </code></pre>
+        <input type="button" value="Hello World" onclick="let newWin = window.open('about:blank', 'hello', 'width=200,height=200');
+
+newWin.document.write('Hello, world!');">
+        <p>А так же можно модифицировать содержимое:</p>
+        <pre><input type="button" value="Модификация содержимого" onclick="expl2()">
+            <code class="lang">
+let newWindow = open('/', 'example', 'width=300,height=300')
+newWindow.focus();
+
+alert(newWindow.location.href); // (*) about:blank, загрузка ещё не началась
+
+newWindow.onload = function() {
+  let html = `<div style="font-size:30px">Добро пожаловать!</div>`;
+  newWindow.document.body.insertAdjacentHTML('afterbegin', html);
+};    
+</code></pre>
+        <script>
+            function expl2(params) {
+                let newWindow = open('/', 'example', 'width=300,height=300')
+                newWindow.focus();
+
+                alert(newWindow.location.href); // (*) about:blank, загрузка ещё не началась
+
+                newWindow.onload = function () {
+                    let html = `<div style="font-size:30px">Добро пожаловать!</div>`;
+                    newWindow.document.body.insertAdjacentHTML('afterbegin', html);
+                };
+            }
+        </script>
+        <p>Но надо сказать это сработает только на том же домене, что и расположение скрипта открывающего окно, открыть
+            левый сайт и добавить туда что-либо браузер не даёт. Как и всегда все инициативы извращены и обосраны
+            буржуазным строем.</p>
+    </div>
 
 
 
