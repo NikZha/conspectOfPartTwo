@@ -194,7 +194,28 @@ newWindow.onload = function() {
             левый сайт и добавить туда что-либо браузер не даёт. Как и всегда все инициативы извращены и обосраны
             буржуазным строем.</p>
     </div>
+    <div class="topic" id="acc">
+        <h3>Доступ к открывшему окну из попапа</h3>
+        <p>Pop-up окно может обратиться к своему родителю при помощи <code>window.opener</code>. Для всех остальных окон
+            там <code>null</code>.</p>
+            <pre><input type="button" value="Тест доступа" onclick="expl3()">
+                <code class="language-js">
+let newWin = window.open("about:blank", "hello", "width=200,height=200");
 
+newWin.document.write(
+  "&lt;script>window.opener.document.body.innerHTML = 'Тест'&lt;\/script>"
+);                
+            </code></pre>
+            <script>
+                function expl3(params) {
+let newWin = window.open("about:blank", "hello", "width=200,height=200");
+
+newWin.document.write(
+  "<script>window.opener.document.body.innerHTML = 'Тест'<\/script>"
+)                    
+                }
+            </script>
+    </div>
 
 
 
