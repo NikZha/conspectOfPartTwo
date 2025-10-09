@@ -11,6 +11,7 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
+
 <body>
     <div class="contents">
         <h2><a href="#open">Открытие окон и методы window</a></h2>
@@ -27,6 +28,30 @@
             <li><a href="#total">Итого</a></li>
         </ul>
     </div>
+    <div class="topic" id="open">
+        <h2><a href="https://learn.javascript.ru/popup-windows">Открытие окон и методы window</a></h2>
+        <p>Открытие отдельного окна:</p>
+        <pre><input type="button" value="Открытие окна" onclick="window.open('https://javascript.info/')">
+            <code class="language-js">
+window.open('https://javascript.info/')            
+        </code></pre>
+        <p>Но в текущий момент это околоанахронизм, поскольку js может грузить окна fetch в том числе и в отдельном div:
+        </p>
+        <script>
+            async function expl1(params) {
+                let respons = await fetch('../README.HTML');
+                testdiv.innerHTML = await respons.text()
+            }
+        </script>
+        <div id="testdiv" onclick="expl1()">Кликни на меня</div>
+        <p>Однако для ряда задач pop-up может использоваться, поскольку:</p>
+        <ol>
+            <li>Попап – это отдельное окно со своим JavaScript-окружением. Так что открытие попапа со стороннего, не
+                доверенного сайта вполне безопасно</li>
+            <li>Открыть попап очень просто.</li>
+            <li>Попап может производить навигацию (менять URL) и отсылать сообщения в основное окно.</li>
+        </ol>
+    </div>
 
 
 
@@ -38,4 +63,5 @@
 
 
 </body>
+
 </html>
