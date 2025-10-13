@@ -273,6 +273,15 @@ newWindow.onload = function() {
             <br>Методы перемещения и изменения размера окна не работают для свернутых и развёрнутых на весь экран окон
         </blockquote>
     </div>
+    <div class="topic" id="scrollwondow">
+        <h3>Прокрутка окна</h3>
+        <p><code>win.scrollBy(x,y)</code> Прокрутить окно на x пикселей вправо и y пикселей вниз относительно текущей
+            прокрутки. Допустимы отрицательные значения.</p>
+            <p><code>win.scrollTo(x,y)</code> Прокрутить окно до заданных координат (x,y).</p>
+            <p><code>elem.scrollIntoView(top = true)</code> Прокрутить окно так, чтобы elem для elem.scrollIntoView(false) появился вверху (по умолчанию) или внизу.</p>
+            <p>Также существует событие <code>window.onscroll</code>.</p>
+            <p><a href="../1Документ/size-and-scroll-window.html">Подброднее рассмотрено в этой главе.</a></p>
+    </div>
     <div class="topic" id="lost">
         <h3>Установка и потеря фокуса</h3>
         <p><code>window.focus()</code> - устрановить фокус окна.</p>
