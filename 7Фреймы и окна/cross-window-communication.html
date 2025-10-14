@@ -42,17 +42,97 @@
         <p>Разные источники:</p>
         <ul>
 
-    <li><code>http://www.site.com</code> (другой домен: <code>www.</code> важен)</li>
-    <li><code>http://site.org</code> (другой домен: <code>.org</code> важен)</li>
-    <li><code>https://site.com</code> (другой протокол: <code>https</code>)</li>
-    <li><code>http://site.com:8080</code> (другой порт: <code>8080</code>)</li>
+            <li><code>http://www.site.com</code> (другой домен: <code>www.</code> важен)</li>
+            <li><code>http://site.org</code> (другой домен: <code>.org</code> важен)</li>
+            <li><code>https://site.com</code> (другой протокол: <code>https</code>)</li>
+            <li><code>http://site.com:8080</code> (другой порт: <code>8080</code>)</li>
 
         </ul>
         <p>Политика "Одинакового источника" говорит:</p>
         <ul>
-<li>если у нас есть ссылка на другой объект <code>window</code>, например, на всплывающее окно, созданное с помощью window.open или на window из <code>&lt;iframe></code> и у этого окна тот же источник, то к нему будет полный доступ.</li>
-<li>в противном случае, если у него другой источник, мы не сможем обращаться к его переменным, объекту <code>document</code> и так далее. Единственное исключение – объект <code>location</code>: его можно изменять (таким образом перенаправляя пользователя). Но нельзя читать location (нельзя узнать, где находится пользователь, чтобы не было никаких утечек информации)            </li>
+            <li>если у нас есть ссылка на другой объект <code>window</code>, например, на всплывающее окно, созданное с
+                помощью window.open или на window из <code>&lt;iframe></code> и у этого окна тот же источник, то к нему
+                будет полный доступ.</li>
+            <li>в противном случае, если у него другой источник, мы не сможем обращаться к его переменным, объекту
+                <code>document</code> и так далее. Единственное исключение – объект <code>location</code>: его можно
+                изменять (таким образом перенаправляя пользователя). Но нельзя читать location (нельзя узнать, где
+                находится пользователь, чтобы не было никаких утечек информации)
+            </li>
         </ul>
+        <div id="access">
+            <h3>Доступ к содержимому ифрейма</h3>
+            <p><code>&lt;ifame&gt;</code> имеет свои собственные свойства <code>document</code> и <code>window</code> и
+                мы можем к ним обратиться:</p>
+            <ul>
+                <li><code>iframe.contentWindow</code> ссылка на объект <code>window</code> внутри
+                    <code>&lt;iframe></code>.
+                </li>
+                <li><code>iframe.contentDocument</code> – ссылка на объект <code>document</code> внутри
+                    <code>&lt;iframe></code>, короткая запись для <code>iframe.contentWindow.document</code>.
+                </li>
+            </ul>
+            <p>И тут работает политика Одинакового источника:</p>
+            <pre><code class="language-js">
+&lt;iframe src="https://example.com" id="iframe"&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+  iframe.onload = function() {
+    // можно получить ссылку на внутренний window
+    let iframeWindow = iframe.contentWindow; // OK
+
+    // ...но при попытке получить доступ к document страницы
+
+    let doc = iframe.contentDocument; // ...получим null
+
+    // также мы не можем прочитать URL страницы в ифрейме
+    try {
+      // нельзя читать из объекта Location
+      let href = iframe.contentWindow.location.href; // ОШИБКА
+    } catch(e) {
+      alert(e); // Security Error
+    }
+
+    // ...но можно писать в него (и загрузить что-то другое в ифрейм)!
+    iframe.contentWindow.location = '/'; // OK
+
+    iframe.onload = null; // уберём обработчик, чтобы не срабатывал после изменения location
+  };
+&lt;/script&gt;                
+            </code></pre>
+            <details>
+                <summary>Соотвественно для одной локации это все будет работать:</summary>
+                <!-- ифрейм с того же сайта -->
+                <iframe src="/" id="iframe"></iframe>
+
+                <script>
+                    iframe.onload = function () {
+                        // делаем с ним что угодно
+                        iframe.contentDocument.body.prepend("Привет, мир!");
+                    };
+                </script>
+            </details>
+            <pre><code class="language-js">
+&lt;!-- ифрейм с того же сайта --&gt;
+&lt;iframe src="/" id="iframe"&gt;&lt;/iframe&gt;
+
+&lt;script&gt;
+  iframe.onload = function() {
+    // делаем с ним что угодно
+    iframe.contentDocument.body.prepend("Привет, мир!");
+  };
+&lt;/script&gt;                
+            </code></pre>
+            <p>Работать внутри просмотра запущенного с vscode.</p>
+            <blockquote>
+                <h4><code>iframe.onload</code> и <code>iframe.contentWindow.onload</code></h4>
+                <p>Событие <code>iframe.onload</code> – по сути то же, что и <code>iframe.contentWindow.onload</code>.
+                    Оно сработает, когда встроенное окно полностью загрузится со всеми ресурсами.</p>
+
+                <p>…Но <code>iframe.onload</code> всегда доступно извне ифрейма, в то время как доступ к
+                    <code>iframe.contentWindow.onload</code> разрешён только из окна с тем же источником.</p>
+
+            </blockquote>
+        </div>
     </div>
 
 
