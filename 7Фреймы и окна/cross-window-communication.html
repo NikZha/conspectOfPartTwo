@@ -129,12 +129,59 @@
                     Оно сработает, когда встроенное окно полностью загрузится со всеми ресурсами.</p>
 
                 <p>…Но <code>iframe.onload</code> всегда доступно извне ифрейма, в то время как доступ к
-                    <code>iframe.contentWindow.onload</code> разрешён только из окна с тем же источником.</p>
+                    <code>iframe.contentWindow.onload</code> разрешён только из окна с тем же источником.
+                </p>
 
             </blockquote>
         </div>
     </div>
+    <div class="topic" id="domain">
+        <h3>Окна на поддоменах: document.domain</h3>
+        <p>Для взаимодействия документов на поддоменах в на каждой странице поддомена надо запустить:</p>
+        <pre><code class="language-js">
+document.domain = 'site.com';            
+        </code></pre>
+        <p>Но сработает это только на домене второго уровня.</p>
+        <div id="wait">
+            <h3>iframe: подождите документ</h3>
+            <pre><code class="language-js">
+&lt;iframe src="/" id="iframe"&gt;&lt;/iframe&gt;
 
+&lt;script&gt;
+  let oldDoc = iframe.contentDocument;
+  iframe.onload = function() {
+    let newDoc = iframe.contentDocument;
+    // загруженный document - не тот, который был в iframe при создании изначально!
+    alert(oldDoc == newDoc); // false
+  };
+&lt;/script&gt;                
+            </code></pre>
+            <p>То есть работать с фреймом надо тогда когда он загрузился и помочь в этом может
+                <code>iframe.onload</code>, но срабатывает он единожды, автор предлагает проверять через мутноватый
+                скрипт:
+            </p>
+            <pre><code class="language-js">
+&lt;iframe src="/" id="iframe">&lt;/iframe>
+
+&lt;script>
+  let oldDoc = iframe.contentDocument;
+
+  // каждый 100 мс проверяем, не изменился ли документ
+  let timer = setInterval(() => {
+    let newDoc = iframe.contentDocument;
+    if (newDoc == oldDoc) return;
+
+    alert("New document is here!");
+
+    clearInterval(timer); // отключим setInterval, он нам больше не нужен
+  }, 100);
+&lt;/script>                
+            </code></pre>
+            <p>Как я понимаю, вместо алерта - предлагается работать с той ссылкой которая появилась, например приравняя
+                её к старой ссылке и работая с ней.</p>
+        </div>
+
+    </div>
 
 
 
