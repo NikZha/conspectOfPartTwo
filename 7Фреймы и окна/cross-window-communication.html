@@ -13,22 +13,47 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#conversation">Общение между окнами</a></h2>
-    <ul>
-        <li><a href="#loan">Политика "Одинакового источника"</a></li>
-        <li><a href="#domain">Окна на поддоменах: document.domain</a></li>
-        <li><a href="#frames">Коллекция window.frames</a></li>
-        <li><a href="#sandbox">Атрибут ифрейма sandbox</a></li>
-        <li><a href="#messages">Обмен сообщениями между окнами</a></li>
-        <li><a href="#total">Итого</a></li>
-    </ul>
-</div>
-<div class="topic" id="conversation">
-    <h2><a href="https://learn.javascript.ru/cross-window-communication">Общение между окнами</a></h2>
-    <p>Задача политики  «Одинакового источника» не дать красть информацию используя скрипты одного сайта с другого сайта. </p>
-</div>
+    <div class="contents">
+        <h2><a href="#conversation">Общение между окнами</a></h2>
+        <ul>
+            <li><a href="#loan">Политика "Одинакового источника"</a></li>
+            <li><a href="#domain">Окна на поддоменах: document.domain</a></li>
+            <li><a href="#frames">Коллекция window.frames</a></li>
+            <li><a href="#sandbox">Атрибут ифрейма sandbox</a></li>
+            <li><a href="#messages">Обмен сообщениями между окнами</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="conversation">
+        <h2><a href="https://learn.javascript.ru/cross-window-communication">Общение между окнами</a></h2>
+        <p>Задача политики «Одинакового источника» не дать красть информацию используя скрипты одного сайта с другого
+            сайта. </p>
+    </div>
+    <div class="topic" id="loan">
+        <h3>Политика "Одинакового источника"</h3>
+        <p>Одинаковый источник:</p>
+        <ul>
 
+            <li><code>http://site.com</code></li>
+            <li><code>http://site.com/</code></li>
+            <li><code>http://site.com/my/page.html</code></li>
+
+        </ul>
+        <p>Разные источники:</p>
+        <ul>
+
+    <li><code>http://www.site.com</code> (другой домен: <code>www.</code> важен)</li>
+    <li><code>http://site.org</code> (другой домен: <code>.org</code> важен)</li>
+    <li><code>https://site.com</code> (другой протокол: <code>https</code>)</li>
+    <li><code>http://site.com:8080</code> (другой порт: <code>8080</code>)</li>
+
+        </ul>
+        <p>Политика "Одинакового источника" говорит:</p>
+        <ul>
+<li>если у нас есть ссылка на другой объект <code>window</code>, например, на всплывающее окно, созданное с помощью window.open или на window из <code>&lt;iframe></code> и у этого окна тот же источник, то к нему будет полный доступ.</li>
+<li>в противном случае, если у него другой источник, мы не сможем обращаться к его переменным, объекту <code>document</code> и так далее. Единственное исключение – объект <code>location</code>: его можно изменять (таким образом перенаправляя пользователя). Но нельзя читать location (нельзя узнать, где находится пользователь, чтобы не было никаких утечек информации)            </li>
+        </ul>
+    </div>
 
 
 
