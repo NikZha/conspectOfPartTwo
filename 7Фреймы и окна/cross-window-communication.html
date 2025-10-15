@@ -255,7 +255,8 @@ if (window == top) { // текущий window == window.top?
         <div id="postMessage">
             <h4>postMessage</h4>
             <p>Окно на которое отпавляют сообщение вызывает метод <code>postMessage</code> -
-                <code>win.postMessage(data, targetOrigin)</code>:</p>
+                <code>win.postMessage(data, targetOrigin)</code>:
+            </p>
             <pre><code class="language-js">
 //здесь win получит сообщения только в том случае, если в нём открыт документ из источника http://example.com:                
 &lt;iframe src="http://example.com" name="example">
@@ -309,12 +310,24 @@ window.addEventListener("message", function(event) {
             </code></pre>
             <blockquote>
                 <h4>Без задержек</h4>
-                Между postMessage и событием message не существует задержки. Событие происходит синхронно, быстрее, чем
-                setTimeout(...,0).
+                Между <code>postMessage</code> и событием <code>message</code> не существует задержки. Событие
+                происходит синхронно, быстрее, чем
+                <code>setTimeout(...,0)</code>.
             </blockquote>
         </div>
     </div>
-
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Поликтика одинакового источника.</p>
+        <p>Доступ к содержимому фрейма - <code>iframe.contentWindow</code> и <code>iframe.contentDocument</code>.</p>
+        <p>Окна на поддоменах.</p>
+        <p>Коллекция window.frames - доступ по итерации массива <code>[]</code> и по имени фрейма
+            <code>name="iframeName"</code> - <code>window.frames.iframeName</code>.
+        </p>
+        <p>Атрибут <code>sandbox</code> фрейма.</p>
+        <p>Обмен сообщениями между окнами - метод <code>postMessage</code> и событие приёма сообщений
+            <code>message</code> обработчик на которое надо устанавливать только при помощи <code>addEventListener</code>.</p>
+    </div>
 
 
 </body>
