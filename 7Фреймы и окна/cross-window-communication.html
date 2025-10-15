@@ -102,7 +102,7 @@
             <details>
                 <summary>Соотвественно для одной локации это все будет работать:</summary>
                 <!-- ифрейм с того же сайта -->
-                <iframe src="/" id="iframe"></iframe>
+                <iframe src="/" id="iframe" name="win"></iframe>
 
                 <script>
                     iframe.onload = function () {
@@ -182,7 +182,56 @@ document.domain = 'site.com';
         </div>
 
     </div>
+    <div class="topic" id="frames">
+        <h3>Коллекция window.frames</h3>
+        <p>Пара способов для получения ссылки на <code>&lt;frame&gt;</code>:</p>
+        <li>В массиве по номеру например - <code>woindow.frames[0]</code>.</li>
+        <li>По имени, как свойстве фрейма <code>name="iframeName"</code> - <code>window.frames.iframeName</code></li>
+        <footer>Например:</footer>
+        <pre><input type="button" value="Потестить скрипт" onclick="expl1">
+            <code class="language-js">
+&lt;iframe src="/" style="height:80px" name="win" id="iframe">&lt;/iframe>
 
+&lt;script>
+  alert(iframe.contentWindow == frames[0]); // true
+  alert(iframe.contentWindow == frames.win); // true
+&lt;/script>            
+        </code></pre>
+        <script>
+            function expl1() {
+                let scr = document.createElement('script');
+                let str = `                
+  alert(iframe.contentWindow == frames[0]); // true
+  alert(iframe.contentWindow == frames.win); // true
+        `;
+                scr.innerHTML = str;
+                document.body.append(scr)
+            }
+
+        </script>
+        <details>
+            <summary>Открыть подробности работы кнопки</summary>
+            <p>Свойство <code>name="win"</code> было засунуто первому <code>iframe</code>, а скрипт динамически
+                создаётся
+                функцией и инжектится в документ.</p>
+        </details>
+        <p>Однако фреймы тоже могут иметь фреймы, навигация по ним выглядит так:</p>
+        <ul>
+            <li><code>window.frames</code> – коллекция «дочерних» window (для вложенных фреймов).</li>
+            <li><code>window.parent</code> – ссылка на «родительский» (внешний) window.</li>
+            <li><code>window.top</code> – ссылка на самого верхнего родител </li>
+        </ul>
+        <footer>Например:</footer>
+        <pre><code class="language-js">
+window.frames[0].parent === window; // true
+
+if (window == top) { // текущий window == window.top?
+  alert('Скрипт находится в самом верхнем объекте window, не во фрейме');
+} else {
+  alert('Скрипт запущен во фрейме!');
+}
+        </code></pre>
+    </div>
 
 
 
