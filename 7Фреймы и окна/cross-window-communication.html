@@ -243,7 +243,77 @@ if (window == top) { // текущий window == window.top?
             он не может ослабить ограничения, накладываемые браузером на ифрейм, приходящий с другого источника.
         </blockquote>
     </div>
+    <div class="topic" id="messages">
+        <h3>Обмен сообщениями между окнами</h3>
+        <p>Интерфейс postMessage позволяет окнам общаться между собой независимо от их происхождения.</p>
 
+        <p>Это способ обойти политику «Одинакового источника». Он позволяет обмениваться информацией, скажем
+            john-smith.com и gmail.com, но только в том случае, если оба сайта согласны и вызывают соответствующие
+            JavaScript-функции. Это делает общение безопасным для пользователя.</p>
+
+        <p>Интерфейс имеет две части: отправляющую и принимаюзую. </p>
+        <div id="postMessage">
+            <h4>postMessage</h4>
+            <p>Окно на которое отпавляют сообщение вызывает метод <code>postMessage</code> -
+                <code>win.postMessage(data, targetOrigin)</code>:</p>
+            <pre><code class="language-js">
+//здесь win получит сообщения только в том случае, если в нём открыт документ из источника http://example.com:                
+&lt;iframe src="http://example.com" name="example">
+
+&lt;script>
+  let win = window.frames.example;
+
+  win.postMessage("message", "http://example.com");
+
+//Если мы не хотим проверять, то в targetOrigin можно указать *.
+
+  win.postMessage("message", "*");  
+&lt;/script>                
+            </code></pre>
+            <p>Параметрами для метода являются:</p>
+            <ul>
+                <li><code>data</code> - Данные для отправки. Может быть любым объектом.</li>
+                <li><code>targetOrigin</code> - Определяет источник для окна-получателя, только окно с данного источника
+                    имеет право получить сообщение.</li>
+            </ul>
+        </div>
+        <div id="message">
+            <h4>Событие message</h4>
+            <p>Объект получаемый имеет некоторые свойства:</p>
+            <ul>
+                <li><code>data</code> -
+                    Данные из <code>postMessage</code>.</li>
+                <li><code>origin</code> -
+                    Источник отправителя, например, <a href="http://javascript.info">http://javascript.info</a>.</li>
+                <li>
+                    <code>source</code> -
+                    Ссылка на окно-отправитель. Можно сразу отправить что-то в ответ, вызвав
+                    <code>source.postMessage(...)</code>.
+                </li>
+            </ul>
+            <footer>
+                Чтобы добавить обработчик, следует использовать метод <code>addEventListener</code>, короткий синтаксис
+                <code>window.onmessage</code> не работает. Пример:
+            </footer>
+            <pre><code class="language-js">
+window.addEventListener("message", function(event) {
+  if (event.origin != 'http://javascript.info') {
+    // что-то пришло с неизвестного домена. Давайте проигнорируем это
+    return;
+  }
+
+  alert( "received: " + event.data );
+
+  // can message back using event.source.postMessage(...)
+});                
+            </code></pre>
+            <blockquote>
+                <h4>Без задержек</h4>
+                Между postMessage и событием message не существует задержки. Событие происходит синхронно, быстрее, чем
+                setTimeout(...,0).
+            </blockquote>
+        </div>
+    </div>
 
 
 
