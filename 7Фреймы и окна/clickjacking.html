@@ -72,7 +72,33 @@ iframe { /* ифрейм с сайта-жертвы */
             стороннего сайта невозможно, а пользователь не будет продолжать что-то вводить не видя ввод.
         </blockquote>
     </div>
-
+    <div class="topic" id="expl">
+        <h3>Примеры слабой защиты</h3>
+        <p>Можно попытаться разместить свою страничку в топе, вместо того, чтобы показывать во фрейме:</p>
+        <pre><code class="language-js">
+if (top != window) {
+  top.location = window.location;
+}            
+        </code></pre>
+        <footer>Однако существует способы обойти эту защиту:</footer>
+        <div id="block">
+            <h4>Блокировка top-навигации</h4>
+            <pre><code class="language-js">
+window.onbeforeunload = function() {
+  return false;
+};                
+            </code></pre>
+            <p>И пользователь видит вопрос "покинуть ли текущую страницу". А так как причин покидать страницу нет, он
+                скорее всего откажется и выйти из фрейма не удасться.</p>
+        </div>
+        <div id="sandbox"><h4>Атрибут «sandbox»</h4>
+        <p>И сменить top не удасться. Например:</p>
+        <pre><code class="language-js">
+&lt;iframe sandbox="allow-scripts allow-forms" src="facebook.html">&lt;/iframe>            
+        </code></pre>
+        </div>
+        <p>Есть и другие способы обойти эту защиту, как заявляет автор.</p>
+    </div>
 
 
 </body>
