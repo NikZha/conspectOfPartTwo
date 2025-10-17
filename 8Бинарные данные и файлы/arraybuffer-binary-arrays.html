@@ -55,3 +55,17 @@ for(let num of view) {
 }        
     </code></pre>
 </div>
+<div class="topic" id="TypedArray">
+    <h3>TypedArray</h3>
+    <p>Для работы с численным представлением есть <code>TypedArray</code> у которого есть типовые методы для работы с
+        ячейками памяти, как у обычного массива.</p>
+    <p>Варианты создания объекта <code>TypedArray</code>:</p>
+    <pre><code class="language-js">
+new TypedArray(buffer, [byteOffset], [length]);
+new TypedArray(object);
+new TypedArray(typedArray);
+new TypedArray(length);
+new TypedArray();            
+        </code></pre>
+    <p>Далее обсуждается вопросы инициализации этого класса и что происходит при переполнении буфера.</p>
+</div>
