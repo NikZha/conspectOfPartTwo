@@ -11,32 +11,35 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
-<div class="contents">
-    <h2><a href="#arraybuffe">ArrayBuffer, бинарные массивы</a></h2>
-    <ul>
-        <li><a href="#TypedArray">TypedArray</a></li>
-        <li><a href="#methods">Методы TypedArray</a></li>
-        <li><a href="#DataView">DataView</a></li>
-        <li><a href="#total">Итого</a></li>
-        <li><a href="#tasks">Задачи</a></li>
-    </ul>
-</div>
-<div class="topic" id="arraybuffe">
-    <h2><a href="https://learn.javascript.ru/arraybuffer-binary-arrays">ArrayBuffer, бинарные массивы</a></h2>
-    <p>ArrayBuffer - класс для выделения памяти под бинарные данные:</p>
-    <pre><code class="language-js">
+
+<body>
+    <div class="contents">
+        <h2><a href="#arraybuffe">ArrayBuffer, бинарные массивы</a></h2>
+        <ul>
+            <li><a href="#TypedArray">TypedArray</a></li>
+            <li><a href="#methods">Методы TypedArray</a></li>
+            <li><a href="#DataView">DataView</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задачи</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="arraybuffe">
+        <h2><a href="https://learn.javascript.ru/arraybuffer-binary-arrays">ArrayBuffer, бинарные массивы</a></h2>
+        <p>ArrayBuffer - класс для выделения памяти под бинарные данные:</p>
+        <pre><code class="language-js">
 let buffer = new ArrayBuffer(16); // создаётся буфер длиной 16 байт
 alert(buffer.byteLength); // 16        
     </code></pre>
-    <p>Выделяется непрерывный массив (виртуальной) памяти который заполняется нулями. Динамически увеличить нельзя,
-        занимает в памяти столько сколько указано при инициализации (скорее всего пиздёшь, так как имеет вспомогательные
-        методы). Требует интерпретации.</p>
-    <p>Для интертрепации ArrayBuffer есть минимум 4 класса:</p>
-    <li><code>Uint8Array</code>, <code>Uint16Array</code>, <code>Uint32Array</code> - как следует из названия uint'ы
-        соотвествующей разрядности.</li>
-    <li><code>Float64Array</code> - типичный Double64.</li>
-    <p>Соотвественно, так как память выделяется в байтах - размер ячейки будет равен выбранному типу, например:</p>
-    <pre><code class="language-js">
+        <p>Выделяется непрерывный массив (виртуальной) памяти который заполняется нулями. Динамически увеличить нельзя,
+            занимает в памяти столько сколько указано при инициализации (скорее всего пиздёшь, так как имеет
+            вспомогательные
+            методы). Требует интерпретации.</p>
+        <p>Для интертрепации ArrayBuffer есть минимум 4 класса:</p>
+        <li><code>Uint8Array</code>, <code>Uint16Array</code>, <code>Uint32Array</code> - как следует из названия uint'ы
+            соотвествующей разрядности.</li>
+        <li><code>Float64Array</code> - типичный Double64.</li>
+        <p>Соотвественно, так как память выделяется в байтах - размер ячейки будет равен выбранному типу, например:</p>
+        <pre><code class="language-js">
 let buffer = new ArrayBuffer(16); // создаётся буфер длиной 16 байт
 
 let view = new Uint32Array(buffer); // интерпретируем содержимое как последовательность 32-битных целых чисел без знака
@@ -54,18 +57,42 @@ for(let num of view) {
   alert(num); // 123456, потом 0, 0, 0 (всего 4 значения)
 }        
     </code></pre>
-</div>
-<div class="topic" id="TypedArray">
-    <h3>TypedArray</h3>
-    <p>Для работы с численным представлением есть <code>TypedArray</code> у которого есть типовые методы для работы с
-        ячейками памяти, как у обычного массива.</p>
-    <p>Варианты создания объекта <code>TypedArray</code>:</p>
-    <pre><code class="language-js">
+    </div>
+    <div class="topic" id="TypedArray">
+        <h3>TypedArray</h3>
+        <p>Для работы с численным представлением есть <code>TypedArray</code> у которого есть типовые методы для работы
+            с
+            ячейками памяти, как у обычного массива.</p>
+        <p>Варианты создания объекта <code>TypedArray</code>:</p>
+        <pre><code class="language-js">
 new TypedArray(buffer, [byteOffset], [length]);
 new TypedArray(object);
 new TypedArray(typedArray);
 new TypedArray(length);
 new TypedArray();            
         </code></pre>
-    <p>Далее обсуждается вопросы инициализации этого класса и что происходит при переполнении буфера.</p>
-</div>
+        <p>Далее обсуждается вопросы инициализации этого класса и что происходит при переполнении буфера.</p>
+    </div>
+    <div class="topic" id="methods">
+        <h3>Методы TypedArray</h3>
+        <p><code>TypedArray</code> имеет почти такие же методы как и <code>Array</code>. За некоторым исключением:</p>
+        <ul>
+            <li>Нет метода <code>splice</code> – мы не можем удалять значения, потому что типизированные массивы – это
+                всего лишь представления данных из буфера, а буфер – это непрерывная область памяти фиксированной длины.
+                Мы можем только записать 0 вместо значения.</li>
+            <li>Нет метода concat. </li>
+        </ul>
+        <p>И есть два других метода:</p>
+        <ol>
+            <li><code>arr.set(fromArr, [offset])</code> копирует все элементы из <code>fromArr</code> в
+                <code>arr</code>, начиная с позиции <code>offset</code> (0 по умолчанию).</li>
+            <li><code>arr.subarray([begin, end])</code> создаёт новое представление того же типа для данных, начиная с
+                позиции begin до end (не включая). Это похоже на метод slice (который также поддерживается), но при этом
+                ничего не копируется – просто создаётся новое представление, чтобы совершать какие-то операции над
+                указанными данными. </li>
+        </ol>
+    </div>
+
+</body>
+
+</html>
