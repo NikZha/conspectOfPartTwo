@@ -21,3 +21,37 @@
         <li><a href="#tasks">Задачи</a></li>
     </ul>
 </div>
+<div class="topic" id="arraybuffe">
+    <h2><a href="https://learn.javascript.ru/arraybuffer-binary-arrays">ArrayBuffer, бинарные массивы</a></h2>
+    <p>ArrayBuffer - класс для выделения памяти под бинарные данные:</p>
+    <pre><code class="language-js">
+let buffer = new ArrayBuffer(16); // создаётся буфер длиной 16 байт
+alert(buffer.byteLength); // 16        
+    </code></pre>
+    <p>Выделяется непрерывный массив (виртуальной) памяти который заполняется нулями. Динамически увеличить нельзя,
+        занимает в памяти столько сколько указано при инициализации (скорее всего пиздёшь, так как имеет вспомогательные
+        методы). Требует интерпретации.</p>
+    <p>Для интертрепации ArrayBuffer есть минимум 4 класса:</p>
+    <li><code>Uint8Array</code>, <code>Uint16Array</code>, <code>Uint32Array</code> - как следует из названия uint'ы
+        соотвествующей разрядности.</li>
+    <li><code>Float64Array</code> - типичный Double64.</li>
+    <p>Соотвественно, так как память выделяется в байтах - размер ячейки будет равен выбранному типу, например:</p>
+    <pre><code class="language-js">
+let buffer = new ArrayBuffer(16); // создаётся буфер длиной 16 байт
+
+let view = new Uint32Array(buffer); // интерпретируем содержимое как последовательность 32-битных целых чисел без знака
+
+alert(Uint32Array.BYTES_PER_ELEMENT); // 4 байта на каждое целое число
+
+alert(view.length); // 4, именно столько чисел сейчас хранится в буфере
+alert(view.byteLength); // 16, размер содержимого в байтах
+
+// давайте запишем какое-нибудь значение
+view[0] = 123456;
+
+// теперь пройдёмся по всем значениям
+for(let num of view) {
+  alert(num); // 123456, потом 0, 0, 0 (всего 4 значения)
+}        
+    </code></pre>
+</div>
