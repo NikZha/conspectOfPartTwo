@@ -69,7 +69,23 @@ alert( new TextDecoder().decode(uint8Array) ); // Hello
             }
         </script>
     </div>
+    <div class="topic" id="encoder">
+        <h3>TextEncoder</h3>
+        <p>Объект который осуществляет обратный процесс, декодирует строку в биинарный массив. Поддерживается только
+            <code>utf-8</code>.
+        </p>
+        <p>Поддерживается 2 метода:</p>
+        <ul>
+<li><code>encode(str)</code> – возвращает бинарный массив <code>Uint8Array</code>, содержащий закодированную строку.</li>
+<li><code>encodeInto(str, destination)</code> – кодирует строку (<code>str</code>) и помещает её в <code>destination</code>, который должен быть экземпляром <code>Uint8Array</code>            </li>
+        </ul>
+        <pre><code class="language-js">
+let encoder = new TextEncoder();
 
+let uint8Array = encoder.encode("Hello");
+alert(uint8Array); // 72,101,108,108,111            
+        </code></pre>
+    </div>
 
 
 </body>
