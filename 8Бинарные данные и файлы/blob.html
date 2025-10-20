@@ -13,17 +13,47 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#blob">Blob</a></h2>
-    <ul>
-        <li><a href="#url">Blob как URL</a></li>
-        <li><a href="#base64">Blob to base64</a></li>
-        <li><a href="#pick">Изображение в Blob</a></li>
-        <li><a href="#arraybufer">Из Blob в ArrayBuffer</a></li>
-        <li><a href="#total">Итого</a></li>
-    </ul>
-</div>
+    <div class="contents">
+        <h2><a href="#blob">Blob</a></h2>
+        <ul>
+            <li><a href="#url">Blob как URL</a></li>
+            <li><a href="#base64">Blob to base64</a></li>
+            <li><a href="#pick">Изображение в Blob</a></li>
+            <li><a href="#arraybufer">Из Blob в ArrayBuffer</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="blob">
+        <h2><a href="https://learn.javascript.ru/blob">Blob</a></h2>
+        <p>Собственно класс который отвечает за передачу бинарных данных:</p>
+        <pre><code class="language-js">
+new Blob(blobParts, options);        
+    </code></pre>
+        <ul>
+            <li><code>blobParts</code> – массив значений Blob/BufferSource/String.</li>
+            <li><code>options</code> – необязательный объект с дополнительными настройками:</li>
+            <ul>
+                <li><code>type</code> – тип объекта, обычно MIME-тип, например. image/png,</li>
+                <li><code>endings</code> – если указан, то окончания строк создаваемого Blob будут изменены в
+                    соответствии с текущей операционной системой (\r\n или \n). По умолчанию "transparent" (ничего не
+                    делать), но также может быть "native" (изменять). </li>
+            </ul>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-js">
+// создадим Blob из строки
+let blob = new Blob(["<html>…</html>"], {type: 'text/html'});
+// создадим Blob из типизированного массива и строк
+let hello = new Uint8Array([72, 101, 108, 108, 111]); // "hello" в бинарной форме
 
+let blob = new Blob([hello, ' ', 'world'], {type: 'text/plain'});        
+    </code></pre>
+        <blockquote>
+            <h4>Blob не изменяем (immutable)</h4>
+            <p>Мы не можем изменять данные напрямую в Blob, но мы можем делать срезы и создавать новый Blob на их
+                основе, объединять несколько объектов в новый и так далее.</p>
+        </blockquote>
+    </div>
 
 
 
@@ -32,4 +62,5 @@
 
 
 </body>
+
 </html>
