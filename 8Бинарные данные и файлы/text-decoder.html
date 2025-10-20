@@ -13,15 +13,65 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#coder">TextDecoder и TextEncoder</a></h2>
-    <ul>
-        <li><a href="#encoder">TextEncoder</a></li>
-    </ul>
-</div>
+    <div class="contents">
+        <h2><a href="#coder">TextDecoder и TextEncoder</a></h2>
+        <ul>
+            <li><a href="#encoder">TextEncoder</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="coder">
+        <h2><a href="https://learn.javascript.ru/text-decoder">TextDecoder и TextEncoder</a></h2>
+        <p><code>TextDecoder</code> - является классом который отвечает за декодирование текста из бинарных файлов:</p>
+        <pre><code class="language-js">
+let decoder = new TextDecoder([label], [options]);        
+    </code></pre>
+        <p>Где:</p>
+        <ul>
+            <li><code>label</code> – тип кодировки, <code>utf-8</code> используется по умолчанию, но также
+                поддерживаются <code>big5</code>, <code>windows-1251</code> и многие другие.</li>
+            <li><code>options</code> – объект с дополнительными настройками:</li>
+            <ul>
+                <li><code>fatal</code> – <code>boolean</code>, если значение <code>true</code>, тогда генерируется
+                    ошибка для невалидных (не
+                    декодируемых) символов, в ином случае (по умолчанию) они заменяются символом <code>\uFFFD</code>.
+                </li>
+                <li><code>ignoreBOM</code> – <code>boolean</code>, если значение <code>true</code>, тогда игнорируется
+                    <code>BOM</code> (дополнительный
+                    признак, определяющий порядок следования байтов), что необходимо крайне редко.
+                </li>
+            </ul>
+        </ul>
+        <p>Далее после создания объекта пихаем в него буфер для декодирования:</p>
+        <pre><code class="language-js">
+let str = decoder.decode([input], [options]);            
+        </code></pre>
+        <ul>
+            <li><code>input</code> – бинарный буфер (BufferSource) для декодирования.</li>
+            <li><code>options</code> – объект с дополнительными настройками:</li>
+            <ul>
+                <li><code>stream</code> – true для декодирования потока данных, при этом decoder вызывается вновь и
+                    вновь для каждого следующего фрагмента данных. В этом случае многобайтовый символ может иногда быть
+                    разделён и попасть в разные фрагменты данных. Это опция указывает TextDecoder запомнить символ, на
+                    котором остановился процесс, и декодировать его со следующим фрагментом. </li>
+            </ul>
+        </ul>
+        <p>Например: <input type="button" value="Тест decode бинарного массива:" onclick="expl1()"></p>
+        <pre><code class="language-js">
+let uint8Array = new Uint8Array([72, 101, 108, 108, 111]);
 
+alert( new TextDecoder().decode(uint8Array) ); // Hello            
+        </code></pre>
+        <script>
+            function expl1(params) {
+                let uint8Array = new Uint8Array([72, 101, 108, 108, 111]);
+
+                alert(new TextDecoder().decode(uint8Array)); // Hello
+            }
+        </script>
+    </div>
 
 
 
 </body>
+
 </html>
