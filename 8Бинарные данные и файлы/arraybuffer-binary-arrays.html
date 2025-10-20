@@ -136,7 +136,41 @@ dataView.setUint32(0, 0); // при установке 4-байтового чи
         </p>
         <p><code>TypedArray</code> - это класс реализующий массив бинарных данных, с имеющимися у него методами похожими
             на обычный <code>Array</code>.</p>
-            <p><code>DataView</code> - это средство для просмотра бинарных буферов.</p>
+        <p><code>DataView</code> - это средство для просмотра бинарных буферов.</p>
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <script>
+            let u81 = new Uint8Array(new ArrayBuffer(24))
+            u81[0] = 10;
+            u81[1] = 12
+            u81[2] = 34
+            let u82 = new Uint8Array(new ArrayBuffer(24))
+            u82[0] = 13;
+            u82[1] = 14;
+            u82[2] = 255;
+            //    for(let i=0;i<u82.length/8;i++) alert(u82.length) 
+            let arrays = [u81, u82];
+            function concat(array) {
+                let lenOfAllu8 = 0
+                let tmpLen = 0;
+                for (let u8 of array) {
+                    lenOfAllu8 += u8.length
+                }
+                let u8All = new Uint8Array(new ArrayBuffer(lenOfAllu8 / 8))
+                for (let u8 of array) {
+                    for (let i = 0; i < u8.length / 8; i++) {
+                        u8All[tmpLen] = u8[i]
+                        tmpLen++;
+                    }
+                }
+                return u8All;
+            }
+            let u83 = concat(arrays);
+            //      alert(u83)
+        </script>
+        <p>Ну в целом задачу можно считать выполненной, вроде как она выполняет все условия, но что-то меня смущает,
+            спросить бы дипсика.</p>
     </div>
 </body>
 
