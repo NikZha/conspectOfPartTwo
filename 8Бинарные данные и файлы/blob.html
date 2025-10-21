@@ -79,7 +79,80 @@ link.href = URL.createObjectURL(blob);
         <p>Так же можно запускать загрузку при помощи <code>link.click()</code> автоматически. Удалить линк, чтобы не
             засорять память можно при помощи: <code>URL.revokeObjectURL(url)</code>.</p>
     </div>
+    <div class="topic" id="base64">
+        <h3>Blob to base64</h3>
+        <p>Альтернатива <code>URL.createObjectURL</code> – конвертация Blob-объекта в строку с кодировкой base64.
+        </p>
+        <p>Эта кодировка представляет двоичные данные в виде строки с безопасными для чтения символами в ASCII-кодах от
+            0 до 64. И что более важно – мы можем использовать эту кодировку для «data-urls».</p>
+        <p>data url имеет форму <code>data:[&lt;mediatype>][;base64],&lt;data></code>. Мы можем использовать такой url
+            где угодно наряду с «обычным» url. Например:</p>
+        <pre><code class="language-js">
+&lt;img src="data:image/png;base64,R0lGODlhDAAMAKIFAF5LAP/zxAAAANyuAP/gaP///wAAAAAAACH5BAEAAAUALAAAAAAMAAwAAAMlWLPcGjDKFYi9lxKBOaGcF35DhWHamZUW0K4mAbiwWtuf0uxFAgA7">    
+</code></pre>
+        <img
+            src="data:image/png;base64,R0lGODlhDAAMAKIFAF5LAP/zxAAAANyuAP/gaP///wAAAAAAACH5BAEAAAUALAAAAAAMAAwAAAMlWLPcGjDKFYi9lxKBOaGcF35DhWHamZUW0K4mAbiwWtuf0uxFAgA7">
+        <script>
+            function expl1(params) {
+                let link = document.createElement('a');
+                link.download = 'hello.txt';
 
+                let blob1 = new Blob(['Hello, world!'], { type: 'text/plain' });
+
+                let reader = new FileReader();
+                reader.readAsDataURL(blob1); // конвертирует Blob в base64 и вызывает onload
+
+
+                link.href = reader.result; // url с данными
+                link.click();
+
+            }   
+        </script>
+        <p>Самое главно, что можно трансформировать <code>blob</code> в <code>base64</code> используя встроенный в
+            браузер объект типа <code>FileReader</code>. Например:</p>
+        <pre><input type="button" value="Тест blobToBase64" onclick="expl1()"><code class="language-js">
+let link = document.createElement('a');
+link.download = 'hello.txt';
+
+let blob1 = new Blob(['Hello, world!'], { type: 'text/plain' });
+
+let reader = new FileReader();
+reader.readAsDataURL(blob1); // конвертирует Blob в base64 и вызывает onload
+
+
+link.href = reader.result; // url с данными
+link.click();            
+        </code></pre>
+        <p>
+            Сравнение <code>URL.createObjectURL(blob)</code> и <code>Blob to data url</code>:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>URL.createObjectURL(blob)</th>
+                    <th>Blob to data url</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <ul>
+                            <li>Нужно отзывать объект для освобождения памяти.</li>
+                            <li>Прямой доступ к Blob, без «кодирования/декодирования».</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>Нет необходимости что-либо отзывать.</li>
+                            <li>Потеря производительности и памяти при декодировании больших Blob-объектов.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Таким образом <code>URL.createObjectURL(blob)</code> обычно быстрее и позовляет контролировать освобождение
+            памяти.</p>
+    </div>
 
 
 
