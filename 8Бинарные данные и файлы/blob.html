@@ -157,8 +157,8 @@ link.click();
         <h3>Изображение в Blob</h3>
         <p>Операции перевода изображения в <code>Blob</code> осуществлятся за счет <code>&lt;canvas&gt;</code>
             использованием метода <code>.toBlob(callback, format, quality)</code>.</p>
-            <p>Как пример:</p>
-            <pre><code class="language-js">
+        <p>Как пример:</p>
+        <pre><code class="language-js">
 // берём любое изображение
 let img = document.querySelector('img');
 
@@ -187,7 +187,37 @@ canvas.toBlob(function(blob) {
 }, 'image/png');                
             </code></pre>
     </div>
-
+    <div class="topic" id="arraybufer">
+        <h3>Из Blob в ArrayBuffer</h3>
+        <p>
+            <code>FileReader</code> позволяет перегнать из блоба в <code>ArrayBuffer</code>, почему-то работает только в таком виде:
+            <pre><input type="button" value="Из Blob в ArrayBuffer" onclick="expl2()"><code class="language-js">
+function expl2(params) {
+    let fileReader = new FileReader();
+    let blob = new Blob(['Hello, world!'], { type: 'text/plain' });
+    fileReader.readAsArrayBuffer(blob);
+    fileReader.onload = function (event) {
+    let arrayBuffer = fileReader.result;
+    alert(arrayBuffer)
+    };
+    
+}                
+            </code></pre>
+        </p>
+        <script>
+            function expl2(params) {
+                let fileReader = new FileReader();
+                let blob = new Blob(['Hello, world!'], { type: 'text/plain' });
+                fileReader.readAsArrayBuffer(blob);
+                fileReader.onload = function (event) {
+                    let arrayBuffer = fileReader.result;
+                    alert(arrayBuffer)
+                };
+                
+            }
+        </script>
+        
+    </div>
 
 
 
