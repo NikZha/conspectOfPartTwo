@@ -190,8 +190,9 @@ canvas.toBlob(function(blob) {
     <div class="topic" id="arraybufer">
         <h3>Из Blob в ArrayBuffer</h3>
         <p>
-            <code>FileReader</code> позволяет перегнать из блоба в <code>ArrayBuffer</code>, почему-то работает только в таком виде:
-            <pre><input type="button" value="Из Blob в ArrayBuffer" onclick="expl2()"><code class="language-js">
+            <code>FileReader</code> позволяет перегнать из блоба в <code>ArrayBuffer</code>, почему-то работает только в
+            таком виде:
+        <pre><input type="button" value="Из Blob в ArrayBuffer" onclick="expl2()"><code class="language-js">
 function expl2(params) {
     let fileReader = new FileReader();
     let blob = new Blob(['Hello, world!'], { type: 'text/plain' });
@@ -213,12 +214,28 @@ function expl2(params) {
                     let arrayBuffer = fileReader.result;
                     alert(arrayBuffer)
                 };
-                
+
             }
         </script>
-        
-    </div>
 
+    </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>В то время как ArrayBuffer, Uint8Array и другие BufferSource являются «бинарными данными», Blob представляет
+            собой «бинарные данные с типом».</p>
+
+        <p>Это делает Blob удобным для операций загрузки/выгрузки данных, которые так часто используются в браузере.</p>
+
+        <p>Методы, которые выполняют сетевые запросы, такие как XMLHttpRequest, fetch и подобные, могут изначально
+            работать с Blob так же, как и с другими объектами, представляющими двоичные данные.</p>
+
+        <p>Мы можем легко конвертировать Blob в низкоуровневые бинарные типы данных и обратно: </p>
+        <ul>
+            <li>Мы можем создать Blob из типизированного массива, используя конструктор new Blob(...).</li>
+            <li>Мы можем обратно создать ArrayBuffer из Blob, используя FileReader, а затем создать его представление
+                для низкоуровневых операций. </li>
+        </ul>
+    </div>
 
 
 
