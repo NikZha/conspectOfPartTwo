@@ -54,6 +54,31 @@ let blob = new Blob([hello, ' ', 'world'], {type: 'text/plain'});
                 основе, объединять несколько объектов в новый и так далее.</p>
         </blockquote>
     </div>
+    <div class="topic" id="url">
+        <h3>Blob как URL</h3>
+        <p><code>Blob</code> может быть использован, как ссылка <code>a</code> или изображение <code>img</code>:</p>
+        <pre><code class="language-js">
+&lt;!-- download атрибут указывает браузеру делать загрузку вместо навигации --&gt;
+&lt;a download="hello.txt" href='#' id="link">Загрузить&lt;/a>
+
+&lt;script>
+let blob = new Blob(["Hello, world!"], {type: 'text/plain'});
+
+link.href = URL.createObjectURL(blob);
+&lt;/script>            
+        </code></pre>
+        <!-- download атрибут указывает браузеру делать загрузку вместо навигации -->
+        <a download="hello.txt" href='#' id="link">Загрузить</a>
+
+        <script>
+            let blob = new Blob(["Hello, world!"], { type: 'text/plain' });
+
+            link.href = URL.createObjectURL(blob);
+        </script>
+        <p>Сгенеренный урл будет вида: <code>blob:*</code>.</p>
+        <p>Так же можно запускать загрузку при помощи <code>link.click()</code> автоматически. Удалить линк, чтобы не
+            засорять память можно при помощи: <code>URL.revokeObjectURL(url)</code>.</p>
+    </div>
 
 
 
