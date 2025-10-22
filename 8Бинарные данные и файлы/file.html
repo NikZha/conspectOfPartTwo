@@ -13,13 +13,66 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#file">File и FileReader</a></h2>
-    <ul>
-        <li><a href="#FileReader">FileReader</a></li>
-        <li><a href="#total">Итого</a></li>
-    </ul>
-</div>
+    <div class="contents">
+        <h2><a href="#file">File и FileReader</a></h2>
+        <ul>
+            <li><a href="#FileReader">FileReader</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="file">
+        <h2><a href="https://learn.javascript.ru/file">File и FileReader</a></h2>
+        <p>Объект File наследуется от объекта Blob и обладает возможностями по взаимодействию с файловой системой.</p>
+        <p>Два способа получения файла:</p>
+        <div id="1">
+            <h4>Конструктор:</h4>
+            <pre><code class="language-js">
+new File(fileParts, fileName, [options])                
+            </code></pre>
+            <ul>
+                <li><code>fileParts</code> – массив значений <code>Blob</code>/<code>BufferSource</code>/строки.</li>
+                <li><code>fileName</code> – имя файла, строка.</li>
+                <li><code>options</code> – необязательный объект со свойством:</li>
+                <ul>
+                    <li><code>lastModified</code> – дата последнего изменения в формате таймстамп (целое число). </li>
+                </ul>
+            </ul>
+        </div>
+        <div id="2">
+            <h4>Второй вариант это <code>&lt;input type="file"&gt;</code></h4>
+            <p>Так как <code>File</code> наследует от <code>Blob</code>, у объектов <code>File</code> есть те же
+                свойства плюс:
+
+            </p>
+            <ul>
+                <li><code>name</code> – имя файла,</li>
+                <li><code>lastModified</code> – таймстамп для даты последнего изменения. </li>
+            </ul>
+            <p>Например:</p>
+            <pre><code class="language-js">
+&lt;input type="file" onchange="showFile(this)"&gt;
+
+&lt;script&gt;
+function showFile(input) {
+  let file = input.files[0]; //Можно выбрать несколько файлов - псевдомассив input.files
+
+  alert(`File name: ${file.name}`); // например, my.png
+  alert(`Last modified: ${file.lastModified}`); // например, 1552830408824
+}
+&lt;/script&gt;                
+            </code></pre>
+            <input type="file" onchange="showFile(this)">
+
+            <script>
+                function showFile(input) {
+                    let file = input.files[0];
+
+                    alert(`File name: ${file.name}`); // например, my.png
+                    alert(`Last modified: ${file.lastModified}`); // например, 1552830408824
+                }
+            </script>
+        </div>
+    </div>
 
 
 
