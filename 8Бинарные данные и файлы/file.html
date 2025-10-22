@@ -61,7 +61,7 @@ function showFile(input) {
 }
 &lt;/script&gt;                
             </code></pre>
-            <input type="file" onchange="showFile(this)">
+            <input type="file" onchange="showFile(this)" id="expl">
 
             <script>
                 function showFile(input) {
@@ -69,11 +69,85 @@ function showFile(input) {
 
                     alert(`File name: ${file.name}`); // например, my.png
                     alert(`Last modified: ${file.lastModified}`); // например, 1552830408824
+                    let reader = new FileReader()
+                    reader.readAsText(file, 'cp1251')
+                    let str = ''
+
+                    reader.onload = function () {
+                        str = reader.result
+                        alert(str)
+                    };
+                    reader.onerror = function () {
+                        alert(reader.error)
+                    }
                 }
             </script>
         </div>
     </div>
+    <div class="topic" id="FileReader">
+        <h3>FileReader</h3>
+        <p>Как было показано в предыдущем уроке - <code>FileReader</code> это класс для чтения данных из
+            <code>Blob</code> и в том числе из его потомков, типа <code>File</code>.
+        </p>
+        <p>Работает несколько криво, потому что создаётся пустой конструктор:</p>
+        <pre><code class="language-js">
+let reader = new FileReader();                
+            </code></pre>
+        <p>Далее нужно вызвать нужный метод объекта:</p>
+        <ul>
+            <li><code>readAsArrayBuffer(blob)</code> – считать данные как ArrayBuffer</li>
+            <li><code>readAsText(blob, [encoding])</code> – считать данные как строку (кодировка по умолчанию: utf-8)
+            </li>
+            <li><code>readAsDataURL(blob)</code> – считать данные как base64-кодированный URL.</li>
+            <li><code>abort()</code> – отменить операцию. </li>
+        </ul>
+        <p>Предусмотреть нужный обработчик события объекта:</p>
+        <ul>
+            <li><code>loadstart</code> – чтение начато.</li>
+            <li><code>progress</code> – срабатывает во время чтения данных.</li>
+            <li><code>load</code> – нет ошибок, чтение окончено.</li>
+            <li><code>abort</code> – вызван abort().</li>
+            <li><code>error</code> – произошла ошибка.</li>
+            <li><code>loadend</code> – чтение завершено (успешно или нет). </li>
+        </ul>
+        <p>И только потом по событию onload или onerror или onloadend получить:</p>
+        <ul>
+            <li><code>reader.result</code> результат чтения (если оно успешно)</li>
+            <li><code>reader.error</code> объект ошибки (при неудаче). </li>
+        </ul>
+        <p><a href="#expl">Возвращаясь</a> к предыдущему примеру, там можно соорудить нечто такое для чтения файла:</p>
+        <pre><code class="language-js">
+                function showFile(input) {
+                    let file = input.files[0];
 
+                    alert(`File name: ${file.name}`); // например, my.png
+                    alert(`Last modified: ${file.lastModified}`); // например, 1552830408824
+                    let reader = new FileReader()
+                    reader.readAsText(file, 'cp1251')
+                    let str = ''
+
+                    reader.onload =  function () {
+                        str = reader.result
+                        alert(str)
+                    };
+                    reader.onerror = function(){
+                        alert(reader.error)
+                    }
+                }        
+    </code></pre>
+        <p>Кривость тут в том, <code>read*</code> генерирует события, а не возвращает результат вычислений, как
+            ожидается.</p>
+        <blockquote>
+            <h4>Для Web Worker также доступен <code>FileReaderSync</code></h4>
+            <p>Для веб-воркеров доступен синхронный вариант FileReader, именуемый FileReaderSync.</p>
+
+            <p>Его методы считывания read* не генерируют события, а возвращают результат, как это делают обычные
+                функции.</p>
+
+            <p>Но это только внутри веб-воркера, поскольку задержки в синхронных вызовах, которые возможны при чтении из
+                файла, в веб-воркерах менее важны. Они не влияют на страницу. </p>
+        </blockquote>
+    </div>
 
 
 
