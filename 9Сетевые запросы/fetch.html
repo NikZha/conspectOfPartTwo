@@ -130,9 +130,10 @@ for (let [key, value] of response.headers) {
   alert(`${key} = ${value}`);
 }            
         </code></pre>
+        <input type="button" value="Test headers of local fetch" onclick="expl2()">
         <script>
           async  function expl2() {
-let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+let response = await fetch('../index.html');
 
 // получить один заголовок
 alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
