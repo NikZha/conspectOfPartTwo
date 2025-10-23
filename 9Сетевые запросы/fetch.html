@@ -24,7 +24,98 @@
             <li><a href="#tasks">Задача</a></li>
         </ul>
     </div>
+    <div class="topic" id="fetch">
+        <h2>Fetch</h2>
+        <p>Для сетевых запросов используется метод(статический класс) <code>fetch</code>:</p>
+        <pre><code class="language-js">
+let promise = fetch(url, [options])            
+        </code></pre>
+        <ul>
+            <li><code>url</code> – URL для отправки запроса.</li>
+            <li><code>options</code> – дополнительные параметры: метод, заголовки и так далее. </li>
+        </ul>
+        <p>Без <code>options</code> это простой GET-запрос который возвращает объект встроенного класса Response в
+            качестве результата, как только сервер пришлёт заголовки ответа. Ошибка возвращется если fetch не смог
+            достучаться до ресурса, коды 400-500 ошибками не являются:</p>
+        <ul>
+            <li><code>status</code> – код статуса HTTP-запроса, например 200.</li>
+            <li><code>ok</code> – логическое значение: будет true, если код HTTP-статуса в диапазоне 200-299. </li>
+        </ul>
+        <p>Например: <input type="button" value="Тест fetch" onclick="expl1()"></p>
+        <script>
+            async function expl1(params) {
+                let url = '../index.html'
+                let response = await fetch(url);
 
+                if (response.ok) { // если HTTP-статус в диапазоне 200-299
+                    // получаем тело ответа (см. про этот метод ниже)
+
+                    let json = await response.text();
+                    alert(json)
+                } else {
+                    alert("Ошибка HTTP: " + response.status);
+                }
+            }
+        </script>
+        <pre><code class="language-js">
+                let url = '../index.html'
+                let response = await fetch(url);
+
+                if (response.ok) { // если HTTP-статус в диапазоне 200-299
+                    // получаем тело ответа (см. про этот метод ниже)
+                    
+                    let json = await response.text();
+                    alert(json)
+                } else {
+                    alert("Ошибка HTTP: " + response.status);
+                }            
+        </code></pre>
+        <p>Как видно с этого кода, чтобы получить ответ нужно использовать дополнительный вызов, причём получив один,
+            нельзя получить другой:</p>
+        <ul>
+            <li><code>response.text()</code> – читает ответ и возвращает как обычный текст,</li>
+            <li><code>response.json()</code> – декодирует ответ в формате JSON,</li>
+            <li><code>response.formData()</code> – возвращает ответ как объект FormData (разберём его в следующей
+                главе),</li>
+            <li><code>response.blob()</code> – возвращает объект как Blob (бинарные данные с типом),</li>
+            <li><code>response.arrayBuffer()</code> – возвращает ответ как ArrayBuffer (низкоуровневое представление
+                бинарных данных),</li>
+            <li>помимо этого, <code>response.body</code> – это объект ReadableStream, с помощью которого можно считывать
+                тело запроса по частям. Мы рассмотрим и такой пример несколько позже.</li>
+
+        </ul>
+        <p>То же самое без await, с использованием промисов:</p>
+        <pre><input type="button" value="Test" onclick="fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+  .then(response => response.json())
+  .then(commits => alert(commits[0].author.login));"><code class="language-js">
+fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
+  .then(response => response.json())
+  .then(commits => alert(commits[0].author.login));            
+        </code></pre>
+        <p>В качестве примера работы с бинарными данными приводится:</p>
+        <pre><code class="language-js">
+let response = await fetch('/article/fetch/logo-fetch.svg');
+
+let blob = await response.blob(); // скачиваем как Blob-объект
+
+// создаём &lt;img>
+let img = document.createElement('img');
+img.style = 'position:fixed;top:10px;left:10px;width:100px';
+document.body.append(img);
+
+// выводим на экран
+img.src = URL.createObjectURL(blob);
+
+setTimeout(() => { // прячем через три секунды
+  img.remove();
+  URL.revokeObjectURL(img.src);
+}, 3000);            
+        </code></pre>
+        <blockquote><h4>Один вариант ответа</h4>
+        Как уже было написано ранее можно выбрать 1 вариант ответа, то есть <code>.json()</code>
+        после <code>.text()</code> не сработает.
+        </blockquote>
+    </div>
 
 </body>
 
