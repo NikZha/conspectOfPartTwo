@@ -116,6 +116,34 @@ setTimeout(() => { // прячем через три секунды
         после <code>.text()</code> не сработает.
         </blockquote>
     </div>
+    <div class="topic" id="resp">
+        <h3>Заголовки ответа</h3>
+        <p>Заголовки ответа хранятся в похожем на Map объекте <code>response.headers</code>.</p>
+        <pre><code class="language-js">
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+
+// получить один заголовок
+alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+
+// перебрать все заголовки
+for (let [key, value] of response.headers) {
+  alert(`${key} = ${value}`);
+}            
+        </code></pre>
+        <script>
+          async  function expl2() {
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+
+// получить один заголовок
+alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+
+// перебрать все заголовки
+for (let [key, value] of response.headers) {
+  alert(`${key} = ${value}`);
+}                
+            }
+        </script>
+    </div>
 
 </body>
 
