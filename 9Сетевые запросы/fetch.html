@@ -241,6 +241,41 @@ alert(result.message);
     }
         </code></pre>
     </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Типичный запрос с помощью fetch состоит из двух операторов await:</p>
+        <pre><code class="language-js">
+let response = await fetch(url, options); // завершается с заголовками ответа
+let result = await response.json(); // читать тело ответа в формате JSON            
+        </code></pre>
+        <p>Или, без await:</p>
+        <pre><code class="language-js">
+fetch(url, options)
+  .then(response => response.json())
+  .then(result => /* обрабатываем результат */)            
+        </code></pre>
+        <p>Ответ:</p>
+        <ul>
+            <li><code>response.status</code> – HTTP-код ответа,</li>
+            <li><code>response.ok</code> – true, если статус ответа в диапазоне 200-299.</li>
+            <li><code>response.headers</code> – похожий на Map объект с HTTP-заголовками. </li>
+        </ul>
+        <p>Методы для получения тела ответа: </p>
+        <ul>
+            <li>response.text()</li> – возвращает ответ как обычный текст,
+            <li>response.json()</li> – декодирует ответ в формате <code>JSON</code>,
+            <li>response.formData()</li> – возвращает ответ как объект <code>FormData</code> (кодировка form/multipart, см. следующую
+            главу),
+            <li>response.blob()</li> – возвращает объект как <code>Blob</code> (бинарные данные с типом),
+            <li>response.arrayBuffer()</li> – возвращает ответ как <code>ArrayBuffer</code> (низкоуровневые бинарные данные),
+        </ul>
+        <p>Опции fetch, которые мы изучили на данный момент:</p>
+        <ul>
+<li><code>method</code> – HTTP-метод,</li>
+<li><code>headers</code> – объект с запрашиваемыми заголовками (не все заголовки разрешены),</li>
+<li><code>body</code> – данные для отправки (тело запроса) в виде текста, <code>FormData</code>, <code>BufferSource</code>, <code>Blob</code> или <code>UrlSearchParams</code>            </li>
+        </ul>
+    </div>
 </body>
 
 </html>
