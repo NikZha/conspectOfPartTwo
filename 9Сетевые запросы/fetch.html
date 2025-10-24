@@ -183,6 +183,41 @@ let response = fetch(protectedUrl, {
         <p>Эти заголовки обеспечивают достоверность данных и корректную работу протокола HTTP, поэтому они
             контролируются исключительно браузером.</p>
     </div>
+    <div class="topic" id="post">
+        <h3>POST-запросы</h3>
+        <p>Для <code>fetch</code> используются параметры:</p>
+        <ul>
+            <li><code>method</code> – HTTP метод, например POST,</li>
+            <li><code>body</code> – тело запроса, одно из списка:</li>
+            <ul>
+                <li>строка (например, в формате JSON),</li>
+                <li>объект <code>FormData</code> для отправки данных как <code>form/multipart</code>,</li>
+                <li><code>Blob/BufferSource</code> для отправки бинарных данных,</li>
+                <li><code>URLSearchParams</code> для отправки данных в кодировке <code>x-www-form-urlencoded</code>,
+                    используется
+                    редко. </li>
+            </ul>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-js">
+let user = {
+  name: 'John',
+  surname: 'Smith'
+};
+
+let response = await fetch('/article/fetch/post/user', {
+  method: 'POST',
+  headers: {
+//Требуется указать правильный Content-Type если мы шлём json.
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+  body: JSON.stringify(user)
+});
+
+let result = await response.json();
+alert(result.message);            
+        </code></pre>
+    </div>
 </body>
 
 </html>
