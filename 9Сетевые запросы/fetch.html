@@ -276,8 +276,33 @@ fetch(url, options)
             <li><code>method</code> – HTTP-метод,</li>
             <li><code>headers</code> – объект с запрашиваемыми заголовками (не все заголовки разрешены),</li>
             <li><code>body</code> – данные для отправки (тело запроса) в виде текста, <code>FormData</code>,
-                <code>BufferSource</code>, <code>Blob</code> или <code>UrlSearchParams</code> </li>
+                <code>BufferSource</code>, <code>Blob</code> или <code>UrlSearchParams</code>
+            </li>
         </ul>
+    </div>
+    <div class="topic" id="tasks">
+        <h3><a href="https://learn.javascript.ru/fetch#tasks">Задача</a></h3>
+        <input type="button" value="Test задачи" onclick="testFunct()">
+        <p>Ну типа сделана, правда я не уверен во втором пункте требований, его песочница не открывается.</p>
+        <script>
+            let names = ['NikZha', 'valdikss']
+            async function getUsers(names) {
+                let users = [];
+                for (let name of names) {
+                    let url = 'https://api.github.com/users/' + name;
+                    let response = await fetch(url); // завершается с заголовками ответа
+                    let result = await response.json(); // читать тело ответа в формате JSON
+                    users.push(result)
+                }
+
+                return users
+            }
+           async function testFunct() {
+                let users = await getUsers(names)
+                for(let user of users) console.log(user)
+            }
+            
+        </script>
     </div>
 </body>
 
