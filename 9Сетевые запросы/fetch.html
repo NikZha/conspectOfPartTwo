@@ -111,9 +111,10 @@ setTimeout(() => { // прячем через три секунды
   URL.revokeObjectURL(img.src);
 }, 3000);            
         </code></pre>
-        <blockquote><h4>Один вариант ответа</h4>
-        Как уже было написано ранее можно выбрать 1 вариант ответа, то есть <code>.json()</code>
-        после <code>.text()</code> не сработает.
+        <blockquote>
+            <h4>Один вариант ответа</h4>
+            Как уже было написано ранее можно выбрать 1 вариант ответа, то есть <code>.json()</code>
+            после <code>.text()</code> не сработает.
         </blockquote>
     </div>
     <div class="topic" id="resp">
@@ -132,20 +133,56 @@ for (let [key, value] of response.headers) {
         </code></pre>
         <input type="button" value="Test headers of local fetch" onclick="expl2()">
         <script>
-          async  function expl2() {
-let response = await fetch('../index.html');
+            async function expl2() {
+                let response = await fetch('../index.html');
 
-// получить один заголовок
-alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
+                // получить один заголовок
+                alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
 
-// перебрать все заголовки
-for (let [key, value] of response.headers) {
-  alert(`${key} = ${value}`);
-}                
+                // перебрать все заголовки
+                for (let [key, value] of response.headers) {
+                    alert(`${key} = ${value}`);
+                }
             }
         </script>
     </div>
-
+    <div class="topic" id="req">
+        <h3>Заголовки запроса</h3>
+        <p>В качестве объекта <code>options</code> можно отправить свойство <code>headers</code> с объектом заголовков.
+            Например:</p>
+        <pre><code class="language-js">
+let response = fetch(protectedUrl, {
+  headers: {
+    Authentication: 'secret'
+  }
+});            
+        </code></pre>
+        <p>Однако есть заголовки которые нельзя установить:</p>
+        <ul>
+            <li><code>Accept-Charset, Accept-Encoding</code></li>
+            <li><code>Access-Control-Request-Headers</code></li>
+            <li><code>Access-Control-Request-Method</code></li>
+            <li><code>Connection</code></li>
+            <li><code>Content-Length</code></li>
+            <li><code>Cookie, Cookie2</code></li>
+            <li><code>Date</code></li>
+            <li><code>DNT</code></li>
+            <li><code>Expect</code></li>
+            <li><code>Host</code></li>
+            <li><code>Keep-Alive</code></li>
+            <li><code>Origin</code></li>
+            <li><code>Referer</code></li>
+            <li><code>TE</code></li>
+            <li><code>Trailer</code></li>
+            <li><code>Transfer-Encoding</code></li>
+            <li><code>Upgrade</code></li>
+            <li><code>Via</code></li>
+            <li><code>Proxy-*</code></li>
+            <li><code>Sec-*            </code></li>
+        </ul>
+        <p>Эти заголовки обеспечивают достоверность данных и корректную работу протокола HTTP, поэтому они
+            контролируются исключительно браузером.</p>
+    </div>
 </body>
 
 </html>
