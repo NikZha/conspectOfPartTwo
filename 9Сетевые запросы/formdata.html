@@ -11,6 +11,7 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
+
 <body>
     <div class="contents">
         <h2><a href="#formdata">FormData</a></h2>
@@ -25,6 +26,11 @@
 
     <div class="topic" id="formdata">
         <h3><a href="https://learn.javascript.ru/formdata">FormData</a></h3>
+        <pre><code class="language-js">
+let formData = new FormData([form]);            
+<p>Это конструктор создающий соотвествующий типа даных, если передаётся в этот конструктор html-элемент <code>form</code>, то прочитываются её поля.</p>
+<p>При обмене данными с сетью указывается тип данных <code>multipart/form-data</code> как и в случае обычной форме в запросе  <code>POST</code>.</p>
+        </code></pre>
     </div>
 
 
@@ -32,4 +38,5 @@
 
 
 </body>
+
 </html>
