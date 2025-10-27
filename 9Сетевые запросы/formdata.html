@@ -143,7 +143,15 @@ formData.append("image", imageBlob, "image.png");
         <p>То есть прямо указывается, что это <code>image</code>, добавляется переменная содержащая <code>blob</code> и
            третий аргумент это имя файла. Далее сервер считает, что это обычный файл из формы.</p>
     </div>
-
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <pre><code class="language-js">
+let formData = new FormData([form]); 
+//конструктор создающий из html-формы струтуру данных в javascript.            
+        </code></pre>
+        <p>Методы <code>FormData</code> похожи на методы <code>Map</code>.</p>
+        <p>Тип данных позволяет отправлять <code>POST</code> как файлы так и <code>Blob</code>.</p>
+    </div>
 </body>
 
 </html>
