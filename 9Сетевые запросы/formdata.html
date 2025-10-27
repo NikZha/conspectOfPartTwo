@@ -60,9 +60,50 @@ let formData = new FormData([form]);
         <p>Пример у меня не работает, потому что нет серверной части которая принимает эту форму и отвечает на запрос.
         </p>
         <p>Но в целом понятно, что действие по умолчанию отменяется, а сама форма создаётся в виде объекта
-            <code>FromData</code> и отправляется при помощи <code>fetch</code>, а далее читается ответ сервера.</p>
+            <code>FromData</code> и отправляется при помощи <code>fetch</code>, а далее читается ответ сервера.
+        </p>
     </div>
+    <div class="topic" id="method">
+        <h3>Методы объекта FormData</h3>
+        <p>Список методов похожий на <code>Map</code>:</p>
+        <ul>
+            <li><code>formData.append(name, value)</code> – добавляет к объекту поле с именем name и значением value,
+            </li>
+            <li><code>formData.append(name, blob, fileName)</code> – добавляет поле, как будто в форме имеется элемент
+                <code>&lt;input type="file"></code>, третий аргумент fileName устанавливает имя файла (не имя поля
+                формы), как будто это имя из файловой системы пользователя,
+            </li>
+            <li><code>formData.set(name, value)</code>,</li>
+            <li><code>formData.set(name, blob, fileName)</code>.</li>
+            <li><code>formData.delete(name)</code> – удаляет поле с заданным именем name,</li>
+            <li><code>formData.get(name)</code> – получает значение поля с именем name,</li>
+            <li><code>formData.has(name)</code> – если существует поле с именем name, то возвращает true, иначе false
+            </li>
+        </ul>
+        <p>Так же как и <code>Map</code> <code>FormData</code> может итерироваться по <code>key, value</code>:</p>
+        <script>
+            function expl1() {
+                let formData = new FormData();
+                formData.append('name', 'Иван');
+                formData.append('surname', 'Иванов');
 
+                // Список пар ключ/значение
+                for (let [name, value] of formData) {
+                    alert(`${name} = ${value}`); // key1=value1, потом key2=value2
+                }
+            }
+        </script>
+        <pre><input type="button" value="Test key value" onclick="expl1()"><code class="language-js">
+let formData = new FormData();
+formData.append('name', 'Иван');
+formData.append('surname', 'Иванов');
+
+// Список пар ключ/значение
+for(let [name, value] of formData) {
+  alert(`${name} = ${value}`); // key1=value1, потом key2=value2
+}            
+        </code></pre>
+    </div>
 
 
 
