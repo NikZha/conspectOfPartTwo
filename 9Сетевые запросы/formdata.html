@@ -134,7 +134,15 @@ for(let [name, value] of formData) {
 &lt;/script&gt;            
         </code></pre>
     </div>
-
+    <div class="topic" id="blob">
+        <h3>Отправка формы с Blob-данными</h3>
+        <p>В топике приводится длинный неработающий пример с canvas, но основное это:</p>
+        <pre><code class="language-js">
+formData.append("image", imageBlob, "image.png");            
+        </code></pre>
+        <p>То есть прямо указывается, что это <code>image</code>, добавляется переменная содержащая <code>blob</code> и
+           третий аргумент это имя файла. Далее сервер считает, что это обычный файл из формы.</p>
+    </div>
 
 </body>
 
