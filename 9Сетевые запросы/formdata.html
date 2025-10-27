@@ -32,7 +32,36 @@ let formData = new FormData([form]);
 <p>При обмене данными с сетью указывается тип данных <code>multipart/form-data</code> как и в случае обычной форме в запросе  <code>POST</code>.</p>
         </code></pre>
     </div>
+    <div class="topic" id="send">
+        <h3><a href="https://learn.javascript.ru/formdata#otpravka-prostoy-formy">Отправка простой формы</a></h3>
+        <p>Создание простой формы:</p>
+        <pre><code class="language-js">
+        &lt;form id="formElem">
+            &lt;input type="text" name="name" value="John">
+            &lt;input type="text" name="surname" value="Smith">
+            &lt;input type="submit">
+        &lt;/form>
 
+        &lt;script>
+            formElem.onsubmit = async (e) => {
+                e.preventDefault();
+
+                let response = await fetch('/article/formdata/post/user', {
+                    method: 'POST',
+                    body: new FormData(formElem)
+                });
+
+                let result = await response.json();
+
+                alert(result.message);
+            };
+        &lt;/script>
+        </code></pre>
+        <p>Пример у меня не работает, потому что нет серверной части которая принимает эту форму и отвечает на запрос.
+        </p>
+        <p>Но в целом понятно, что действие по умолчанию отменяется, а сама форма создаётся в виде объекта
+            <code>FromData</code> и отправляется при помощи <code>fetch</code>, а далее читается ответ сервера.</p>
+    </div>
 
 
 
