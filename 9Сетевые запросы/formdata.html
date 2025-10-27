@@ -104,7 +104,36 @@ for(let [name, value] of formData) {
 }            
         </code></pre>
     </div>
+    <div class="topic" id="form">
+        <h3>Отправка формы с файлом</h3>
+        <p>Собственно все тоже самое кроме того, что помимо текстовых полей в форме присуствиуем
+            <code>&lt;input type="file"></code> потому что заголовок <code>Content-Type: multipart/form-data</code>
+            позволяет отправлять файлы.
+        </p>
+        <p>У автора этот пример не работает, нет серверного механизма обрабатывающего запрос:</p>
+        <pre><code class="language-js">
+&lt;form id="formElem"&gt;
+  &lt;input type="text" name="firstName" value="John"&gt;
+  Картинка: &lt;input type="file" name="picture" accept="image/*"&gt;
+  &lt;input type="submit"&gt;
+&lt;/form&gt;
 
+&lt;script&gt;
+  formElem.onsubmit = async (e) => {
+    e.preventDefault();
+
+    let response = await fetch('/article/formdata/post/user-avatar', {
+      method: 'POST',
+      body: new FormData(formElem)
+    });
+
+    let result = await response.json();
+
+    alert(result.message);
+  };
+&lt;/script&gt;            
+        </code></pre>
+    </div>
 
 
 </body>
