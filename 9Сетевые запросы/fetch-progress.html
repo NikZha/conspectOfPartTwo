@@ -13,12 +13,125 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#progress">Fetch: ход загрузки</a></h2>
+    <div class="contents">
+        <h2><a href="#progress">Fetch: ход загрузки</a></h2>
 
-</div>
+    </div>
+    <div class="topic" id="progress">
+        <h2><a href="https://learn.javascript.ru/fetch-progress">Fetch: ход загрузки</a></h2>
+        <p>Не понимаю зачем этот топик, но пусть будет.</p>
+        <p><code>response.body</code> - позволяет отслеживать сколько и чего загрузилось в ответ. В отличии от
+            <code>.json()</code> позволяет несколько раз дёргать это свойство.
+        </p>
+        <p>Упрощённый код для иллюстрации:</p>
+        <pre><code class="language-js">
+// вместо response.json() и других методов
+const reader = response.body.getReader();
 
+// бесконечный цикл, пока идёт загрузка
+while(true) {
+  // done становится true в последнем фрагменте
+  // value - Uint8Array из байтов каждого фрагмента
+  const {done, value} = await reader.read();
+
+  if (done) {
+    break;
+  }
+
+  console.log(`Получено ${value.length} байт`)
+}                
+            </code></pre>
+        <p>Рабочий код для иллюстрации:</p>
+        <input type="button" value="Тест кода из примера" onclick="expl1()">
+        <pre><code class="language-js">
+// Шаг 1: начинаем загрузку fetch, получаем поток для чтения
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?per_page=100');
+
+const reader = response.body.getReader();
+
+// Шаг 2: получаем длину содержимого ответа
+const contentLength = +response.headers.get('Content-Length');
+
+// Шаг 3: считываем данные:
+let receivedLength = 0; // количество байт, полученных на данный момент
+let chunks = []; // массив полученных двоичных фрагментов (составляющих тело ответа)
+while(true) {
+  const {done, value} = await reader.read();
+
+  if (done) {
+    break;
+  }
+
+  chunks.push(value);
+  receivedLength += value.length;
+
+  console.log(`Получено ${receivedLength} из ${contentLength}`)
+}
+
+// Шаг 4: соединим фрагменты в общий типизированный массив Uint8Array
+let chunksAll = new Uint8Array(receivedLength); // (4.1)
+let position = 0;
+for(let chunk of chunks) {
+  chunksAll.set(chunk, position); // (4.2)
+  position += chunk.length;
+}
+
+// Шаг 5: декодируем Uint8Array обратно в строку
+let result = new TextDecoder("utf-8").decode(chunksAll);
+
+// Готово!
+let commits = JSON.parse(result);
+alert(commits[0].author.login);                
+            </code></pre>
+        <p>Для полученя блоба вмиесто строки нужно вместо 4 и 5 шага:</p>
+        <pre><code class="language-js">
+let blob = new Blob(chunks);                
+            </code></pre>
+        <script>
+            async function expl1() {
+                // Шаг 1: начинаем загрузку fetch, получаем поток для чтения
+                let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?per_page=100');
+
+                const reader = response.body.getReader();
+
+                // Шаг 2: получаем длину содержимого ответа
+                const contentLength = +response.headers.get('Content-Length');
+
+                // Шаг 3: считываем данные:
+                let receivedLength = 0; // количество байт, полученных на данный момент
+                let chunks = []; // массив полученных двоичных фрагментов (составляющих тело ответа)
+                while (true) {
+                    const { done, value } = await reader.read();
+
+                    if (done) {
+                        break;
+                    }
+
+                    chunks.push(value);
+                    receivedLength += value.length;
+
+                    console.log(`Получено ${receivedLength} из ${contentLength}`)
+                }
+
+                // Шаг 4: соединим фрагменты в общий типизированный массив Uint8Array
+                let chunksAll = new Uint8Array(receivedLength); // (4.1)
+                let position = 0;
+                for (let chunk of chunks) {
+                    chunksAll.set(chunk, position); // (4.2)
+                    position += chunk.length;
+                }
+
+                // Шаг 5: декодируем Uint8Array обратно в строку
+                let result = new TextDecoder("utf-8").decode(chunksAll);
+
+                // Готово!
+                let commits = JSON.parse(result);
+                alert(commits[0].author.login);
+            }                
+        </script>
+    </div>
 
 
 </body>
+
 </html>
