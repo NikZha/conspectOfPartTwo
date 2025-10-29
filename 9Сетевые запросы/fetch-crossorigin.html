@@ -149,8 +149,20 @@ gotWeather({
             конспекте мусолить нет.</p>
     </div>
     <div class="topic" id="headers">
-        <h3>Заголовки ответа</h3>
-
+        <h3><a href="https://learn.javascript.ru/fetch-crossorigin#zagolovki-otveta">Заголовки ответа</a></h3>
+        <p>По умолчанию при запросе к другому источнику JavaScript может получить доступ только к так называемым
+            «простым» заголовкам ответа:</p>
+        <ul>
+            <li><code>Cache-Control</code></li>
+            <li><code>Content-Language</code></li>
+            <li><code>Content-Length</code></li>
+            <li><code>Content-Type</code></li>
+            <li><code>Expires</code></li>
+            <li><code>Last-Modified</code></li>
+            <li><code>Pragma            </code></li>
+        </ul>
+        <p>Чтобы разрешить JavaScript доступ к любому другому заголовку ответа, сервер должен указать заголовок
+            Access-Control-Expose-Headers</p>
     </div>
 
 
