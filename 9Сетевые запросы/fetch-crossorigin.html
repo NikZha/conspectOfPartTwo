@@ -67,16 +67,56 @@
         <p>Таким образом пока видится использование <code>fetch</code> лишь для манипуляций на файловой системе и тут
             скорее всего вылезут какие-нибудь подводные камни.</p>
     </div>
+    <div class="topic" id="forwhat">
+        <h3>Зачем нужен CORS? Экскурс в историю</h3>
+        <p>Cors это ослабление политики доступа с одного ресурса на другой, ранее это было в принципе не возможно.</p>
+        <div id="form">
+            <h4>Использование форм</h4>
+            <p>Из ситуации выходили кто как может, например при помощи <code>iframe</code>:</p>
+            <pre><code class="language-js">
+
+        &lt;!-- цель формы -->
+&lt;iframe name="iframe">&lt;/iframe>
+
+&lt;!-- форма могла быть динамически сгенерирована и отправлена с помощью JavaScript -->
+        &lt;form target="iframe" method="POST" action="http://narcat.narod.ru" id="form1">
+            &lt;button type="submit" form="form1" value="Submit">Submit&lt;/button>
+        &lt;/form>                
+            </code></pre>
+
+            <!-- цель формы -->
+            <iframe name="iframe"></iframe>
+
+            <!-- форма могла быть динамически сгенерирована и отправлена с помощью JavaScript -->
+            <form target="iframe" method="POST" action="http://narcat.narod.ru" id="form1">
+                <button type="submit" form="form1" value="Submit">Submit</button>
+            </form>
+            <p>Как видно и этот метод к настоящему моменту не сработает из-за политики одного источника и запрещения в
+                заголовках размещать старницу во фрейме.</p>
+        </div>
+        <div id="use">
+            <h4>Использование скриптов</h4>
+            <p>Идея в использовании <code>script.src</code>:</p>
+            <pre><code class="language-js">
+// 1. Объявить функцию для обработки погодных данных
+function gotWeather({ temperature, humidity }) {
+  alert(`температура: ${temperature}, влажность: ${humidity}`);
+}
+let script = document.createElement('script');
+script.src = `http://another.com/weather.json?callback=gotWeather`;
+document.body.append(script);
+// Ожидаемый ответ от сервера выглядит так:
+gotWeather({
+  temperature: 25,
+  humidity: 78
+});                
+            </code></pre>
+            <p>В целом выглядит как костыль.</p>
+        </div>
+    </div>
     <div class="topic" id="headers">
         <h3>Заголовки ответа</h3>
 
-        <!-- цель формы 
-<iframe name="iframe"></iframe>
-
-<!-- форма могла быть динамически сгенерирована и отправлена с помощью JavaScript -->
-        <form target="iframe" method="POST" action="http://narcat.narod.ru" id="form1">
-            <button type="submit" form="form1" value="Submit">Submit</button>
-        </form>
     </div>
 
 
