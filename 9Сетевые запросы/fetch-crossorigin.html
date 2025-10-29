@@ -26,27 +26,57 @@
             <li><a href="#tasks">Задачи</a></li>
         </ul>
     </div>
-    <div class="topic" id="headers">
-        <h3>Заголовки ответа</h3>
+    <div class="topic" id="crossorigin">
+        <h2><a href="https://learn.javascript.ru/fetch-crossorigin">Fetch: запросы на другие сайты</a></h2>
+        <pre><code class="lang">
+            //НЕ СРАБОТАЕТ ПРИМЕРНО НИКОГДА
+            let url = 'https://ya.ru'
+            async function expl1() {
+                let response = await fetch(url, {
+                    method: 'GET', headers: [
+                        ['Host', url],
+                        ['Origin', 'localhost']
+                    ]
+                })
+                let result = await response.text()
+                console.dir(result)
+            }            
+        </code></pre>
         <script>
             let url = 'https://ya.ru'
             async function expl1() {
-                let response = await fetch(url, {method: 'GET', headers: [
-                    ['Host', url],
-                    ['Origin', 'localhost'] 
-                ]})
+                let response = await fetch(url, {
+                    method: 'GET', headers: [
+                        ['Host', url],
+                        ['Origin', 'localhost']
+                    ]
+                })
                 let result = await response.text()
-               console.dir(result)
-        }
+                console.dir(result)
+            }
         </script>
-        <input type="button" value="Test simple" onclick="expl1()">
-                <!-- цель формы -->
+        <input type="button" value="Не сработает подробности в консоли" onclick="expl1()">
+        <p>На 99,9% сайтов не работают запросы в браузере, так как срабатывает политика браузера
+            «CORS»: Cross-Origin Resource Sharing («совместное использование ресурсов между разными источниками»).
+            Отключить можно, но это около опасно. Любые манипуляции с скрапингом интернет-ресурсов требуют написания
+            бэка.
+            Дипсик говорил, что есть прокси с которых можно якобы качать, но и они не работают могут не работать.
+        </p>
+        <p><code>fetch</code> будет использовать политику одного источника или если у ресурса установлен специальный
+            заголовок, чего нет у 99,9% сайтов.</p>
+        <p>Таким образом пока видится использование <code>fetch</code> лишь для манипуляций на файловой системе и тут
+            скорее всего вылезут какие-нибудь подводные камни.</p>
+    </div>
+    <div class="topic" id="headers">
+        <h3>Заголовки ответа</h3>
+
+        <!-- цель формы 
 <iframe name="iframe"></iframe>
 
 <!-- форма могла быть динамически сгенерирована и отправлена с помощью JavaScript -->
-<form target="iframe" method="POST" action="http://narcat.narod.ru" id="form1">
-<button type="submit" form="form1" value="Submit">Submit</button>
-</form>
+        <form target="iframe" method="POST" action="http://narcat.narod.ru" id="form1">
+            <button type="submit" form="form1" value="Submit">Submit</button>
+        </form>
     </div>
 
 
