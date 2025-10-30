@@ -11,22 +11,54 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
-<body>
-   <div class="contents">
-    <h2><a href="#api">Fetch API</a></h2>
-    <ul>
-        <li><a href="#reffer">referrer, referrerPolicy</a></li>
-        <li><a href="#mode">mode</a></li>
-        <li><a href="#credentials">credentials</a></li>
-        <li><a href="#cache">cache</a></li>
-        <li><a href="#redirect">redirect</a></li>
-        <li><a href="#integrity">integrity</a></li>
-        <li><a href="#keepalive">keepalive</a></li>
-    </ul>
-   </div> 
 
+<body>
+    <div class="contents">
+        <h2><a href="#api">Fetch API</a></h2>
+        <ul>
+            <li><a href="#reffer">referrer, referrerPolicy</a></li>
+            <li><a href="#mode">mode</a></li>
+            <li><a href="#credentials">credentials</a></li>
+            <li><a href="#cache">cache</a></li>
+            <li><a href="#redirect">redirect</a></li>
+            <li><a href="#integrity">integrity</a></li>
+            <li><a href="#keepalive">keepalive</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="api">
+        <h2><a href="https://learn.javascript.ru/fetch-api">Fetch API</a></h2>
+        <blockquote>
+            <p>Дядинька пишет, что все рассмотренные в этом уроке возможности являются редкоиспользуемыми, пробегу
+                коротенечко.</p> </blockquote>
+            <p>Нижеследующий список – это все возможные опции для <code>fetch</code> с соответствующими значениями по умолчанию (в
+                комментариях указаны альтернативные значения):</p>
+                <pre><code class="language-js">
+let promise = fetch(url, {
+  method: "GET", // POST, PUT, DELETE, etc.
+  headers: {
+    // значение этого заголовка обычно ставится автоматически,
+    // в зависимости от тела запроса
+    "Content-Type": "text/plain;charset=UTF-8"
+  },
+  body: undefined, // string, FormData, Blob, BufferSource или URLSearchParams
+  referrer: "about:client", // или "" для того, чтобы не послать заголовок Referer,
+  // или URL с текущего источника
+  referrerPolicy: "strict-origin-when-cross-origin", // no-referrer-when-downgrade, no-referrer, origin, same-origin...
+  mode: "cors", // same-origin, no-cors
+  credentials: "same-origin", // omit, include
+  cache: "default", // no-store, reload, no-cache, force-cache или only-if-cached
+  redirect: "follow", // manual, error
+  integrity: "", // контрольная сумма, например "sha256-abcdef1234567890"
+  keepalive: false, // true
+  signal: undefined, // AbortController, чтобы прервать запрос
+  window: window // null
+});                    
+                </code></pre>
+       
+    </div>
 
 
 
 </body>
+
 </html>
