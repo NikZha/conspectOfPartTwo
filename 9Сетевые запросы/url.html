@@ -23,8 +23,77 @@
     </div>
     <div class="topic" id="url">
         <h2><a href="https://learn.javascript.ru/url">Объекты URL</a></h2>
-        <p>Встроенный класс для создания и парсинга <code>url</code>. Нет методов которые требовали бы этот объект, подходит <code>String</code>.</p>
+        <p>Встроенный класс для создания и парсинга <code>url</code>. Нет методов которые требовали бы этот объект,
+            подходит <code>String</code>.</p>
+    </div>
+    <div class="topic" id="make">
+        <h3>Создание URL</h3>
+        <pre><code class="language-js">
+new URL(url, [base])            
+        </code></pre>
+        <p>Где:</p>
+        <ul>
+            <li><code>url</code> – полный URL-адрес или только путь, если указан второй параметр,</li>
+            <li><code>base</code> – необязательный «базовый» URL: если указан и аргумент url содержит только путь, то
+                адрес будет создан относительно него (пример ниже). </li>
+        </ul>
+        <p>Пример создания:</p>
+        <pre><input type="button" value="Создание url" onclick="expl1()"><code class="language-js">
+let url1 = new URL('https://javascript.info/profile/admin');
+let url2 = new URL('/profile/admin', 'https://javascript.info');
+
+alert(url1.toString() == url2.toString()); // Получается одинаковая строка, объекты естественно будут разные        
+        </code></pre>
+        <script>
+            function expl1() {
+                let url1 = new URL('https://javascript.info/profile/admin');
+                let url2 = new URL('/profile/admin', 'https://javascript.info');
+
+                alert(url1.toString() == url2.toString());
+            }
+        </script>
+        <p>Так же можно создать <code>url</code> из текущего и разложить его на составляющие:</p>
+        <input type="button" value="Создать url и составляющие url" onclick="expl2()">
+        <pre><code class="language-js">
+let url = new URL('https://javascript.info/profile/admin');
+let newUrl = new URL('tester', url);
+
+alert(`URL = ${newUrl}`); // https://javascript.info/profile/tester
+alert(`Protocol = ${newUrl.protocol}`)                
+alert(`Host = ${newUrl.host}`)
+alert(`pathname = ${newUrl.pathname}`)    
+</code></pre>
+        <script>
+            function expl2() {
+                let url = new URL('https://javascript.info/profile/admin');
+                let newUrl = new URL('tester', url);
+
+                alert(`URL = ${newUrl}`); // https://javascript.info/profile/tester
+                alert(`Protocol = ${newUrl.protocol}`)
+                alert(`Host = ${newUrl.host}`)
+                alert(`pathname = ${newUrl.pathname}`)
+                //И так далее
+            }
+        </script>
+        <p>Структура URL:</p>
+        <img src="href.jpeg" alt="">
+        <p>Где:</p>
+        <ul>
+            <li><code>href</code> это полный URL-адрес, то же самое, что url.toString()</li>
+            <li><code>protocol</code> – протокол, заканчивается символом двоеточия :</li>
+            <li><code>search</code> строка параметров, начинается с вопросительного знака ?</li>
+            <li><code>hash</code> начинается с символа #
+                <br>также есть свойства user и password, если используется HTTP-аутентификация:
+                <code>http://login:password@site.com</code> (не нарисованы сверху, так как редко используются).
+            </li>
+        </ul>
+        <blockquote>
+            <p>Большинство сетевых методов способны принимать объекты URL, так же пихать можно куда угодно - преобразуются 
+                <code>.toString()</code>
+            </p>
+        </blockquote>
     </div>
 
 </body>
+
 </html>
