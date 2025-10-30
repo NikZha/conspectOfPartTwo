@@ -91,6 +91,17 @@ fetch('/page', {
         <h3><a href="https://learn.javascript.ru/fetch-api#redirect">redirect</a></h3>
         <p>По умолчанию следует редиректу. Опции редиректа: "follow", "error", "manual".</p>
     </div>
+    <div class="topic" id="integrity">
+        <h3><a href="https://learn.javascript.ru/fetch-api#integrity">integrity</a></h3>
+        <p>Опция integrity позволяет проверить, соответствует ли ответ известной заранее контрольной сумме.
+            Например:
+        </p>
+        <pre><code class="language-js">
+fetch('http://site.com/file', {
+  integrity: 'sha256-abcdef'
+});            
+        </code></pre>
+    </div>
 </body>
 
 </html>
