@@ -29,10 +29,12 @@
         <h2><a href="https://learn.javascript.ru/fetch-api">Fetch API</a></h2>
         <blockquote>
             <p>Дядинька пишет, что все рассмотренные в этом уроке возможности являются редкоиспользуемыми, пробегу
-                коротенечко.</p> </blockquote>
-            <p>Нижеследующий список – это все возможные опции для <code>fetch</code> с соответствующими значениями по умолчанию (в
-                комментариях указаны альтернативные значения):</p>
-                <pre><code class="language-js">
+                коротенечко.</p>
+        </blockquote>
+        <p>Нижеследующий список – это все возможные опции для <code>fetch</code> с соответствующими значениями по
+            умолчанию (в
+            комментариях указаны альтернативные значения):</p>
+        <pre><code class="language-js">
 let promise = fetch(url, {
   method: "GET", // POST, PUT, DELETE, etc.
   headers: {
@@ -54,7 +56,7 @@ let promise = fetch(url, {
   window: window // null
 });                    
                 </code></pre>
-       
+
     </div>
     <div class="topic" id="reffer">
         <h3><a href="https://learn.javascript.ru/fetch-api#referrer-referrerpolicy">referrer, referrerPolicy</a></h3>
@@ -65,7 +67,16 @@ fetch('/page', {
 });            
         </code></pre>
     </div>
-
+    <div class="topic" id="mode">
+        <h3><a href="https://learn.javascript.ru/fetch-api#mode">mode</a></h3>
+        <p>Опция <code>mode</code> – это защита от нечаянной отправки запроса на другой источник:</p>
+        <ul>
+            <li><code>"cors"</code> – стоит по умолчанию, позволяет делать такие запросы так, как описано в Fetch:
+                запросы на другие сайты,</li>
+            <li><code>"same-origin"</code> – запросы на другой источник запрещены,</li>
+            <li><code>"no-cors"</code> – разрешены только простые запросы на другой источник. </li>
+        </ul>
+    </div>
 
 </body>
 
