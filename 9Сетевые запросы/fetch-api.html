@@ -102,6 +102,20 @@ fetch('http://site.com/file', {
 });            
         </code></pre>
     </div>
+    <div class="topic" id="keepalive">
+        <h3><a href="https://learn.javascript.ru/fetch-api#keepalive">keepalive</a></h3>
+        <p>Опция keepalive указывает на то, что запрос может «пережить» страницу, которая его отправила.
+Например:</p>
+<pre><code class="language-js">
+window.onunload = function() {
+  fetch('/analytics', {
+    method: 'POST',
+    body: "statistics",
+    keepalive: true
+  });
+};    
+</code></pre>
+    </div>
 </body>
 
 </html>
