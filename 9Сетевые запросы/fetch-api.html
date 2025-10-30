@@ -56,7 +56,15 @@ let promise = fetch(url, {
                 </code></pre>
        
     </div>
-
+    <div class="topic" id="reffer">
+        <h3><a href="https://learn.javascript.ru/fetch-api#referrer-referrerpolicy">referrer, referrerPolicy</a></h3>
+        <p>Обычно опция <code>reffer</code> устанавливается автоматически, но можно убрать, например:</p>
+        <pre><code class="language-js">
+fetch('/page', {
+  referrer: "" // не ставить заголовок Referer
+});            
+        </code></pre>
+    </div>
 
 
 </body>
