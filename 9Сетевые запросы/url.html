@@ -126,6 +126,59 @@ for(let [name, value] of url.searchParams) {
 }            
         </code></pre>
     </div>
+    <div class="topic" id="code">
+        <h3>Кодирование</h3>
+        <p><a href="https://datatracker.ietf.org/doc/html/rfc3986">Стандарт RFC3986</a> определяет список разрешёный
+            символов в <code>url</code>. Запрещённые кодируются разрешёнными. Объект <code>URL</code> на лету
+            перекодирует запрещённые символы в разрещённые. Например:</p>
+        <script>
+            function expl3() {
+                let url = new URL('https://ru.wikipedia.org/wiki/Тест');
+
+                url.searchParams.set('key', 'ъ');
+                alert(url); //https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%8A                    
+            }
+        </script>
+        <input type="button" value="Тест кодирования" onclick="expl3()">
+        <pre><code class="language-js">
+let url = new URL('https://ru.wikipedia.org/wiki/Тест');
+
+url.searchParams.set('key', 'ъ');
+alert(url); //https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%8A                   
+            </code></pre>
+        <div id="String">
+            <h3>Кодирование в строках</h3>
+            <p>Для кодирования и раскодирования строк используются специальные ф-ции:</p>
+            <ul>
+                <li>encodeURI – кодирует URL-адрес целиком.</li>
+                <li>decodeURI – декодирует URL-адрес целиком.</li>
+                <li>encodeURIComponent – кодирует компонент URL, например, параметр, хеш, имя пути и т.п.</li>
+                <li>decodeURIComponent – декодирует компонент URL. </li>
+            </ul>
+            <p>Например:</p>
+            <pre><code class="language-js">
+let url = encodeURI('http://site.com/привет');
+
+alert(url); // http://site.com/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82
+let music = encodeURIComponent('Rock&Roll');
+
+url = `https://google.com/search?q=${music}`;
+alert(url); // https://google.com/search?q=Rock%26Roll
+music = encodeURI('Rock&Roll');
+
+url = `https://google.com/search?q=${music}`;
+alert(url); // https://google.com/search?q=Rock&Roll                    
+                </code></pre>
+            <p> Но не всё гладко:</p>
+            <pre><code class="language-js">
+// допустимый URL-адрес IPv6
+let url = 'http://[2607:f8b0:4005:802::1007]/';
+
+alert(encodeURI(url)); // http://%5B2607:f8b0:4005:802::1007%5D/
+alert(new URL(url)); // http://[2607:f8b0:4005:802::1007]/                    
+                </code></pre>
+        </div>
+    </div>
 </body>
 
 </html>
