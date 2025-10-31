@@ -88,12 +88,44 @@ alert(`pathname = ${newUrl.pathname}`)
             </li>
         </ul>
         <blockquote>
-            <p>Большинство сетевых методов способны принимать объекты URL, так же пихать можно куда угодно - преобразуются 
+            <p>Большинство сетевых методов способны принимать объекты URL, так же пихать можно куда угодно -
+                преобразуются
                 <code>.toString()</code>
             </p>
         </blockquote>
     </div>
+    <div class="topic" id="search">
+        <h3>SearchParams «?…»</h3>
+        <p>Есть возможность прописывать параметры запроса в поиске:</p>
+        <ul>
+            <li><code>append(name, value)</code> – добавить параметр по имени,</li>
+            <li><code>delete(name)</code> – удалить параметр по имени,</li>
+            <li><code>get(name)</code> – получить параметр по имени,</li>
+            <li><code>getAll(name)</code> – получить все параметры с одинаковым именем name (такое возможно, например:
+                ?user=John&user=Pete),</li>
+            <li><code>has(name)</code> – проверить наличие параметра по имени,</li>
+            <li><code>set(name, value)</code> – задать/заменить параметр,</li>
+            <li><code>sort()</code> – отсортировать параметры по имени, используется редко,</li>
+            <li>…и является перебираемым, аналогично <code>Map</code>. </li>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-js">
+let url = new URL('https://google.com/search');
+url.searchParams.set('q', 'test me!'); // добавим параметр, содержащий пробел и !
 
+alert(url); // https://google.com/search?q=test+me%21
+
+url.searchParams.set('tbs', 'qdr:y'); // параметр с двоеточием :
+
+// параметры автоматически кодируются
+alert(url); // https://google.com/search?query=test+me%21&tbs=qdr%3Ay
+
+// перебрать параметры (в исходном виде)
+for(let [name, value] of url.searchParams) {
+  alert(`${name}=${value}`); // q=test me!, далее tbs=qdr:y
+}            
+        </code></pre>
+    </div>
 </body>
 
 </html>
