@@ -64,8 +64,10 @@ xhr.send([body])
         <p>Где <code>body</code> необязательный параметр, но нужен для <code>POST</code>.</p>
         <p>У этого объекта <code>xhr</code> есть события:</p>
         <ul>
-            <li><code>load</code> – происходит, когда получен какой-либо ответ, включая ответы с HTTP-ошибкой, например 404.</li>
-            <li><code>error</code> – когда запрос не может быть выполнен, например, нет соединения или невалидный URL.</li>
+            <li><code>load</code> – происходит, когда получен какой-либо ответ, включая ответы с HTTP-ошибкой, например
+                404.</li>
+            <li><code>error</code> – когда запрос не может быть выполнен, например, нет соединения или невалидный URL.
+            </li>
             <li><code>progress</code> – происходит периодически во время загрузки ответа, сообщает о прогрессе. </li>
         </ul>
         <p>Например:</p>
@@ -103,19 +105,22 @@ xhr.onerror = function() {
         </code></pre>
         <p>После получения ответа у объекта появляются следующие свойства:</p>
         <ul>
-<li><code>status</code> <br>
-Код состояния HTTP (число): 200, 404, 403 и так далее, может быть 0 в случае, если ошибка не связана с HTTP.</li>
-<li><code>statusText</code> <br>
-Сообщение о состоянии ответа HTTP (строка): обычно OK для 200, Not Found для 404, Forbidden для 403, и так далее.</li>
-<li><code>response</code> (в старом коде может встречаться как responseText) <br>
-Тело ответа сервера.            </li>
+            <li><code>status</code> <br>
+                Код состояния HTTP (число): 200, 404, 403 и так далее, может быть 0 в случае, если ошибка не связана с
+                HTTP.</li>
+            <li><code>statusText</code> <br>
+                Сообщение о состоянии ответа HTTP (строка): обычно OK для 200, Not Found для 404, Forbidden для 403, и
+                так далее.</li>
+            <li><code>response</code> (в старом коде может встречаться как responseText) <br>
+                Тело ответа сервера. </li>
         </ul>
         <pre><code class="language-js">
 xhr.timeout = 10000; // таймаут ожидания ответа указывается в миллисекундах, т.е. 10 секунд            
         </code></pre>
-        <blockquote><h4>URL с параметрами</h4>
+        <blockquote>
+            <h4>URL с параметрами</h4>
             <p><code>XMLHttpRequest</code> кооректно работает с объектом <code>URL</code>:</p>
-        <pre><code class="language-js">
+            <pre><code class="language-js">
 let url = new URL('https://google.com/search');
 url.searchParams.set('q', 'test me!');
 
@@ -124,7 +129,55 @@ xhr.open('GET', url); // https://google.com/search?q=test+me%21
         </code></pre>
         </blockquote>
     </div>
+    <div class="topic" id="type">
+        <h3><a href="https://learn.javascript.ru/xmlhttprequest#tip-otveta">Тип ответа</a></h3>
+        <p>Мы можем задать свойство <code>xhr.responseType</code>, чтобы указать ожидаемый типа ответа:</p>
+        <ul>
+            <li><code>""</code> (по умолчанию) – строка,</li>
+            <li><code>"text"</code> – строка,</li>
+            <li><code>"arraybuffer"</code> – ArrayBuffer (для бинарных данных, смотрите в <a
+                    href="../8Бинарные данные и файлы/arraybuffer-binary-arrays.html">ArrayBuffer</a>, бинарные
+                массивы),</li>
+            <li><code>"blob"</code> – Blob (для бинарных данных, смотрите в <a
+                    href="../8Бинарные данные и файлы/blob.html">Blob</a>),</li>
+            <li><code>"document"</code> – XML-документ (может использовать XPath и другие XML-методы),</li>
+            <li><code>"json"</code> – JSON (парсится автоматически). </li>
+        </ul>
+        <p>Например:</p>
+        <pre><input type="button" value="Тестировать ответ" onclick="expl1()"><code class="language-js">
+let xhr = new XMLHttpRequest();
 
+xhr.open('GET', './example.json');
+
+xhr.responseType = 'json';
+
+xhr.send();
+
+// тело ответа {"message": "Привет, мир!"}
+xhr.onload = function() {
+  let responseObj = xhr.response;
+  alert(responseObj.message); // Привет, мир!
+};              
+        </code></pre>
+        <script>
+            function expl1() {
+                let xhr = new XMLHttpRequest();
+
+                xhr.open('GET', './example.json');
+
+                xhr.responseType = 'json';
+
+                xhr.send();
+
+                // тело ответа {"message": "Привет, мир!"}
+                xhr.onload = function () {
+                    let responseObj = xhr.response;
+                    alert(responseObj.message); // Привет, мир!
+                };
+            }
+        </script>
+
+    </div>
 
 
 
