@@ -203,7 +203,13 @@ xhr.onreadystatechange = function() {
         <p>Однако при наличии событий: <code>load/error/progress</code> можно сказать что получение каких-то цифровых
             кодов состояния в стиле <code>C</code> - морально устарело.</p>
     </div>
-
+    <div class="topic" id="cansel">
+        <h3>Отмена запроса</h3>
+        <pre><code class="language-js">
+xhr.abort(); // завершить запрос            
+        </code></pre>
+        <p>При этом генерируется событие <code>abort</code>, а <code>xhr.status</code> устанавливается в 0.</p>
+    </div>
 
 </body>
 
