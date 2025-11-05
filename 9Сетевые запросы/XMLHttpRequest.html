@@ -11,6 +11,7 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
+
 <body>
     <div class="contents">
         <h2><a href="#XMLHttpRequest">XMLHttpRequest</a></h2>
@@ -31,10 +32,97 @@
         <h2><a href="https://learn.javascript.ru/xmlhttprequest">XMLHttpRequest</a></h2>
         <p>Встроенный в браузер объект навроде <code>fetch</code> только старше, используется по 3 причинам:</p>
         <ol>
-<li>По историческим причинам: существует много кода, использующего <code>XMLHttpRequest</code>, который нужно поддерживать.</li>
-<li>Необходимость поддерживать старые браузеры и нежелание использовать полифилы (например, чтобы уменьшить количество кода).</li>
-<li>Потребность в функциональности, которую <code>fetch</code> пока что не может предоставить, к примеру, отслеживание прогресса отправки на сервер.            </li>
+            <li>По историческим причинам: существует много кода, использующего <code>XMLHttpRequest</code>, который
+                нужно поддерживать.</li>
+            <li>Необходимость поддерживать старые браузеры и нежелание использовать полифилы (например, чтобы уменьшить
+                количество кода).</li>
+            <li>Потребность в функциональности, которую <code>fetch</code> пока что не может предоставить, к примеру,
+                отслеживание прогресса отправки на сервер. </li>
         </ol>
+    </div>
+    <div class="topic" id="basics">
+        <h3>Основы</h3>
+        <pre><code class="language-js">
+let xhr = new XMLHttpRequest(); // у конструктора нет аргументов
+//Далее рулится методами по типу:
+xhr.open(method, URL, [async, user, password])            
+        </code></pre>
+        <p>Где:</p>
+        <ul>
+            <li><code>method</code> – HTTP-метод. Обычно это <code>"GET"</code> или <code>"POST"</code> .</li>
+            <li><code>URL</code> – URL, куда отправляется запрос: строка, может быть и объект URL.</li>
+            <li><code>async</code> – если указать <code>false</code>, тогда запрос будет выполнен синхронно, это мы
+                рассмотрим чуть позже.</li>
+            <li><code>user</code>, <code>password</code> – логин и пароль для базовой HTTP-авторизации (если требуется)
+            </li>
+        </ul>
+        <p>Однако метод <code>open</code> лишь конфигурирует запрос, но не отправляет его, чтобы отправить запрос,
+            нужно:</p>
+        <pre><code class="language-js">
+xhr.send([body])            
+        </code></pre>
+        <p>Где <code>body</code> необязательный параметр, но нужен для <code>POST</code>.</p>
+        <p>У этого объекта <code>xhr</code> есть события:</p>
+        <ul>
+            <li><code>load</code> – происходит, когда получен какой-либо ответ, включая ответы с HTTP-ошибкой, например 404.</li>
+            <li><code>error</code> – когда запрос не может быть выполнен, например, нет соединения или невалидный URL.</li>
+            <li><code>progress</code> – происходит периодически во время загрузки ответа, сообщает о прогрессе. </li>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-js">
+// 1. Создаём новый XMLHttpRequest-объект
+let xhr = new XMLHttpRequest();
+
+// 2. Настраиваем его: GET-запрос по URL /article/.../load
+xhr.open('GET', '/article/xmlhttprequest/example/load');
+
+// 3. Отсылаем запрос
+xhr.send();
+
+// 4. Этот код сработает после того, как мы получим ответ сервера
+xhr.onload = function() {
+  if (xhr.status != 200) { // анализируем HTTP-статус ответа, если статус не 200, то произошла ошибка
+    alert(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
+  } else { // если всё прошло гладко, выводим результат
+    alert(`Готово, получили ${xhr.response.length} байт`); // response -- это ответ сервера
+  }
+};
+
+xhr.onprogress = function(event) {
+  if (event.lengthComputable) {
+    alert(`Получено ${event.loaded} из ${event.total} байт`);
+  } else {
+    alert(`Получено ${event.loaded} байт`); // если в ответе нет заголовка Content-Length
+  }
+
+};
+
+xhr.onerror = function() {
+  alert("Запрос не удался");
+};            
+        </code></pre>
+        <p>После получения ответа у объекта появляются следующие свойства:</p>
+        <ul>
+<li><code>status</code> <br>
+Код состояния HTTP (число): 200, 404, 403 и так далее, может быть 0 в случае, если ошибка не связана с HTTP.</li>
+<li><code>statusText</code> <br>
+Сообщение о состоянии ответа HTTP (строка): обычно OK для 200, Not Found для 404, Forbidden для 403, и так далее.</li>
+<li><code>response</code> (в старом коде может встречаться как responseText) <br>
+Тело ответа сервера.            </li>
+        </ul>
+        <pre><code class="language-js">
+xhr.timeout = 10000; // таймаут ожидания ответа указывается в миллисекундах, т.е. 10 секунд            
+        </code></pre>
+        <blockquote><h4>URL с параметрами</h4>
+            <p><code>XMLHttpRequest</code> кооректно работает с объектом <code>URL</code>:</p>
+        <pre><code class="language-js">
+let url = new URL('https://google.com/search');
+url.searchParams.set('q', 'test me!');
+
+// параметр 'q' закодирован
+xhr.open('GET', url); // https://google.com/search?q=test+me%21            
+        </code></pre>
+        </blockquote>
     </div>
 
 
