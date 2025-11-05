@@ -178,7 +178,31 @@ xhr.onload = function() {
         </script>
 
     </div>
-
+    <div class="topic" id="req">
+        <h3>Состояния запроса</h3>
+        <p><code>xhr.readyState</code> может быть:</p>
+        <pre><code class="language-js">
+UNSENT = 0; // исходное состояние
+OPENED = 1; // вызван метод open
+HEADERS_RECEIVED = 2; // получены заголовки ответа
+LOADING = 3; // ответ в процессе передачи (данные частично получены)
+DONE = 4; // запрос завершён            
+        </code></pre>
+        <p>Состояние меняется последовательно с тем нюансом, что 3 появляется до тех пор пока не получены все данные.
+            Изменения в состоянии объекта запроса генерируют событие <code>readystatechange</code>:</p>
+        <pre><code class="language-js">
+xhr.onreadystatechange = function() {
+  if (xhr.readyState == 3) {
+    // загрузка
+  }
+  if (xhr.readyState == 4) {
+    // запрос завершён
+  }
+};                
+            </code></pre>
+        <p>Однако при наличии событий: <code>load/error/progress</code> можно сказать что получение каких-то цифровых
+            кодов состояния в стиле <code>C</code> - морально устарело.</p>
+    </div>
 
 
 </body>
