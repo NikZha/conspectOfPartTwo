@@ -210,6 +210,28 @@ xhr.abort(); // завершить запрос
         </code></pre>
         <p>При этом генерируется событие <code>abort</code>, а <code>xhr.status</code> устанавливается в 0.</p>
     </div>
+    <div class="topic" id="sync">
+        <h3>Синхронные запросы</h3>
+        <p>Если третий параметр <code>false</code> то запрос выполняется синхронно:</p>
+        <pre><code class="language-js">
+let xhr = new XMLHttpRequest();
+
+xhr.open('GET', '/article/xmlhttprequest/hello.txt', false);
+
+try {
+  xhr.send();
+  if (xhr.status != 200) {
+    alert(`Ошибка ${xhr.status}: ${xhr.statusText}`);
+  } else {
+    alert(xhr.response);
+  }
+} catch(err) { // для отлова ошибок используем конструкцию try...catch вместо onerror
+  alert("Запрос не удался");
+}            
+        </code></pre>
+        <p>Однако при этом блокируется выполнение нижеследующего кода и страница может выглядеть зависшей при долгой
+            загрузке. А потому используется редко.</p>
+    </div>
 
 </body>
 
