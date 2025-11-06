@@ -261,6 +261,47 @@ Date: Sat, 08 Sep 2012 16:53:16 GMT
         </code></pre>
         <p>Между заголовками всегда стоит перевод строки в два символа <code>"\r\n"</code> вне зависимости от используемой ОС. </p>
     </div>
+    <div class="topic" id="post">
+        <h3>POST, FormData</h3>
+        <p>Методика работы с объектом <code>FormData</code>:</p>
+        <pre><code class="language-js">
+&lt;form name="person"&gt;
+  &lt;input name="name" value="Петя"&gt;
+  &lt;input name="surname" value="Васечкин"&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+  // заполним FormData данными из формы
+  let formData = new FormData(document.forms.person);
+
+  // добавим ещё одно поле
+  formData.append("middle", "Иванович");
+
+  // отправим данные
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/article/xmlhttprequest/post/user");
+  xhr.send(formData);
+
+  xhr.onload = () => alert(xhr.response);
+&lt;/script&gt;            
+        </code></pre>
+        <p>Это отправка в кодировке <code>multipart/form-data</code>.</p>
+        <p>Если нужна отправка в JSON то устанавливается соотвутствующий header:</p>
+        <pre><code class="lang">
+let xhr = new XMLHttpRequest();
+
+let json = JSON.stringify({
+  name: "Вася",
+  surname: "Петров"
+});
+
+xhr.open("POST", '/submit')
+xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+xhr.send(json);            
+        </code></pre>
+        <p><code>.send(anythin)</code> отправляет что угодно, главное указать правильный заголовок.</p>
+    </div>
 </body>
 
 </html>
