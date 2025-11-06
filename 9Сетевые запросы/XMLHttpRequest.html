@@ -232,7 +232,35 @@ try {
         <p>Однако при этом блокируется выполнение нижеследующего кода и страница может выглядеть зависшей при долгой
             загрузке. А потому используется редко.</p>
     </div>
+    <div class="topic" id="headers">
+        <h3>HTTP-заголовки</h3>
+        <p>3 метода для работы с заголовками:</p>
+        <p><code>setRequestHeader(name, value)</code> - Устанавливает заголовок запроса с именем <code>name</code> и значением <code>value</code>.</p>
+        <pre><code class="language-js">
+xhr.setRequestHeader('Content-Type', 'application/json');            
+        </code></pre>
+        <p>Соотвественно есть ряд ограничений - некоторые заголовки невозможно установить, и повторные вызовы по типу:</p>
+        <pre><code class="language-js">
+xhr.setRequestHeader('X-Auth', '123');
+xhr.setRequestHeader('X-Auth', '456');
 
+// заголовок получится такой:
+// X-Auth: 123, 456            
+        </code></pre>
+        <p>Будут приводить лишь к добавлению информации.</p>
+        <p><code>getResponseHeader(name)</code> Возвращает значение заголовка ответа name (кроме Set-Cookie и Set-Cookie2).</p>
+        <pre><code class="language-js">
+xhr.getResponseHeader('Content-Type')            
+        </code></pre>
+        <p><code>getAllResponseHeaders()</code> Возвращает все заголовки ответа, кроме Set-Cookie и Set-Cookie2 в виде единой строки</p>
+        <pre><code class="language-js">
+Cache-Control: max-age=31536000
+Content-Length: 4260
+Content-Type: image/png
+Date: Sat, 08 Sep 2012 16:53:16 GMT            
+        </code></pre>
+        <p>Между заголовками всегда стоит перевод строки в два символа <code>"\r\n"</code> вне зависимости от используемой ОС. </p>
+    </div>
 </body>
 
 </html>
