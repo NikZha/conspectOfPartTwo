@@ -235,11 +235,13 @@ try {
     <div class="topic" id="headers">
         <h3>HTTP-заголовки</h3>
         <p>3 метода для работы с заголовками:</p>
-        <p><code>setRequestHeader(name, value)</code> - Устанавливает заголовок запроса с именем <code>name</code> и значением <code>value</code>.</p>
+        <p><code>setRequestHeader(name, value)</code> - Устанавливает заголовок запроса с именем <code>name</code> и
+            значением <code>value</code>.</p>
         <pre><code class="language-js">
 xhr.setRequestHeader('Content-Type', 'application/json');            
         </code></pre>
-        <p>Соотвественно есть ряд ограничений - некоторые заголовки невозможно установить, и повторные вызовы по типу:</p>
+        <p>Соотвественно есть ряд ограничений - некоторые заголовки невозможно установить, и повторные вызовы по типу:
+        </p>
         <pre><code class="language-js">
 xhr.setRequestHeader('X-Auth', '123');
 xhr.setRequestHeader('X-Auth', '456');
@@ -248,18 +250,21 @@ xhr.setRequestHeader('X-Auth', '456');
 // X-Auth: 123, 456            
         </code></pre>
         <p>Будут приводить лишь к добавлению информации.</p>
-        <p><code>getResponseHeader(name)</code> Возвращает значение заголовка ответа name (кроме Set-Cookie и Set-Cookie2).</p>
+        <p><code>getResponseHeader(name)</code> Возвращает значение заголовка ответа name (кроме Set-Cookie и
+            Set-Cookie2).</p>
         <pre><code class="language-js">
 xhr.getResponseHeader('Content-Type')            
         </code></pre>
-        <p><code>getAllResponseHeaders()</code> Возвращает все заголовки ответа, кроме Set-Cookie и Set-Cookie2 в виде единой строки</p>
+        <p><code>getAllResponseHeaders()</code> Возвращает все заголовки ответа, кроме Set-Cookie и Set-Cookie2 в виде
+            единой строки</p>
         <pre><code class="language-js">
 Cache-Control: max-age=31536000
 Content-Length: 4260
 Content-Type: image/png
 Date: Sat, 08 Sep 2012 16:53:16 GMT            
         </code></pre>
-        <p>Между заголовками всегда стоит перевод строки в два символа <code>"\r\n"</code> вне зависимости от используемой ОС. </p>
+        <p>Между заголовками всегда стоит перевод строки в два символа <code>"\r\n"</code> вне зависимости от
+            используемой ОС. </p>
     </div>
     <div class="topic" id="post">
         <h3>POST, FormData</h3>
@@ -301,6 +306,64 @@ xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 xhr.send(json);            
         </code></pre>
         <p><code>.send(anythin)</code> отправляет что угодно, главное указать правильный заголовок.</p>
+    </div>
+    <div class="topic" id="progress">
+        <h3>Прогресс отправки</h3>
+        <p>Событие progress срабатывает только на стадии загрузки ответа с сервера.</p>
+        <p>
+            Существует другой объект, без методов, только для отслеживания событий отправки: xhr.upload.
+
+            Он генерирует события, похожие на события xhr, но только во время отправки данных на сервер:
+        </p>
+        <ul>
+            <li><code>loadstart</code> – начало загрузки данных.</li>
+            <li><code>progress</code> – генерируется периодически во время отправки на сервер.</li>
+            <li><code>abort</code> – загрузка прервана.</li>
+            <li><code>error</code> – ошибка, не связанная с HTTP.</li>
+            <li><code>load</code> – загрузка успешно завершена.</li>
+            <li><code>timeout</code> – вышло время, отведённое на загрузку (при установленном свойстве timeout).</li>
+            <li><code>loadend</code> – загрузка завершена, вне зависимости от того, как – успешно или нет. </li>
+        </ul>
+        <p>Пример:</p>
+        <pre><code class="lang">
+xhr.upload.onprogress = function(event) {
+  alert(`Отправлено ${event.loaded} из ${event.total} байт`);
+};
+
+xhr.upload.onload = function() {
+  alert(`Данные успешно отправлены.`);
+};
+
+xhr.upload.onerror = function() {
+  alert(`Произошла ошибка во время отправки: ${xhr.status}`);            
+        </code></pre>
+        <p>Или чуть более расширенный пример с HTML:</p>
+        <pre><code class="lang">
+&lt;input type="file" onchange="upload(this.files[0])"&gt;
+
+&lt;script&gt;
+function upload(file) {
+  let xhr = new XMLHttpRequest();
+
+  // отслеживаем процесс отправки
+  xhr.upload.onprogress = function(event) {
+    console.log(`Отправлено ${event.loaded} из ${event.total}`);
+  };
+
+  // Ждём завершения: неважно, успешного или нет
+  xhr.onloadend = function() {
+    if (xhr.status == 200) {
+      console.log("Успех");
+    } else {
+      console.log("Ошибка " + this.status);
+    }
+  };
+
+  xhr.open("POST", "/article/xmlhttprequest/post/upload");
+  xhr.send(file);
+}
+&lt;/script&gt;            
+        </code></pre>
     </div>
 </body>
 
