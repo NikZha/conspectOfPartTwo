@@ -325,7 +325,7 @@ xhr.send(json);
             <li><code>loadend</code> – загрузка завершена, вне зависимости от того, как – успешно или нет. </li>
         </ul>
         <p>Пример:</p>
-        <pre><code class="lang">
+        <pre><code class="language-js">
 xhr.upload.onprogress = function(event) {
   alert(`Отправлено ${event.loaded} из ${event.total} байт`);
 };
@@ -338,7 +338,7 @@ xhr.upload.onerror = function() {
   alert(`Произошла ошибка во время отправки: ${xhr.status}`);            
         </code></pre>
         <p>Или чуть более расширенный пример с HTML:</p>
-        <pre><code class="lang">
+        <pre><code class="language-js">
 &lt;input type="file" onchange="upload(this.files[0])"&gt;
 
 &lt;script&gt;
