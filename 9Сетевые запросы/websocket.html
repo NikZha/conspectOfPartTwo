@@ -111,9 +111,28 @@ socket.onerror = function(error) {
     <div class="topic" id="open">
         <h3>Открытие веб-сокета</h3>
         <p>В топике идёт обсуждение как происходит обмен данными на уровне заголовков. Из интересно-полезного рассказ о
-            <a href="https://learn.javascript.ru/websocket#rasshireniya-i-podprotokoly">подпротоколах</a>.</p>
+            <a href="https://learn.javascript.ru/websocket#rasshireniya-i-podprotokoly">подпротоколах</a>.
+        </p>
     </div>
-
+    <div class="topic" id="send">
+        <h3>Передача данных</h3>
+        <p>Данные могут быть:</p>
+        <ul>
+            <li>Тестовые фреймы.</li>
+            <li>Бинарные фреймы.</li>
+            <li>ping-pong фреймы.</li>
+            <li>Служебные фреймы которые меняют состоняние соединения.</li>
+        </ul>
+        <p>Методы <code>.send(body)</code> принимает body, как бинарные данные или как строку. При получении строк они
+            распознаются автоматически, а для бинарных данных есть метод <code>socket.binaryType</code> который
+            позволяет задать данные как blob или ArrayBuffer. По умолчанию стоит blob. Например:</p>
+        <pre><code class="language-js">
+socket.binaryType = "arraybuffer";
+socket.onmessage = (event) => {
+  // event.data является строкой (если текст) или arraybuffer (если двоичные данные)
+};                
+            </code></pre>
+    </div>
 
 
 </body>
