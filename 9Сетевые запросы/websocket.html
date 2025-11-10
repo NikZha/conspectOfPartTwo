@@ -17,7 +17,7 @@
         <h2><a href="#websockets">WebSocket</a></h2>
         <ul>
             <li><a href="#simple">Простой пример</a></li>
-            <li><a href="#open">Простой пример</a></li>
+            <li><a href="#open">Открытие веб-сокета</a></li>
             <li><a href="#send">Передача данных</a></li>
             <li><a href="#reduce">Ограничение скорости</a></li>
             <li><a href="#close">Закрытие подключения</a></li>
@@ -78,34 +78,40 @@ socket.onerror = function(error) {
         </code></pre>
         <script>
             function expl1(params) {
-let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
+                let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
 
-socket.onopen = function(e) {
-  alert("[open] Соединение установлено");
-  alert("Отправляем данные на сервер");
-  socket.send("Меня зовут Джон");
-};
+                socket.onopen = function (e) {
+                    alert("[open] Соединение установлено");
+                    alert("Отправляем данные на сервер");
+                    socket.send("Меня зовут Джон");
+                };
 
-socket.onmessage = function(event) {
-  alert(`[message] Данные получены с сервера: ${event.data}`);
-};
+                socket.onmessage = function (event) {
+                    alert(`[message] Данные получены с сервера: ${event.data}`);
+                };
 
-socket.onclose = function(event) {
-  if (event.wasClean) {
-    alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
-  } else {
-    // например, сервер убил процесс или сеть недоступна
-    // обычно в этом случае event.code 1006
-    alert('[close] Соединение прервано');
-  }
-};
+                socket.onclose = function (event) {
+                    if (event.wasClean) {
+                        alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+                    } else {
+                        // например, сервер убил процесс или сеть недоступна
+                        // обычно в этом случае event.code 1006
+                        alert('[close] Соединение прервано');
+                    }
+                };
 
-socket.onerror = function(error) {
-  alert(`[error]`);
-};                
+                socket.onerror = function (error) {
+                    alert(`[error]`);
+                };
             }
         </script>
-        <p>За ответ на этот запрос отвечает <a href="https://learn.javascript.ru/article/websocket/demo/server.js">server.js</a>.</p>
+        <p>За ответ на этот запрос отвечает <a
+                href="https://learn.javascript.ru/article/websocket/demo/server.js">server.js</a>.</p>
+    </div>
+    <div class="topic" id="open">
+        <h3>Открытие веб-сокета</h3>
+        <p>В топике идёт обсуждение как происходит обмен данными на уровне заголовков. Из интересно-полезного рассказ о
+            <a href="https://learn.javascript.ru/websocket#rasshireniya-i-podprotokoly">подпротоколах</a>.</p>
     </div>
 
 
