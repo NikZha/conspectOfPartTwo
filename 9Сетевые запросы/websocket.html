@@ -32,7 +32,81 @@
         <p>Постоянное соединение между браузером и сервером используется для сервисом которые используют обмен
             реалтаймовыми данными.</p>
     </div>
+    <div class="topic" id="simple">
+        <h3>Простой пример</h3>
+        <p>Создание объекта соединения:</p>
+        <pre><code class="lang">
+let socket = new WebSocket("ws://javascript.info");            
+        </code></pre>
+        <p>Где <code>ws</code> - это не шифрованный протокол, а <code>wss</code> - шифрованный протокол, который более
+            предпочителен для использования.
+        </p>
+        <p>После создания объекта у него есть 4 события которые необходимо обрабатывать:</p>
+        <ol>
+            <li><code>open</code> – соединение установлено,</li>
+            <li><code>message</code> – получены данные,</li>
+            <li><code>error</code> – ошибка,</li>
+            <li><code>close</code> – соединение закрыто. </li>
+        </ol>
+        <p>Для отправки данных есть метод: <code>obj.send(data)</code>. Например:</p>
+        <pre><input type="button" value="Тест веб-сокета" onclick="expl1()"><code class="language-js">
+let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
 
+socket.onopen = function(e) {
+  alert("[open] Соединение установлено");
+  alert("Отправляем данные на сервер");
+  socket.send("Меня зовут Джон");
+};
+
+socket.onmessage = function(event) {
+  alert(`[message] Данные получены с сервера: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+  } else {
+    // например, сервер убил процесс или сеть недоступна
+    // обычно в этом случае event.code 1006
+    alert('[close] Соединение прервано');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error]`);
+};            
+        </code></pre>
+        <script>
+            function expl1(params) {
+let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
+
+socket.onopen = function(e) {
+  alert("[open] Соединение установлено");
+  alert("Отправляем данные на сервер");
+  socket.send("Меня зовут Джон");
+};
+
+socket.onmessage = function(event) {
+  alert(`[message] Данные получены с сервера: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+  } else {
+    // например, сервер убил процесс или сеть недоступна
+    // обычно в этом случае event.code 1006
+    alert('[close] Соединение прервано');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error]`);
+};                
+            }
+        </script>
+        <p>За ответ на этот запрос отвечает <a href="https://learn.javascript.ru/article/websocket/demo/server.js">server.js</a>.</p>
+    </div>
 
 
 
