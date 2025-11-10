@@ -178,6 +178,17 @@ socket.onclose = event => {
 };            
         </code></pre>
     </div>
+    <div class="topic" id="state">
+        <h3>Состояние соединения</h3>
+        <p>Для получения состояния соединения существует свойство <code>socket.readyState</code> получаемые значения
+            обозначают:</p>
+        <ul>
+            <li>0 – «CONNECTING»: соединение ещё не установлено,</li>
+            <li>1 – «OPEN»: обмен данными,</li>
+            <li>2 – «CLOSING»: соединение закрывается,</li>
+            <li>3 – «CLOSED»: соединение закрыто. </li>
+        </ul>
+    </div>
 
 </body>
 
