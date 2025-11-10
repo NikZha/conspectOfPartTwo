@@ -133,7 +133,20 @@ socket.onmessage = (event) => {
 };                
             </code></pre>
     </div>
-
+    <div class="topic" id="reduce">
+        <h3>Ограничение скорости</h3>
+        <p>Ограничение скорости не в байтах, а в проверке наличия данных для отправки при помощи свойства
+            <code>socket.bufferedAmount</code> и если буфер пуст - отправка ещё. Например:</p>
+            <pre><code class="language-js">
+// каждые 100мс проверить сокет и отправить больше данных,
+// только если все текущие отосланы
+setInterval(() => {
+  if (socket.bufferedAmount == 0) {
+    socket.send(moreData());
+  }
+}, 100);                
+            </code></pre>
+    </div>
 
 </body>
 
