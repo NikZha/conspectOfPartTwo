@@ -24,6 +24,33 @@
             <li><a href="#total">Итого</a></li>
         </ul>
     </div>
+    <div class="topic" id="server">
+        <h2><a href="https://learn.javascript.ru/server-sent-events">Server Sent Events</a></h2>
+        <p>Класс похожий на WebSocket, но с некоторыми различиями:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th><code>WebSocket</code></th>
+                    <th><code>EventSource</code></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Двунаправленность: и сервер, и клиент могут обмениваться сообщениями</td>
+                    <td>Однонаправленность: данные посылает только сервер</td>
+                </tr>
+                <tr>
+                    <td>Бинарные и текстовые данные</td>
+                    <td>Только текст</td>
+                </tr>
+                <tr>
+                    <td>Протокол WebSocket</td>
+                    <td>	Обычный HTTP</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Таким образом <code>EventSource</code> заметно проще чем <code>WebSocket</code> и работает по HTTP-протоколу.</p>
+    </div>
 
 
 
