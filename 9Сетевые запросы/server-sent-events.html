@@ -100,7 +100,21 @@ let source = new EventSource("https://another-site.com/events", {
         </code></pre>
         <p>Подробнее в главе <a href="./fetch-crossorigin.html">fetch-crossorigin</a></p>
     </div>
+    <div class="topic" id="reconnect">
+        <h3>Переподключение</h3>
+        <p>После создания объекта подключение в случае разрыва устанавливается заново. Сервер выставляет
+            <code>retry:</code> в миллисекундах.
+        </p>
+        <ul>
+            <li>Если сервер хочет остановить попытки переподключения, он должен ответить со статусом 204.</li>
+            <li>Если браузер хочет прекратить соединение, он может вызвать eventSource.close(): </li>
+        </ul>
+        <pre><code class="language-js">
+let eventSource = new EventSource(...);
 
+eventSource.close();            
+        </code></pre>
+    </div>
 
 
 </body>
