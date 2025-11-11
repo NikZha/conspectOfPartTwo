@@ -140,6 +140,14 @@ id: 3
             Обратите внимание: id указывается сервером после данных data сообщения, чтобы обновление lastEventId произошло после того, как сообщение будет получено.
         </blockquote>
     </div>
+    <div class="topic" id="status">
+        <h3>Статус подключения: readyState</h3>
+        <pre><code class="language-js">
+EventSource.CONNECTING = 0; // подключение или переподключение устанаваливается при создании объекта
+EventSource.OPEN = 1;       // подключено
+EventSource.CLOSED = 2;     // подключение закрыто            
+        </code></pre>
+    </div>
 
 </body>
 
