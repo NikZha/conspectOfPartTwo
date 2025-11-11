@@ -137,7 +137,8 @@ id: 3
         </ul>
         <blockquote>
             <h4>Указывайте id: после data:</h4>
-            Обратите внимание: id указывается сервером после данных data сообщения, чтобы обновление lastEventId произошло после того, как сообщение будет получено.
+            Обратите внимание: id указывается сервером после данных data сообщения, чтобы обновление lastEventId
+            произошло после того, как сообщение будет получено.
         </blockquote>
     </div>
     <div class="topic" id="status">
@@ -146,6 +147,39 @@ id: 3
 EventSource.CONNECTING = 0; // подключение или переподключение устанаваливается при создании объекта
 EventSource.OPEN = 1;       // подключено
 EventSource.CLOSED = 2;     // подключение закрыто            
+        </code></pre>
+    </div>
+    <div class="topic" id="type">
+        <h3>Типы событий</h3>
+        <p>По умолчанию объект <code>EventSource</code> генерирует 3 события:</p>
+        <ul>
+            <li>message – получено сообщение, доступно как event.data.</li>
+            <li>open – соединение открыто.</li>
+            <li>error – не удалось установить соединение, например, сервер вернул статус 500. </li>
+        </ul>
+        <p>Так же можно создавать свои события при помощи <code>obj.event</code>, например:</p>
+        <pre><code>
+event: join
+data: Боб
+
+data: Привет
+
+event: leave
+data: Боб            
+        </code></pre>
+        <p>Чтобы начать слушать пользовательские события, нужно использовать <code>addEventListener</code>:</p>
+        <pre><code class="language-js">
+eventSource.addEventListener('join', event => {
+  alert(`${event.data} зашёл`);
+});
+
+eventSource.addEventListener('message', event => {
+  alert(`Сказал: ${event.data}`);
+});
+
+eventSource.addEventListener('leave', event => {
+  alert(`${event.data} вышел`);
+});            
         </code></pre>
     </div>
 
