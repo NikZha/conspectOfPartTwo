@@ -11,6 +11,7 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
+
 <body>
     <div class="contents">
         <h2><a href="#server">Server Sent Events</a></h2>
@@ -45,15 +46,63 @@
                 </tr>
                 <tr>
                     <td>Протокол WebSocket</td>
-                    <td>	Обычный HTTP</td>
+                    <td> Обычный HTTP</td>
                 </tr>
             </tbody>
         </table>
-        <p>Таким образом <code>EventSource</code> заметно проще чем <code>WebSocket</code> и работает по HTTP-протоколу.</p>
+        <p>Таким образом <code>EventSource</code> заметно проще чем <code>WebSocket</code> и работает по HTTP-протоколу.
+        </p>
+    </div>
+    <div class="topic" id="recove">
+        <h3>Получение сообщений</h3>
+        <p>После создания объекта <code>let obj = new EventSource(url)</code> браузер устнавливает соединение с
+            <code>url</code> и начнёт ждать событий. Сервер должен ответить заголовком
+            <code>Content-Type: text/event-stream</code>. Сервер отвечает в формате:
+        </p>
+        <pre><code class="language-js">
+data: Сообщение 1
+
+data: Сообщение 2
+
+data: Сообщение 3
+data: в две строки            
+        </code></pre>
+        <ul>
+            <li>Текст сообщения указывается после <code>data:</code>, пробел после двоеточия необязателен.</li>
+            <li>Сообщения разделяются двойным переносом строки <code>\n\n</code>.</li>
+            <li>Чтобы разделить сообщение на несколько строк, мы можем отправить несколько <code>data:</code> подряд
+                (третье сообщение). </li>
+        </ul>
+        <p>Но обычно отправляют в json в котором перевод строки кодируется как <code>\n</code>:</p>
+        <pre><code class="language-js">
+data: {"user":"Джон","message":"Первая строка\n Вторая строка"}            
+        </code></pre>
+        <pre><code class="language-js">
+let eventSource = new EventSource("/events/subscribe");
+
+eventSource.onmessage = function(event) {
+  console.log("Новое сообщение", event.data);
+  // этот код выведет в консоль 3 сообщения, из потока данных выше
+};
+// или eventSource.addEventListener('message', ...)            
+        </code></pre>
+        <h4>Кросс-доменные запросы</h4>
+        <p>EventSource, как и fetch, поддерживает кросс-доменные запросы. Мы можем использовать любой URL:</p>
+        <pre><code class="language-js">
+let source = new EventSource("https://another-site.com/events");
+        </code></pre>
+        <p>Сервер получит заголовок Origin и должен будет ответить с заголовком Access-Control-Allow-Origin. Чтобы
+            послать авторизационные данные, следует установить дополнительную опцию withCredentials:</p>
+        <pre><code class="language-js">
+let source = new EventSource("https://another-site.com/events", {
+  withCredentials: true
+});            
+        </code></pre>
+        <p>Подробнее в главе <a href="./fetch-crossorigin.html">fetch-crossorigin</a></p>
     </div>
 
 
 
-
 </body>
+
 </html>
