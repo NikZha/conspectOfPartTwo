@@ -45,7 +45,12 @@
         </ol>
         <p>Из скрипта на странице есть возможность получить доступ к свойству <code>document.cookie</code>.</p>
     </div>
-
+    <div class="topic" id="read">
+        <h3>Чтение из document.cookie</h3>
+        <p>Чтобы прочитать куки сервера надо вызвать: <input type="button" value="Тест кук" onclick="alert( document.cookie );"></p>
+            <pre><code class="language-js">alert( document.cookie ); // cookie1=value1; cookie2=value2;...</code></pre>
+        <p>Естественно с локального документа не покажет ничего. Потому что ничего не установлено изначально.</p>    
+    </div>
 
 
 </body>
