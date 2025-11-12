@@ -92,8 +92,25 @@ alert(document.cookie); // ...; my%20name=John%20Smith
         <h3>path</h3>
         <p><code>path=/somepath</code></p>
         <p>Значения будут доступны на путях <code>somepath</code>. То есть на страницах <code>/somepath</code>,
-            <code>/somepath/someelse</code>, но не на путях <code>/difpath</code>.</p>
-            <p>Установка <code>path=/</code> обеспечивает доступность кук по всему сайту.</p>
+            <code>/somepath/someelse</code>, но не на путях <code>/difpath</code>.
+        </p>
+        <p>Установка <code>path=/</code> обеспечивает доступность кук по всему сайту.</p>
+    </div>
+    <div class="topic" id="domain">
+        <h3>domain</h3>
+        <p><code>domain=site.com</code> - подразумевается, что установить куки для другого домена не удасться. Настройка
+            нужна для того, чтобы кука была доступа и с site.com и с forum.site.com. Работает так:</p>
+        <pre><code class="language-js">
+// находясь на странице site.com
+// сделаем куки доступным для всех поддоменов *.site.com:
+document.cookie = "user=John; domain=site.com"
+
+// позже
+
+// на forum.site.com
+alert(document.cookie); // есть куки user=John                
+            </code></pre>
+        <p>Tак же работает запись .site.com по историческим причинам, для старых браузеров обозначает поддомены.</p>
     </div>
 
 </body>
