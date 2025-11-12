@@ -134,6 +134,15 @@ document.cookie = "user=John; max-age=3600";
 document.cookie = "user=John; max-age=0";            
         </code></pre>
     </div>
+    <div class="topic" id="secure">
+        <h3>secure</h3>
+        <p><code>secure</code> - эту куку следует передавать только по шифрованному соединению:</p>
+        <pre><code class="language-js">
+// предполагается, что сейчас мы на https://
+// установим опцию secure для куки (куки доступно только через HTTPS)
+document.cookie = "user=John; secure";            
+        </code></pre>
+    </div>
 
 </body>
 
