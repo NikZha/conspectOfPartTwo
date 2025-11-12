@@ -47,11 +47,47 @@
     </div>
     <div class="topic" id="read">
         <h3>Чтение из document.cookie</h3>
-        <p>Чтобы прочитать куки сервера надо вызвать: <input type="button" value="Тест кук" onclick="alert( document.cookie );"></p>
-            <pre><code class="language-js">alert( document.cookie ); // cookie1=value1; cookie2=value2;...</code></pre>
-        <p>Естественно с локального документа не покажет ничего. Потому что ничего не установлено изначально.</p>    
+        <p>Чтобы прочитать куки сервера надо вызвать: <input type="button" value="Тест кук"
+                onclick="alert( document.cookie );"></p>
+        <pre><code class="language-js">alert( document.cookie ); // cookie1=value1; cookie2=value2;...</code></pre>
+        <p>Естественно с локального документа не покажет ничего. Потому что ничего не установлено изначально.</p>
     </div>
+    <div class="topic" id="write">
+        <h3>Запись в document.cookie</h3>
+        <p><code>document.cookie</code> - это ассессор, доступ к нему обрабатывается особым образом, свойство не
+            обнуляется, а обновляется. Например:</p>
+        <input type="button" value="Tест добавления кук" onclick="document.cookie = 'user=John'; // обновляем только куки с именем 'user'
+alert(document.cookie); // показываем все куки">
+        <pre><code class="language-js">
+document.cookie = "user=John"; // обновляем только куки с именем 'user'
+alert(document.cookie); // показываем все куки                
+            </code></pre>
+        <p>Добавить куки можно только при просмотре в локальном сервере, открытый с диска документ не позволяет
+            установить куки. Соотвественно если какие-то куки были до этого, они перезаписаны не будут, а произойдёт
+            добавление кук.</p>
+        <p>Технически данные могут быть любыми, но лучше использовать ф-цию <code>encodeURIComponent</code> для
+            правильной установки кук:</p>
+        <pre><code class="language-js">
+// специальные символы (пробелы), требуется кодирование
+let name = "my name";
+let value = "John Smith"
 
+// кодирует в my%20name=John%20Smith
+document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+
+alert(document.cookie); // ...; my%20name=John%20Smith                
+            </code></pre>
+        <p>В <a href="#appendix1">топике ниже</a> автор даёт нормальные ф-ции для работы с куками.</p>
+        <blockquote>
+            <h4>Ограничения</h4>
+            <ul>
+                <li>После encodeURIComponent пара name=value не должна занимать более 4Кб. Таким образом, мы не можем
+                    хранить в куки большие данные.</li>
+                <li>Общее количество куки на один домен ограничивается примерно 20+. Точное ограничение зависит от
+                    конкретного браузера. </li>
+            </ul>
+        </blockquote>
+    </div>
 
 </body>
 
