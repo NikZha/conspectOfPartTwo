@@ -112,6 +112,28 @@ alert(document.cookie); // есть куки user=John
             </code></pre>
         <p>Tак же работает запись .site.com по историческим причинам, для старых браузеров обозначает поддомены.</p>
     </div>
+    <div class="topic" id="expires">
+        <h3>expires, max-age</h3>
+        <p>Куки без этих параметров являются сессионными и удаляются при закрытии браузера. Для того, чтобы избежать
+            этого надо установить значения <code>expires</code> или <code>max-age</code>.</p>
+        <p><code>expires=Tue, 19 Jan 2038 03:14:07 GMT</code> по истечении этой даты браузер удалит автоматически куку.
+            Кука должна быть в зоне GMT, в целом можно устанавливать так:</p>
+        <pre><code class="language-js">
+// +1 день от текущей даты
+let date = new Date(Date.now() + 86400e3);
+date = date.toUTCString();
+document.cookie = "user=John; expires=" + date;            
+        </code></pre>
+        <p>Если дата будет меньше текущей, кука удалится.</p>
+        <p>В качестве альтернативы может выступать <code>max-age=3600</code>:</p>
+        <pre><code class="language-js">
+// куки будет удалено через 1 час
+document.cookie = "user=John; max-age=3600";
+
+// удалим куки (срок действия истекает прямо сейчас)
+document.cookie = "user=John; max-age=0";            
+        </code></pre>
+    </div>
 
 </body>
 
