@@ -11,23 +11,46 @@
     <script>hljs.highlightAll();</script>
     <script defer src="../scripts.js"></script>
 </head>
-<body>
- <div class="contents">
-    <h2><a href="#localstorage">LocalStorage, sessionStorage</a></h2>
-    <ul>
-        <li><a href="#demo">Демо localStorage</a></li>
-        <li><a href="#access">Доступ как к обычному объекту</a></li>
-        <li><a href="#foreach">Перебор ключей</a></li>
-        <li><a href="#onlystr">Только строки</a></li>
-        <li><a href="#sessionStorage">sessionStorage</a></li>
-        <li><a href="#event">Событие storage</a></li>
-        <li><a href="#total">Итого</a></li>
-        <li><a href="#tasks">Задача</a></li>
-    </ul>
- </div>   
 
+<body>
+    <div class="contents">
+        <h2><a href="#localstorage">LocalStorage, sessionStorage</a></h2>
+        <ul>
+            <li><a href="#demo">Демо localStorage</a></li>
+            <li><a href="#access">Доступ как к обычному объекту</a></li>
+            <li><a href="#foreach">Перебор ключей</a></li>
+            <li><a href="#onlystr">Только строки</a></li>
+            <li><a href="#sessionStorage">sessionStorage</a></li>
+            <li><a href="#event">Событие storage</a></li>
+            <li><a href="#total">Итого</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="localstorage">
+        <h2><a href="https://learn.javascript.ru/localstorage">LocalStorage, sessionStorage</a></h2>
+        <p>Оба этих объекта позволяют хранить ключ-значения в браузере. Чем похожи на <code>Map</code>. С тем отличием
+            от кук и <code>Map</code> что:</p>
+        <ul>
+            <li>Не отправляют в каждом запросе как заголовок.</li>
+            <li>Так же объем может быть значительно больше - от 5 мб и далее.</li>
+            <li>Веб-сервер не может манипулировать этими объектами. Только javascript. </li>
+            <li>Хранилице соотвествует - <code>протокол://домен:порт</code> и другое сочетание не может получить доступ
+                к хранилищу.</li>
+        </ul>
+        <p>Методы этих объектов:</p>
+        <ul>
+            <li><code>setItem(key, value)</code> – сохранить пару ключ/значение.</li>
+            <li><code>getItem(key)</code> – получить данные по ключу key.</li>
+            <li><code>removeItem(key)</code> – удалить данные с ключом key.</li>
+            <li><code>clear()</code> – удалить всё.</li>
+            <li><code>key(index)</code> – получить ключ на заданной позиции.</li>
+            <li><code>length</code> – количество элементов в хранилище. </li>
+        </ul>
+        <p>Интерфейс сильно похож на <code>Map</code>, однако есть <code>key(index)</code> – получить ключ на заданной позиции.</p>
+    </div>
 
 
 
 </body>
+
 </html>
