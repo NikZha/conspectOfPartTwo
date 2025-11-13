@@ -46,9 +46,25 @@
             <li><code>key(index)</code> – получить ключ на заданной позиции.</li>
             <li><code>length</code> – количество элементов в хранилище. </li>
         </ul>
-        <p>Интерфейс сильно похож на <code>Map</code>, однако есть <code>key(index)</code> – получить ключ на заданной позиции.</p>
+        <p>Интерфейс сильно похож на <code>Map</code>, однако есть <code>key(index)</code> – получить ключ на заданной
+            позиции.</p>
     </div>
-
+    <div class="topic" id="demo">
+        <h3>Демо localStorage</h3>
+        <p>Основные особенности localStorage:</p>
+        <ul>
+            <li>Этот объект один на все вкладки и окна в рамках источника (один и тот же домен/протокол/порт).</li>
+            <li>Данные не имеют срока давности, по которому истекают и удаляются. Сохраняются после перезапуска браузера
+                и даже ОС. </li>
+        </ul>
+        <p>Демо:</p>
+        <pre><input type="button" value="Тест localStorage" onclick="localStorage.setItem('test', 1);
+alert( localStorage.getItem('test') ); // 1"><code class="language-js">
+localStorage.setItem('test', 1);
+alert( localStorage.getItem('test') ); // 1
+        </code></pre>
+        <p>Срабатывает и на локальном сервере и будучи открытым с диска.</p>
+    </div>
 
 
 </body>
