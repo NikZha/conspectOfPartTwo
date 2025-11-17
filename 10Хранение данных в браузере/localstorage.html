@@ -157,6 +157,29 @@ alert( JSON.stringify(localStorage, null, 2) );
         </ul>
         <p>Методы те же самые.</p>
     </div>
+    <div class="topic" id="event">
+        <h3>Событие storage</h3>
+        <p>При изменении какого-либо хранилища генерирутся событие-объект <code>storage</code> со следующими свойствами:
+        </p>
+        <ul>
+            <li><code>key</code> – ключ, который обновился (null, если вызван .clear()).</li>
+            <li><code>oldValue</code> – старое значение (null, если ключ добавлен впервые).</li>
+            <li><code>newValue</code> – новое значение (null, если ключ был удалён).</li>
+            <li><code>url</code> – url документа, где произошло обновление.</li>
+            <li><code>storageArea</code> – объект localStorage или sessionStorage, где произошло обновление. </li>
+        </ul>
+        <p>Это код работает так, что в одном объекте добавляется что-либо в другом срабатывает событие.</p>
+        <pre><code class="language-js">
+// срабатывает при обновлениях, сделанных в том же хранилище из других документов
+window.onstorage = event => { // можно также использовать window.addEventListener('storage', event => {
+  if (event.key != 'now') return;
+  alert(event.key + ':' + event.newValue + " at " + event.url);
+};
+
+localStorage.setItem('now', Date.now());            
+        </code></pre>
+        <p>Сделано исключительно для обмена данными между вкладками с одного ресурса.</p>
+    </div>
 
 
 </body>
