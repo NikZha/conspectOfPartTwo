@@ -180,6 +180,58 @@ localStorage.setItem('now', Date.now());
         </code></pre>
         <p>Сделано исключительно для обмена данными между вкладками с одного ресурса.</p>
     </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Хранилища похожи на <code>Map</code>:</p>
+        <ul>
+            <li>key и value должны быть строками.</li>
+            <li>Лимит 5 Мб+, зависит от браузера.</li>
+            <li>Данные не имеют «времени истечения».</li>
+            <li>Данные привязаны к источнику (домен/протокол/порт). </li>
+        </ul>
+        <h4>Различия между localStorage и sessionStorage:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th><code>localStorage</code></th>
+                    <th><code>sessionStorage</code></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Совместно используется между всеми вкладками и окнами с одинаковым источником</td>
+                    <td>Разделяется в рамках вкладки браузера, среди ифреймов из того же источника</td>
+                </tr>
+                <tr>
+                    <td>«Переживает» перезапуск браузера</td>
+                    <td>«Переживает» перезагрузку страницы (но не закрытие вкладки)</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4>API:</h4>
+        <ul>
+            <li><code>setItem(key, value)</code> – сохранить пару ключ/значение.</li>
+            <li><code>getItem(key)</code> – получить данные по ключу key.</li>
+            <li><code>removeItem(key)</code> – удалить значение по ключу key.</li>
+            <li><code>clear()</code> – удалить всё.</li>
+            <li><code>key(index)</code> – получить ключ на заданной позиции.</li>
+            <li><code>length</code> – количество элементов в хранилище.</li>
+            <li>Используйте <code>Object.keys</code> для получения всех ключей.</li>
+            <li>Можно обращаться к ключам как к обычным свойствам объекта, в этом случае событиеstorage не срабатывает.
+            </li>
+        </ul>
+        <h4>Событие storage:</h4>
+        <ul>
+            <li>Срабатывает при вызове <code>setItem</code>, <code>removeItem</code>, <code>clear</code>.</li>
+            <li>Содержит все данные об произошедшем обновлении
+                (<code>key</code>/<code>oldValue</code>/<code>newValue</code>), url документа и объект хранилища
+                <code>storageArea</code>.
+            </li>
+            <li>Срабатывает на всех объектах window, которые имеют доступ к хранилищу, кроме того, где оно было
+                сгенерировано (внутри вкладки для <code>sessionStorage</code>, глобально для <code>localStorage</code>).
+            </li>
+        </ul>
+    </div>
 
 
 </body>
