@@ -83,7 +83,8 @@ delete localStorage.test;
             <li>Ключ может не проканать. Всё-таки это объект и все свойства взять и установить может и не получится.
             </li>
             <li>Только при модификации хранилища при помощи <code>setItem</code> срабатывает событие
-                <code>storage</code>.</li>
+                <code>storage</code>.
+            </li>
         </ul>
     </div>
     <div class="topic" id="foreach">
@@ -110,6 +111,36 @@ let keys = Object.keys(localStorage);
 for(let key of keys) {
   alert(`${key}: ${localStorage.getItem(key)}`);
 }          
+        </code></pre>
+    </div>
+    <div class="topic" id="onlystr">
+        <h3>Только строки</h3>
+        <p>Обратите внимание, что ключ и значение должны быть строками. Далее идёт пример, в котором объект превращается
+            в toString() - <code>[object Object]</code> и таким образом теряется его внутреннее содержание:</p>
+        <pre><input type="button" value="Тест потери содержания" onclick="localStorage.user = {name: 'John'};
+alert(localStorage.user); // [object Object]">
+                <code class="lang"> 
+localStorage.user = {name: "John"};
+alert(localStorage.user); // [object Object]                
+            </code></pre>
+        <p>Избежать этого поможет JSON:</p>
+        <input type="button" value="Тест JSON" onclick="
+            localStorage.user = JSON.stringify({name: 'John'});
+
+// немного позже
+let user = JSON.parse( localStorage.user );
+alert( user.name ); // John">
+        <pre><code class="language-js">
+localStorage.user = JSON.stringify({name: "John"});
+
+// немного позже
+let user = JSON.parse( localStorage.user );
+alert( user.name ); // John    
+</code></pre>
+        <p>Также возможно привести к строке весь объект хранилища, например для отладки:</p>
+        <pre><input type="button" value="Всё хранилище в JSON" onclick="alert( JSON.stringify(localStorage, null, 2) );"><code class="lang">
+// для JSON.stringify добавлены параметры форматирования, чтобы объект выглядел лучше
+alert( JSON.stringify(localStorage, null, 2) );            
         </code></pre>
     </div>
 
