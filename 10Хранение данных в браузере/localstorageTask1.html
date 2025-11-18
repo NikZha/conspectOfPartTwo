@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задача к localStorage</title>
+    <style>
+        #str{
+            height: 10ch;
+            width: 10em;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Задача к <a href="./localstorage.html">этому файлу</a></h1>
+    <form id="form">
+        <textarea type="text" name="TextArea" id="str" placeholder="Введите текст" oninput="onchangeTextArea(this)"></textarea>
+        <br><input type="button" value="Очистить форму" onclick="clearForm()">
+    </form>
+    <script>
+        let str = document.querySelector('#str')
+        function clearForm() {
+            localStorage.setItem('str', '')
+            str.value = ''
+        }
+        function onchangeTextArea(event) {
+            localStorage.setItem('str', event.value)
+        }
+        window.onload = function () {
+            str.value = localStorage.getItem('str')
+        }
+    </script>
+</body>
+</html>
