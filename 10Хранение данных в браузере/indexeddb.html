@@ -85,7 +85,7 @@ openRequest.onsuccess = function() {
 };                
             </code></pre>
         <p>Допустим дальше мы инициализируем 2 версию:</p>
-            <pre><code class="language-js">
+        <pre><code class="language-js">
 let openRequest = indexedDB.open("store", 2);
 
 openRequest.onupgradeneeded = function(event) {
@@ -101,13 +101,70 @@ openRequest.onupgradeneeded = function(event) {
   }
 };                
             </code></pre>
-            <p>Удаление БД</p>
-            <pre><code class="language-js">
+        <p>Удаление БД</p>
+        <pre><code class="language-js">
 let deleteRequest = indexedDB.deleteDatabase(name)
 // deleteRequest.onsuccess/onerror отслеживает результат                
             </code></pre>
     </div>
 
+    <div class="topic" id="wharehouse">
+        <h3>Хранилище объектов</h3>
+        <p>В БД можно хранить сложные объекты, используя связку ключ-значение. Ключ должен быть одним из следующих
+            типов: number, date, string, binary или array. Это уникальный идентификатор: по ключу мы можем
+            искать/удалять/обновлять значения. Синтаксис создания хранилища:</p>
+        <pre><code class="language-js">
+db.createObjectStore(name[, keyOptions]);                
+            </code></pre>
+        <p>Где:</p>
+        <ul>
+            <li><code>name</code> – это название хранилища, например "books" для книг,</li>
+            <li><code>keyOptions</code> – это необязательный объект с одним или двумя свойствами:</li>
+            <ul>
+                <li><code>keyPath</code> – путь к свойству объекта, которое <code>IndexedDB</code> будет использовать в
+                    качестве ключа, например
+                    <code>id</code>.
+                </li>
+                <li><code>autoIncrement</code> – если <code>true</code>, то ключ будет формироваться автоматически для
+                    новых объектов, как
+                    постоянно увеличивающееся число. </li>
+            </ul>
+            <p>Например, это хранилище объектов использует свойство id как ключ:</p>
+            <pre><code class="language-js">
+db.createObjectStore('books', {keyPath: 'id'});                
+            </code></pre>
+            <p><strong>Хранилище объектов можно создавать/изменять только при обновлении версии базы данных в
+                    обработчике upgradeneeded.</strong></p>
+            <p>Для обновления версии базы есть два основных подхода:</p>
+            <ol>
+                <li>Мы можем реализовать функции обновления по версиям: с 1 на 2, с 2 на 3 и т.д. Потом в upgradeneeded
+                    сравнить версии (например, была 2, сейчас 4) и запустить операции обновления для каждой
+                    промежуточной версии (2 на 3, затем 3 на 4).</li>
+                <li>Или мы можем взять список существующих хранилищ объектов, используя db.objectStoreNames. Этот объект
+                    является DOMStringList, в нём есть метод contains(name), используя который можно проверить
+                    существование хранилища. Посмотреть, какие хранилища есть и создать те, которых нет. </li>
+            </ol>
+        </ul>
+        <p>Для простых баз данных второй подход может быть проще и предпочтительнее.
+
+            Вот демонстрация второго способа:</p>
+        <pre><code class="language-js">
+let openRequest = indexedDB.open("db", 2);
+
+// создаём хранилище объектов для books, если ешё не существует
+openRequest.onupgradeneeded = function() {
+  let db = openRequest.result;
+  if (!db.objectStoreNames.contains('books')) { // если хранилище "books" не существует
+    db.createObjectStore('books', {keyPath: 'id'}); // создаём хранилище
+  }
+};            
+        </code></pre>
+        <p>Для удаления хранилища объектов:</p>
+        <pre><code class="language-js">
+db.deleteObjectStore('books')    
+</code></pre>
+
+    </div>
 
 
 
