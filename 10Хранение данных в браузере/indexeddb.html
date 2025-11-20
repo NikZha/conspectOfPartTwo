@@ -226,6 +226,25 @@ request.onerror = function() {
         </ul>
     </div>
 
+    <div class="topic" id="auto">
+        <h3>Автоматическая фиксация транзакций</h3>
+        <p>Транзакции фиксируются автоматически, пока нет возможности зафиксировать транзакцию мануально. Для того чтобы
+            поймать завершение транзакции есть специальное событие:</p>
+        <pre><code class="language-js">
+let transaction = db.transaction("books", "readwrite");
+
+// ...выполнить операции...
+
+transaction.oncomplete = function() {
+  console.log("Транзакция выполнена");
+};                
+            </code></pre>
+        <p>Для отмены транзакции:</p>
+    <pre><code class="language-js">
+transaction.abort();        
+    </code></pre>
+    <p>Генерируется событие <code>transaction.onabort</code></p>
+    </div>
 
 
 
