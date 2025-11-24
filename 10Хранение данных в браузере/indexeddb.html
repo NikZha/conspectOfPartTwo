@@ -240,13 +240,40 @@ transaction.oncomplete = function() {
 };                
             </code></pre>
         <p>Для отмены транзакции:</p>
-    <pre><code class="language-js">
+        <pre><code class="language-js">
 transaction.abort();        
     </code></pre>
-    <p>Генерируется событие <code>transaction.onabort</code></p>
+        <p>Генерируется событие <code>transaction.onabort</code></p>
     </div>
+    <div class="topic" id="errors">
+        <h3>Обработка ошибок</h3>
+        <p>Как и все в этой бд, обработка ошибок идёт событийно в обработчике: <code>request.onerror</code>.</p>
+        <p>В примере ниже новая книга добавляется с тем же ключом (id), что и существующая. Метод store.add генерирует в
+            этом случае ошибку "ConstraintError". Мы обрабатываем её без отмены транзакции:</p>
+            <pre><code class="language-js">
+let transaction = db.transaction("books", "readwrite");
 
+let book = { id: 'js', price: 10 };
 
+let request = transaction.objectStore("books").add(book);
+
+request.onerror = function(event) {
+  // ConstraintError возникает при попытке добавить объект с ключом, который уже существует
+  if (request.error.name == "ConstraintError") {
+    console.log("Книга с таким id уже существует"); // обрабатываем ошибку
+    event.preventDefault(); // предотвращаем отмену транзакции
+    // ...можно попробовать использовать другой ключ...
+  } else {
+    // неизвестная ошибка
+    // транзакция будет отменена
+  }
+};
+
+transaction.onabort = function() {
+  console.log("Ошибка", transaction.error);
+};                
+            </code></pre>
+    </div>
 
 
 
