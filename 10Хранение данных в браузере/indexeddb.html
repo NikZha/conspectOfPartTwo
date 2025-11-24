@@ -250,7 +250,7 @@ transaction.abort();
         <p>Как и все в этой бд, обработка ошибок идёт событийно в обработчике: <code>request.onerror</code>.</p>
         <p>В примере ниже новая книга добавляется с тем же ключом (id), что и существующая. Метод store.add генерирует в
             этом случае ошибку "ConstraintError". Мы обрабатываем её без отмены транзакции:</p>
-            <pre><code class="language-js">
+        <pre><code class="language-js">
 let transaction = db.transaction("books", "readwrite");
 
 let book = { id: 'js', price: 10 };
@@ -273,6 +273,39 @@ transaction.onabort = function() {
   console.log("Ошибка", transaction.error);
 };                
             </code></pre>
+        <div id="delegation">
+            <h3>Делегирование событий</h3>
+            <p>События IndexedDB всплывают: <code>запрос</code> → <code>транзакция</code> → <code>база данных</code>.
+                Мы можем перехватить все ошибки, используя обработчик db.onerror, для оповещения пользователя или других
+                целей:
+            </p>
+            <pre><code class="language-js">
+db.onerror = function(event) {
+  let request = event.target; // запрос, в котором произошла ошибка
+
+  console.log("Ошибка", request.error);
+};                
+            </code></pre>
+            <p>
+                …А если мы полностью обработали ошибку? В этом случае мы не хотим сообщать об этом.
+
+                Мы можем остановить всплытие и, следовательно, <code>db.onerror</code>, используя
+                <code>event.stopPropagation()</code> в request.onerror.
+            </p>
+            <pre><code class="language-js">
+request.onerror = function(event) {
+  if (request.error.name == "ConstraintError") {
+    console.log("Книга с таким id уже существует"); // обрабатываем ошибку
+    event.preventDefault(); // предотвращаем отмену транзакции
+    event.stopPropagation(); // предотвращаем всплытие ошибки
+  } else {
+    // ничего не делаем
+    // транзакция будет отменена
+    // мы можем обработать ошибку в transaction.onabort
+  }
+};                
+            </code></pre>
+        </div>
     </div>
 
 
