@@ -32,7 +32,82 @@
         <p>CSS позволяет создавать анимации без использования javascript, но управляя CSS-анимациями можно создавать ещё
             более сложные анимации.</p>
     </div>
+    <div class="topic" id="enter">
+        <h3>CSS-переходы</h3>
+        <p>Это свойство которое говорит браузеру как менять анимацию какого-либо объекта, например:</p>
+        <pre><code class="language-html">
+&lt;button id="color">Нажми меня&lt;/button&gt;
 
+&lt;style&gt;
+  #color {
+    transition-property: background-color, font-size;
+    transition-duration: 10s;
+  }
+&lt;/style&gt;
+
+&lt;script&gt;
+  color.onclick = function() {
+    this.style.backgroundColor = 'red';
+    this.style.fontSize = '35px'
+  };
+&lt;/script&gt;            
+        </code></pre>
+        <button id="color">Нажми меня</button>
+
+        <style>
+            #color {
+                transition-property: background-color, font-size;
+                transition-duration: 10s;
+            }
+        </style>
+
+        <script>
+            color.onclick = function () {
+                this.style.backgroundColor = 'red';
+                this.style.fontSize = '35px'
+            };
+        </script>
+        <p>Как видно из 4 свойств было задействовано 2:</p>
+        <ul>
+            <li><code>transition-property</code> – свойство перехода</li>
+            <li><code>transition-duration</code> – продолжительность перехода</li>
+            <li><code>transition-timing-function</code> – временная функция перехода</li>
+            <li><code>transition-delay</code> – задержка начала перехода </li>
+        </ul>
+        <p>Есть также общее свойство transition, которое позволяет задать их одновременно в последовательности: property
+            duration timing-function delay, а также анимировать несколько свойств одновременно. Здесь анимируются два
+            свойства color и font-size одновременно:</p>
+        <pre><code class="language-html">
+&lt;button id="growing">Нажми меня&lt;/button&gt;
+
+&lt;style&gt;
+#growing {
+  transition: font-size 3s, color 2s;
+}
+&lt;/style&gt;
+
+&lt;script&gt;
+growing.onclick = function() {
+  this.style.fontSize = '36px';
+  this.style.color = 'red';
+};
+&lt;/script&gt;                
+            </code></pre>
+        <button id="growing">Нажми меня</button>
+
+        <style>
+            #growing {
+                transition: font-size 3s, color 2s;
+            }
+        </style>
+
+        <script>
+            growing.onclick = function () {
+                this.style.fontSize = '36px';
+                this.style.color = 'red';
+            };
+        </script>
+    </div>
 
 
 
