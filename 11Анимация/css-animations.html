@@ -181,6 +181,46 @@ growing.onclick = function() {
             </ul>
         </div>
     </div>
+    <div class="topic" id="transitionend">
+        <h3>Событие: «transitionend»</h3>
+        <p>Когда завершается анимация, срабатывает событие transitionend.
+
+            Оно широко используется для выполнения действий после завершения анимации, а также для создания
+            последовательности анимаций. Далее идёт пример с корабликом, код там примерно такой:</p>
+            <pre><code class="language-js">
+boat.onclick = function() {
+  //...
+  let times = 1;
+
+  function go() {
+    if (times % 2) {
+      // плыть вправо
+      boat.classList.remove('back');
+      boat.style.marginLeft = 100 * times + 200 + 'px';
+    } else {
+      // плыть влево
+      boat.classList.add('back');
+      boat.style.marginLeft = 100 * times - 200 + 'px';
+    }
+
+  }
+
+  go();
+
+  boat.addEventListener('transitionend', function() {
+    times++;
+    go();
+  });
+};
+            </code></pre>
+            <p>Объект события transitionend содержит ряд полезных свойств:</p>
+            <ul>
+<li><code>event.propertyName</code>
+<br>Имя свойства, анимация которого завершилась. Может быть полезным, если мы анимируем несколько свойств.</li>
+<li><code>event.elapsedTime</code>
+<br>Время (в секундах), которое заняла анимация, без учёта transition-delay.                </li>
+            </ul>
+    </div>
 
 
 </body>
