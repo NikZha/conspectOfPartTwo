@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .changed {
+            height: 240px;
+            width: 400px;
+            transition-property: height, width;
+            transition-duration: 3s;
+        }
+    </style>
+    <title>Task 1 into css-animations.html</title>
+</head>
+
+<body>
+    <img src="flyjet.jpg" alt="самолётик" height="24px" width="40px" title="Кликни на меня" id="flyjet">
+    <script>
+        let flyjet = document.querySelector('#flyjet');
+        let flag = true;
+        function flyjetOnclick() {
+            flyjet.classList.add('changed');
+            flyjet.title = ''
+
+        }
+        function onEndAnimation() {
+            if (flag) {
+                alert('Анимация закончилась!');
+                flag = false;
+            }
+        }
+        flyjet.onclick = flyjetOnclick;
+        flyjet.ontransitionend = onEndAnimation;
+    </script>
+</body>
+
+</html>
