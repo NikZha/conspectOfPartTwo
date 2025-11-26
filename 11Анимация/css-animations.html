@@ -224,6 +224,73 @@ boat.onclick = function() {
             </li>
         </ul>
     </div>
+    <div class="topic" id="basic">
+        <h3>Ключевые кадры</h3>
+        <p>Мы можем объединить несколько простых анимаций вместе, используя CSS-правило @keyframes. Оно определяет «имя»
+            анимации и правила: что, когда и где анимировать. После этого можно использовать свойство animation, чтобы
+            назначить анимацию на элемент и определить её дополнительные параметры. Например:
+        </p>
+        <pre><code class="language-css">
+&lt;div class="progress">&lt;/div>
+
+&lt;style>
+  @keyframes go-left-right {        /* объявляем имя анимации: "go-left-right" */
+    from { left: 0px; }             /* от: left: 0px */
+    to { left: calc(100% - 50px); } /* до: left: 100%-50px */
+  }
+
+  .progress {
+    animation: go-left-right 3s infinite alternate;
+    /* применить анимацию "go-left-right" на элементе
+       продолжительностью 3 секунды
+       количество раз: бесконечно (infinite)
+       менять направление анимации каждый раз (alternate)
+    */
+
+    position: relative;
+    border: 2px solid green;
+    width: 50px;
+    height: 20px;
+    background: lime;
+  }
+&lt;/style>
+
+        </code></pre>
+        <div class="progress"></div>
+
+        <style>
+            @keyframes go-left-right {
+
+                /* объявляем имя анимации: "go-left-right" */
+                from {
+                    left: 0px;
+                }
+
+                /* от: left: 0px */
+                to {
+                    left: calc(100% - 50px);
+                }
+
+                /* до: left: 100%-50px */
+            }
+
+            .progress {
+                animation: go-left-right 3s infinite alternate;
+                /* применить анимацию "go-left-right" на элементе
+       продолжительностью 3 секунды
+       количество раз: бесконечно (infinite)
+       менять направление анимации каждый раз (alternate)
+    */
+
+                position: relative;
+                border: 2px solid green;
+                width: 50px;
+                height: 20px;
+                background: lime;
+            }
+        </style>
+
+    </div>
 
 
 </body>
