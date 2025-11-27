@@ -31,7 +31,69 @@
         <h2><a href="https://learn.javascript.ru/js-animation">JavaScript-анимации</a></h2>
         <p>С помощью JavaScript-анимаций можно делать вещи, которые нельзя реализовать на CSS-анимациях.</p>
     </div>
+    <div class="topic" id="use">
+        <h3>Использование setInterval</h3>
+        <p>Идея в том, чтобы менять например <code>obj.style.left</code> с каким-нибудь интревалом перемещая объект:</p>
+        <style>
+            #train {
+                position: relative;
+                cursor: pointer;
+            }
+        </style>
+        <img src="train.gif" alt="" id="train" onclick="trainMove()">
+        <script>
+            function trainMove() {
+                let start = Date.now(); // запомнить время начала
 
+                let timer = setInterval(function () {
+                    // сколько времени прошло с начала анимации?
+                    let timePassed = Date.now() - start;
+
+                    if (timePassed >= 2000) {
+                        clearInterval(timer); // закончить анимацию через 2 секунды
+                        return;
+                    }
+
+                    // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+                    draw(timePassed);
+
+                }, 20);
+
+                // в то время как timePassed идёт от 0 до 2000
+                // left изменяет значение от 0px до 400px
+                function draw(timePassed) {
+                    train.style.left = timePassed / 5 + 'px';
+                }
+            }
+        </script>
+        <pre><code class="language-js">
+            function trainMove() {
+                let start = Date.now(); // запомнить время начала
+
+                let timer = setInterval(function () {
+                    // сколько времени прошло с начала анимации?
+                    let timePassed = Date.now() - start;
+
+                    if (timePassed >= 2000) {
+                        clearInterval(timer); // закончить анимацию через 2 секунды
+                        return;
+                    }
+
+                    // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+                    draw(timePassed);
+
+                }, 20);
+
+                // в то время как timePassed идёт от 0 до 2000
+                // left изменяет значение от 0px до 400px
+                function draw(timePassed) {
+                    train.style.left = timePassed / 5 + 'px';
+                }
+            }            
+        </code></pre>
+        <p>Данная функиция находится на свойстве онклик рисунка, что с соответствующей настройкой css позволяет
+            перемещать объект.</p>
+    </div>
 
 
 
