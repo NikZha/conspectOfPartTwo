@@ -94,7 +94,47 @@
         <p>Данная функиция находится на свойстве онклик рисунка, что с соответствующей настройкой css позволяет
             перемещать объект.</p>
     </div>
+    <div class="topic" id="usereq">
+        <h3>Использование requestAnimationFrame</h3>
+        <p>Сама функиция используется для запуска анимации с целью экономии ресурсов. Синтаксис такой:</p>
+        <pre><code class="language-js">
+let requestId = requestAnimationFrame(callback)            
+        </code></pre>
+        <p>Для отмены анимации:</p>
+        <pre><code class="language-js">
+cancelAnimationFrame(requestId)            
+        </code></pre>
+        <p>Как я понимаю, в <code>callback</code> передаётся время с момент запуска страницы первым аргументом. Немножко
+            говнокода из урока для прояснения ситуации:</p>
+        <pre><input type="button" value="Тест периода запуска" onclick="howManyTimes()"><code class="language-js">
+&lt;script>
+  let prev = performance.now();
+  let times = 0;
 
+  requestAnimationFrame(function measure(time) {
+    document.body.insertAdjacentHTML("beforeEnd", Math.floor(time - prev) + " ");
+    prev = time;
+
+    if (times++ < 10) requestAnimationFrame(measure);
+  })
+&lt;/script>                
+            </code></pre>
+        <p id="expl"></p>
+        <script>
+            function howManyTimes() {
+                let prev = performance.now();
+                let times = 0;
+
+                requestAnimationFrame(function measure(time) {
+                    expl.insertAdjacentHTML("beforeEnd", Math.floor(time - prev) + " ");
+                    prev = time;
+
+                    if (times++ < 10) requestAnimationFrame(measure);
+                })
+            }
+        </script>
+        <p>Таким образом видно, что запускается функиция <code>measure</code> раз в 10-20 ms.</p>
+    </div>
 
 
 
