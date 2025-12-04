@@ -83,6 +83,86 @@ customElements.define("my-element", MyElement);
             <p>Это гарантирует отсуствие конфликтов.</p>
         </blockquote>
     </div>
+    <div class="topic" id="exampl">
+        <h3>Пример: «time-formatted»</h3>
+        <p>Вместо тысячи слов:</p>
+        <pre><code class="language-js">
+&lt;script>
+class TimeFormatted extends HTMLElement { // (1)
+
+  connectedCallback() {
+    let date = new Date(this.getAttribute('datetime') || Date.now());
+
+    this.innerHTML = new Intl.DateTimeFormat("default", {
+      year: this.getAttribute('year') || undefined,
+      month: this.getAttribute('month') || undefined,
+      day: this.getAttribute('day') || undefined,
+      hour: this.getAttribute('hour') || undefined,
+      minute: this.getAttribute('minute') || undefined,
+      second: this.getAttribute('second') || undefined,
+      timeZoneName: this.getAttribute('time-zone-name') || undefined,
+    }).format(date);
+  }
+
+}
+
+customElements.define("time-formatted", TimeFormatted); // (2)
+&lt;/script>
+
+<!-- (3) -->
+&lt;time-formatted datetime="2019-12-01"
+  year="numeric" month="long" day="numeric"
+  hour="numeric" minute="numeric" second="numeric"
+  time-zone-name="short"
+>&lt;/time-formatted>            
+        </code></pre>
+        <script>
+            class TimeFormatted extends HTMLElement { // (1)
+
+                connectedCallback() {
+                    let date = new Date(this.getAttribute('datetime') || Date.now());
+
+                    this.innerHTML = new Intl.DateTimeFormat("default", {
+                        year: this.getAttribute('year') || undefined,
+                        month: this.getAttribute('month') || undefined,
+                        day: this.getAttribute('day') || undefined,
+                        hour: this.getAttribute('hour') || undefined,
+                        minute: this.getAttribute('minute') || undefined,
+                        second: this.getAttribute('second') || undefined,
+                        timeZoneName: this.getAttribute('time-zone-name') || undefined,
+                    }).format(date);
+                }
+
+            }
+
+            customElements.define("time-formatted", TimeFormatted); // (2)
+        </script>
+
+        <!-- (3) -->
+        <time-formatted datetime="2019-12-01" year="numeric" month="long" day="numeric" hour="numeric" minute="numeric"
+            second="numeric" time-zone-name="short"></time-formatted>
+        <ol>
+            <li>Класс имеет только один метод <code>connectedCallback()</code> – браузер вызывает его, когда элемент
+                <code>&lt;time-formatted></code>
+                добавляется на страницу (или когда HTML-парсер обнаруживает его), и он использует встроенный
+                форматировщик данных <code>Intl.DateTimeFormat</code>, хорошо поддерживаемый в браузерах, чтобы показать
+                красиво
+                отформатированное время.
+            </li>
+            <li>Нам нужно зарегистрировать наш новый элемент, используя <code>customElements.define(tag, class)</code>.
+            </li>
+            <li>И тогда мы сможем использовать его везде. </li>
+        </ol>
+        <p>Чтобы получить информацию о пользовательских элементах, есть следующие методы:</p>
+        <ul>
+            <li><code>customElements.get(name)</code> – возвращает класс пользовательского элемента с указанным именем
+                <code>name</code>,
+            </li>
+            <li><code>customElements.whenDefined(name)</code> – возвращает промис, который переходит в состояние
+                «успешно выполнен» со значением конструктора пользовательского элемента, когда определён
+                пользовательский элемент с указанным именем <code>name</code>.</li>
+        </ul>
+    </div>
 </body>
 
 </html>
