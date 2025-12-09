@@ -219,6 +219,12 @@ setInterval(() => elem.setAttribute('datetime', new Date()), 1000); // (5)
       <li>В конце мы легко создаём живой таймер. </li>
     </ol>
   </div>
+  <div class="topic" id="order">
+    <h3><a href="https://learn.javascript.ru/custom-elements#poryadok-renderinga">Порядок рендеринга</a></h3>
+    <p>Когда HTML-парсер строит DOM, элементы обрабатываются друг за другом, родители до детей. Например, если у нас
+      есть <code>&lt;outer>&lt;inner>&lt;/inner>&lt;/outer></code>, то элемент <code>&lt;outer></code> создаётся и включается в DOM первым, а затем
+        <code>&lt;inner></code></p>
+  </div>
 </body>
 
 </html>
