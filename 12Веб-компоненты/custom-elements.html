@@ -222,8 +222,71 @@ setInterval(() => elem.setAttribute('datetime', new Date()), 1000); // (5)
   <div class="topic" id="order">
     <h3><a href="https://learn.javascript.ru/custom-elements#poryadok-renderinga">Порядок рендеринга</a></h3>
     <p>Когда HTML-парсер строит DOM, элементы обрабатываются друг за другом, родители до детей. Например, если у нас
-      есть <code>&lt;outer>&lt;inner>&lt;/inner>&lt;/outer></code>, то элемент <code>&lt;outer></code> создаётся и включается в DOM первым, а затем
-        <code>&lt;inner></code></p>
+      есть <code>&lt;outer>&lt;inner>&lt;/inner>&lt;/outer></code>, то элемент <code>&lt;outer></code> создаётся и
+      включается в DOM первым, а затем
+      <code>&lt;inner></code>
+    </p>
+  </div>
+  <div class="topic" id="modif">
+    <h3>Модифицированные встроенные элементы</h3>
+    <p>Мы можем расширять и модифицировать встроенные HTML-элементы, наследуя их классы.
+
+      Например, кнопки <code>&lt;button></code> являются экземплярами класса <code>HTMLButtonElement</code>, давайте
+      построим элемент на его основе:</p>
+    <ol>
+      <li>Унаследуем <code>HTMLButtonElement</code>нашим классом:
+        <pre><code class="language-js">
+class HelloButton extends HTMLButtonElement { /* методы пользовательского элемента */ }
+      </code></pre>
+      </li>
+      <li>Предоставим третий аргумент в customElements.define, указывающий тег:
+        <pre><code class="language-js">
+customElements.define('hello-button', HelloButton, {extends: 'button'});
+</code></pre>
+        Бывает, что разные теги имеют одинаковый DOM-класс, поэтому указание тега необходимо.
+      </li>
+      <li>В конце, чтобы использовать наш пользовательский элемент, вставим обычный тег <code>&lt;button></code>, но
+        добавим к нему <code>is="hello-button"</code>:
+        <pre><code class="language-html">
+&lt;button is="hello-button">...&lt;/button>        
+      </code></pre>
+      </li>
+    </ol>
+    <p>И это все. Вот полный пример:</p>
+    <pre><code class="language-js">
+&lt;script>
+// Кнопка, говорящая "привет" по клику
+class HelloButton extends HTMLButtonElement {
+  constructor() {
+    super();
+    this.addEventListener('click', () => alert("Привет!"));
+  }
+}
+
+customElements.define('hello-button', HelloButton, {extends: 'button'});
+&lt;/script>
+
+&lt;button is="hello-button">Нажми на меня&lt;/button>
+
+&lt;button is="hello-button" disabled>Отключена&lt;/button>      
+    </code></pre>
+    <script>
+      // Кнопка, говорящая "привет" по клику
+      class HelloButton extends HTMLButtonElement {
+        constructor() {
+          super();
+          this.addEventListener('click', () => alert("Привет!"));
+        }
+      }
+
+      customElements.define('hello-button', HelloButton, { extends: 'button' });
+    </script>
+
+    <button is="hello-button">Нажми на меня</button>
+
+    <button is="hello-button" disabled>Отключена</button>
+    <p>Наша новая кнопка расширяет встроенную. Так что она сохраняет те же стили и стандартные возможности, наподобие
+      атрибута <code>disabled</code>.</p>
   </div>
 </body>
 
