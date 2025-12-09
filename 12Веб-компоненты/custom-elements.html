@@ -2,42 +2,42 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пользовательские элементы (Custom Elements)</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
-    <script defer src="../scripts.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пользовательские элементы (Custom Elements)</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  <script defer src="../scripts.js"></script>
 </head>
 
 <body>
 
-    <div class="contents">
-        <h2><a href="#custom">Пользовательские элементы (Custom Elements)</a></h2>
-        <ul>
-            <li><a href="#exampl">Пример: «time-formatted»</a></li>
-            <li><a href="#watch">Наблюдение за атрибутами</a></li>
-            <li><a href="#order">Порядок рендеринга</a></li>
-            <li><a href="#modif">Модифицированные встроенные элементы</a></li>
-            <li><a href="#links">Ссылки</a></li>
-            <li><a href="#total">Итого</a></li>
-            <li><a href="#tasks">Задача</a></li>
-        </ul>
-    </div>
-    <div class="topic" id="custom">
-        <h2><a href="https://learn.javascript.ru/custom-elements">Пользовательские элементы (Custom Elements)</a></h2>
-        <p>В html/js можно создавать свои теги прописывая их свойства, которых существует два вида:</p>
-        <ul>
-            <li><strong>Автономные пользовательские элементы</strong> – «полностью новые» элементы, расширяющие
-                абстрактный класс HTMLElement.</li>
-            <li><strong>Пользовательские встроенные элементы</strong> – элементы, расширяющие встроенные, например
-                кнопку HTMLButtonElement и т.п. </li>
-        </ul>
-        <p>Сначала будем рассматривать автономные пользовательские элементы. Создание происходит путём создания
-            пользовательского класса:</p>
-        <pre><code class="language-js">
+  <div class="contents">
+    <h2><a href="#custom">Пользовательские элементы (Custom Elements)</a></h2>
+    <ul>
+      <li><a href="#exampl">Пример: «time-formatted»</a></li>
+      <li><a href="#watch">Наблюдение за атрибутами</a></li>
+      <li><a href="#order">Порядок рендеринга</a></li>
+      <li><a href="#modif">Модифицированные встроенные элементы</a></li>
+      <li><a href="#links">Ссылки</a></li>
+      <li><a href="#total">Итого</a></li>
+      <li><a href="#tasks">Задача</a></li>
+    </ul>
+  </div>
+  <div class="topic" id="custom">
+    <h2><a href="https://learn.javascript.ru/custom-elements">Пользовательские элементы (Custom Elements)</a></h2>
+    <p>В html/js можно создавать свои теги прописывая их свойства, которых существует два вида:</p>
+    <ul>
+      <li><strong>Автономные пользовательские элементы</strong> – «полностью новые» элементы, расширяющие
+        абстрактный класс HTMLElement.</li>
+      <li><strong>Пользовательские встроенные элементы</strong> – элементы, расширяющие встроенные, например
+        кнопку HTMLButtonElement и т.п. </li>
+    </ul>
+    <p>Сначала будем рассматривать автономные пользовательские элементы. Создание происходит путём создания
+      пользовательского класса:</p>
+    <pre><code class="language-js">
 class MyElement extends HTMLElement {
   constructor() {
     super();
@@ -70,23 +70,23 @@ class MyElement extends HTMLElement {
   // у элемента могут быть ещё другие методы и свойства
 }                
             </code></pre>
-        <p>После этого нам нужно зарегистрировать элемент:</p>
-        <pre><code class="language-js">
+    <p>После этого нам нужно зарегистрировать элемент:</p>
+    <pre><code class="language-js">
 // сообщим браузеру, что <my-element> обслуживается нашим новым классом
 customElements.define("my-element", MyElement);                
             </code></pre>
-        <p>Теперь для любых HTML-элементов с тегом &lt;my-element> создаётся экземпляр MyElement и вызываются
-            вышеупомянутые
-            методы. Также мы можем использовать document.createElement('my-element') в JavaScript.</p>
-        <blockquote>
-            <h4>Имя пользовательского элемента должно содержать дефис -</h4>
-            <p>Это гарантирует отсуствие конфликтов.</p>
-        </blockquote>
-    </div>
-    <div class="topic" id="exampl">
-        <h3>Пример: «time-formatted»</h3>
-        <p>Вместо тысячи слов:</p>
-        <pre><code class="language-js">
+    <p>Теперь для любых HTML-элементов с тегом &lt;my-element> создаётся экземпляр MyElement и вызываются
+      вышеупомянутые
+      методы. Также мы можем использовать document.createElement('my-element') в JavaScript.</p>
+    <blockquote>
+      <h4>Имя пользовательского элемента должно содержать дефис -</h4>
+      <p>Это гарантирует отсуствие конфликтов.</p>
+    </blockquote>
+  </div>
+  <div class="topic" id="exampl">
+    <h3>Пример: «time-formatted»</h3>
+    <p>Вместо тысячи слов:</p>
+    <pre><code class="language-js">
 &lt;script>
 class TimeFormatted extends HTMLElement { // (1)
 
@@ -116,53 +116,109 @@ customElements.define("time-formatted", TimeFormatted); // (2)
   time-zone-name="short"
 >&lt;/time-formatted>            
         </code></pre>
-        <script>
-            class TimeFormatted extends HTMLElement { // (1)
+    <script>
+      class TimeFormatted extends HTMLElement { // (1)
 
-                connectedCallback() {
-                    let date = new Date(this.getAttribute('datetime') || Date.now());
+        connectedCallback() {
+          let date = new Date(this.getAttribute('datetime') || Date.now());
 
-                    this.innerHTML = new Intl.DateTimeFormat("default", {
-                        year: this.getAttribute('year') || undefined,
-                        month: this.getAttribute('month') || undefined,
-                        day: this.getAttribute('day') || undefined,
-                        hour: this.getAttribute('hour') || undefined,
-                        minute: this.getAttribute('minute') || undefined,
-                        second: this.getAttribute('second') || undefined,
-                        timeZoneName: this.getAttribute('time-zone-name') || undefined,
-                    }).format(date);
-                }
+          this.innerHTML = new Intl.DateTimeFormat("default", {
+            year: this.getAttribute('year') || undefined,
+            month: this.getAttribute('month') || undefined,
+            day: this.getAttribute('day') || undefined,
+            hour: this.getAttribute('hour') || undefined,
+            minute: this.getAttribute('minute') || undefined,
+            second: this.getAttribute('second') || undefined,
+            timeZoneName: this.getAttribute('time-zone-name') || undefined,
+          }).format(date);
+        }
 
-            }
+      }
 
-            customElements.define("time-formatted", TimeFormatted); // (2)
-        </script>
+      customElements.define("time-formatted", TimeFormatted); // (2)
+    </script>
 
-        <!-- (3) -->
-        <time-formatted datetime="2019-12-01" year="numeric" month="long" day="numeric" hour="numeric" minute="numeric"
-            second="numeric" time-zone-name="short"></time-formatted>
-        <ol>
-            <li>Класс имеет только один метод <code>connectedCallback()</code> – браузер вызывает его, когда элемент
-                <code>&lt;time-formatted></code>
-                добавляется на страницу (или когда HTML-парсер обнаруживает его), и он использует встроенный
-                форматировщик данных <code>Intl.DateTimeFormat</code>, хорошо поддерживаемый в браузерах, чтобы показать
-                красиво
-                отформатированное время.
-            </li>
-            <li>Нам нужно зарегистрировать наш новый элемент, используя <code>customElements.define(tag, class)</code>.
-            </li>
-            <li>И тогда мы сможем использовать его везде. </li>
-        </ol>
-        <p>Чтобы получить информацию о пользовательских элементах, есть следующие методы:</p>
-        <ul>
-            <li><code>customElements.get(name)</code> – возвращает класс пользовательского элемента с указанным именем
-                <code>name</code>,
-            </li>
-            <li><code>customElements.whenDefined(name)</code> – возвращает промис, который переходит в состояние
-                «успешно выполнен» со значением конструктора пользовательского элемента, когда определён
-                пользовательский элемент с указанным именем <code>name</code>.</li>
-        </ul>
-    </div>
+    <!-- (3) -->
+    <time-formatted datetime="2019-12-01" year="numeric" month="long" day="numeric" hour="numeric" minute="numeric"
+      second="numeric" time-zone-name="short"></time-formatted>
+    <ol>
+      <li>Класс имеет только один метод <code>connectedCallback()</code> – браузер вызывает его, когда элемент
+        <code>&lt;time-formatted></code>
+        добавляется на страницу (или когда HTML-парсер обнаруживает его), и он использует встроенный
+        форматировщик данных <code>Intl.DateTimeFormat</code>, хорошо поддерживаемый в браузерах, чтобы показать
+        красиво
+        отформатированное время.
+      </li>
+      <li>Нам нужно зарегистрировать наш новый элемент, используя <code>customElements.define(tag, class)</code>.
+      </li>
+      <li>И тогда мы сможем использовать его везде. </li>
+    </ol>
+    <p>Чтобы получить информацию о пользовательских элементах, есть следующие методы:</p>
+    <ul>
+      <li><code>customElements.get(name)</code> – возвращает класс пользовательского элемента с указанным именем
+        <code>name</code>,
+      </li>
+      <li><code>customElements.whenDefined(name)</code> – возвращает промис, который переходит в состояние
+        «успешно выполнен» со значением конструктора пользовательского элемента, когда определён
+        пользовательский элемент с указанным именем <code>name</code>.</li>
+    </ul>
+  </div>
+  <div class="topic" id="watch">
+    <h3>Наблюдение за атрибутами</h3>
+    <p>Вот новый &lt;time-formatted>, который автоматически обновляется при изменении атрибутов:</p>
+    <pre><code class="lang">
+&lt;script>
+class TimeFormatted extends HTMLElement {
+
+  render() { // (1)
+    let date = new Date(this.getAttribute('datetime') || Date.now());
+
+    this.innerHTML = new Intl.DateTimeFormat("default", {
+      year: this.getAttribute('year') || undefined,
+      month: this.getAttribute('month') || undefined,
+      day: this.getAttribute('day') || undefined,
+      hour: this.getAttribute('hour') || undefined,
+      minute: this.getAttribute('minute') || undefined,
+      second: this.getAttribute('second') || undefined,
+      timeZoneName: this.getAttribute('time-zone-name') || undefined,
+    }).format(date);
+  }
+
+  connectedCallback() { // (2)
+    if (!this.rendered) {
+      this.render();
+      this.rendered = true;
+    }
+  }
+
+  static get observedAttributes() { // (3)
+    return ['datetime', 'year', 'month', 'day', 'hour', 'minute', 'second', 'time-zone-name'];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) { // (4)
+    this.render();
+  }
+
+}
+
+customElements.define("time-formatted", TimeFormatted);
+&lt;/script>
+
+&lt;time-formatted id="elem" hour="numeric" minute="numeric" second="numeric">&lt;/time-formatted>
+
+&lt;script>
+setInterval(() => elem.setAttribute('datetime', new Date()), 1000); // (5)
+&lt;/script>        
+      </code></pre>
+    <iframe src="explCustom-elements.html" frameborder="0" width="100px" height="50px"></iframe>
+    <ol>
+      <li>Логика рендеринга перенесена во вспомогательный метод render().</li>
+      <li>Мы вызываем его один раз, когда элемент вставляется на страницу.</li>
+      <li>При изменении атрибута, указанного в observedAttributes(), вызывается attributeChangedCallback.</li>
+      <li>…и происходит ререндеринг элемента.</li>
+      <li>В конце мы легко создаём живой таймер. </li>
+    </ol>
+  </div>
 </body>
 
 </html>
