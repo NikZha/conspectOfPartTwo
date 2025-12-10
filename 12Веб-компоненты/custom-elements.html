@@ -297,6 +297,36 @@ customElements.define('hello-button', HelloButton, {extends: 'button'});
         href="https://caniuse.com/#feat=custom-elementsv1">https://caniuse.com/#feat=custom-elementsv1</a>. Имеется в
       виду совместимость с браузерами.</p>
   </div>
+  <div class="topic" id="total">
+    <h3>Итого</h3>
+    <p>Два типа пользовательских элементов</p>
+    <ol>
+      <li>«Автономные» – новые теги, расширяющие <code>HTMLElement</code>.
+        <br>Схема определения:
+        <pre><code class="language-js">
+class MyElement extends HTMLElement {
+  constructor() { super(); /* ... */ }
+  connectedCallback() { /* ... */ }
+  disconnectedCallback() { /* ... */  }
+  static get observedAttributes() { return [/* ... */]; }
+  attributeChangedCallback(name, oldValue, newValue) { /* ... */ }
+  adoptedCallback() { /* ... */ }
+ }
+customElements.define('my-element', MyElement);
+/* &lt;my-element> */  
+</code></pre>
+      </li>
+      <li>«Модифицированные встроенные элементы» – расширения существующих элементов.
+
+        Требуют ещё один аргумент в <code>.define</code> и атрибут <code>is="..."</code> в HTML:
+        <pre><code class="language-js">
+class MyButton extends HTMLButtonElement { /*...*/ }
+customElements.define('my-button', MyElement, {extends: 'button'});
+/* &lt;button is="my-button"> */  
+</code></pre>
+      </li>
+    </ol>
+  </div>
 </body>
 
 </html>
