@@ -196,7 +196,26 @@ alert( "Люблю HTML".replace(/HTML/, "$& и JavaScript") ); // Люблю HT
             }
         </script>
     </div>
+    <div class="topic" id="test">
+        <h3>Проверка: regexp.test</h3>
+        <p>Метод <code>regexp.test(str)</code> проверяет, есть ли хоть одно совпадение, если да, то возвращает
+            <code>true</code>, иначе <code>false</code>.
+        </p>
+        <pre class="startbutton"><code class="language-js" onclick="expl3()">
+let str = "Я ЛюБлЮ JavaScript";
+let regexp = /люблю/i;
 
+alert( regexp.test(str) ); // true                
+            </code></pre>
+        <script>
+            function expl3(params) {
+                let str = "Я ЛюБлЮ JavaScript";
+                let regexp = /люблю/i;
+
+                alert(regexp.test(str)); // true
+            }
+        </script>
+    </div>
 
 
 
