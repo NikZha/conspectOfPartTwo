@@ -216,6 +216,25 @@ alert( regexp.test(str) ); // true
             }
         </script>
     </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <ul>
+            <li>Регулярное выражение состоит из шаблона и необязательных флагов: <code>g</code>, <code>i</code>,
+                <code>m</code>, <code>u</code>, <code>s</code>, <code>y</code>, <code>d</code>.
+            </li>
+            <li>Без флагов и специальных символов, которые мы изучим позже, поиск по регулярному выражению аналогичен
+                поиску подстроки.</li>
+            <li>Метод <code>str.match(regexp)</code> ищет совпадения: все, если есть флаг <code>g</code>, иначе только
+                первое.</li>
+            <li>Метод <code>str.replace(regexp, replacement)</code> заменяет совпадения с <code>regexp</code> на
+                <code>replacement</code>: все, если у регулярного выражения есть флаг <code>g</code>, иначе только
+                первое.
+            </li>
+            <li>Метод <code>regexp.test(str)</code> возвращает <code>true</code>, если есть хоть одно совпадение, иначе
+                <code>false</code>.
+            </li>
+        </ul>
+    </div>
 
 
 
