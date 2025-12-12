@@ -128,6 +128,74 @@ if (!matches.length) {
             </li>
         </ol>
     </div>
+    <div class="topic" id="replace">
+        <h3>Замена: str.replace</h3>
+        <p>Метод <code>str.replace(regexp, replacement)</code> заменяет совпадения с <code>regexp</code> в строке
+            <code>str</code> на <code>replacement</code> (все, если есть флаг <code>g</code>, иначе только первое).
+        </p>
+        <pre><input type="button" value="Тест replace" onclick="expl1()"><code class="language-js">
+// без флага g
+alert( "We will, we will".replace(/we/i, "I") ); // I will, we will
+
+// с флагом g
+alert( "We will, we will".replace(/we/ig, "I") ); // I will, I will                
+            </code></pre>
+        <script>
+            function expl1() {
+                // без флага g
+                alert("We will, we will".replace(/we/i, "I")); // I will, we will
+
+                // с флагом g
+                alert("We will, we will".replace(/we/ig, "I")); // I will, I will                    
+            }
+        </script>
+        <p>В строке замены <code>replacement</code> мы можем использовать специальные комбинации символов для вставки
+            фрагментов совпадения:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Спецсимволы</th>
+                    <th>Действие в строке замены</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>$&</code></td>
+                    <td> вставляет всё найденное совпадение</td>
+                </tr>
+                <tr>
+                    <td><code>$`</code></td>
+                    <td>вставляет часть строки до совпадения</td>
+                </tr>
+                <tr>
+                    <td>$'</td>
+                    <td>вставляет часть строки после совпадения</td>
+                </tr>
+                <tr>
+                    <td><code>$n</code></td>
+                    <td> если n это 1-2 значное число, вставляет содержимое n-й скобочной группы регулярного выражения,
+                        больше об этом в главе Скобочные группы</td>
+                </tr>
+                <tr>
+                    <td><code>$&lt;name></code></td>
+                    <td>вставляет содержимое скобочной группы с именем name, также изучим в главе Скобочные группы</td>
+                </tr>
+                <tr>
+                    <td><code>$$</code></td>
+                    <td>вставляет символ "$"</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Пример с <code>$&</code>:</p>
+        <pre class="startbutton" onclick="expl2()"><code class="language-js">
+alert( "Люблю HTML".replace(/HTML/, "$& и JavaScript") ); // Люблю HTML и JavaScript
+            </code></pre>
+        <script>
+            function expl2() {
+                alert("Люблю HTML".replace(/HTML/, "$& и JavaScript")); // Люблю HTML и JavaScript                    
+            }
+        </script>
+    </div>
 
 
 
