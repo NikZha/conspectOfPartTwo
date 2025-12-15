@@ -13,15 +13,77 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#symbols">Символьные классы</a></h2>
-    <ul>
-        <li><a href="#revers">Обратные символьные классы</a></li>
-        <li><a href="#point">Точка – это любой символ</a></li>
-        <li><a href="#total">Итого</a></li>
-    </ul>
-</div>
+    <div class="contents">
+        <h2><a href="#symbols">Символьные классы</a></h2>
+        <ul>
+            <li><a href="#revers">Обратные символьные классы</a></li>
+            <li><a href="#point">Точка – это любой символ</a></li>
+            <li><a href="#total">Итого</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="symbols">
+        <h2><a href="https://learn.javascript.ru/regexp-character-classes">Символьные классы</a></h2>
+        <p>Рассмотрим практическую задачу – у нас есть номер телефона вида "+7(903)-123-45-67", и нам нужно превратить
+            его в строку только из чисел: 79031234567. </p>
+        <pre class="startbutton" onclick="expl1()"><code class="language-js">
+let str = "+7(903)-123-45-67";
 
+let regexp = /\d/g;
+
+alert( str.match(regexp) ); // массив совпадений: 7,9,0,3,1,2,3,4,5,6,7
+
+// и можно сделать из них уже чисто цифровой номер телефона
+alert( str.match(regexp).join('') ); // 79031234567                
+            </code></pre>
+        <script>
+            function expl1() {
+                let str = "+7(903)-123-45-67";
+
+                let regexp = /\d/g;
+
+                alert(str.match(regexp)); // массив совпадений: 7,9,0,3,1,2,3,4,5,6,7
+
+                // и можно сделать из них уже чисто цифровой номер телефона
+                alert(str.match(regexp).join('')); // 79031234567                    
+            }
+        </script>
+        <p>Наиболее используемые символьные классы:</p>
+        <li><code>\d</code> («d» от английского «digit» означает «цифра»)
+            <br>Цифра: символ от 0 до 9.
+        </li>
+        <li><code>\s</code> («s»: от английского «space» – «пробел»)
+            <br>Пробельные символы: включает в себя символ пробела, табуляции \t, перевода строки \n и некоторые другие
+            редкие пробельные символы, обозначаемые как \v, \f и \r.
+        </li>
+        <li><code>\w</code> («w»: от английского «word» – «слово»)
+            <br>Символ «слова», а точнее – буква латинского алфавита или цифра или подчёркивание _. Нелатинские буквы не
+            являются частью класса \w, то есть буква русского алфавита не подходит.
+        </li>
+        <p>Для примера, <code>\d\s\w</code> обозначает «цифру», за которой идёт пробельный символ, а затем символ слова,
+            например <code>1 a</code>.</p>
+        <blockquote>Регулярное выражение может содержать как обычные символы, так и символьные классы.
+
+            Например, CSS\d соответствует строке CSS с цифрой после неё:</blockquote>
+        <pre class="startbutton" onclick="expl2()"><code class="language-js">
+let str = "Есть ли стандарт CSS4?";
+let regexp = /CSS\d/
+
+alert( str.match(regexp) ); // CSS4                
+            </code></pre>
+        <script>
+            function expl2() {
+                let str = "Есть ли стандарт CSS4?";
+                let regexp = /CSS\d/
+
+                alert(str.match(regexp)); // CSS4                    
+            }
+        </script>
+        <p>Так же можно использовать несколько классов:</p>
+        <pre><code class="language-js">
+alert( "I love HTML5!".match(/\s\w\w\w\w\d/) ); // ' HTML5'                
+            </code></pre>
+        <p>Каждому символу соответствует свой симольный класс.</p>
+    </div>
 
 
 
