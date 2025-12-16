@@ -116,6 +116,53 @@ alert( str.replace(/\D/g, "") ); // 79031234567
             }
         </script>
     </div>
+    <div class="topic" id="point">
+        <div id="any">
+            <h3>Точка – это любой символ</h3>
+            <p>Точка <code>.</code> – это специальный символьный класс, который соответствует «любому символу, кроме
+                новой
+                строки <code>\n</code>». Для примера:</p>
+            <pre><code class="language-js startbutton" onclick="expl4()">
+let regexp = /CS.4/;
+
+alert( "CSS4".match(regexp) ); // CSS4
+alert( "CS-4".match(regexp) ); // CS-4
+alert( "CS 4".match(regexp) ); // CS 4 (пробел тоже является символом)
+
+alert( "CS4".match(/CS.4/) ); // null, нет совпадений потому что нет символа для точки
+</code></pre>
+            <script>
+                function expl4() {
+                    let regexp = /CS.4/;
+
+                    alert("CSS4".match(regexp)); // CSS4
+                    alert("CS-4".match(regexp)); // CS-4
+                    alert("CS 4".match(regexp)); // CS 4 (пробел тоже является символом)
+
+                    alert("CS4".match(/CS.4/)); // null, нет совпадений потому что нет символа для точки
+                }
+            </script>
+        </div>
+        <div id="anywithdot">
+            <h3>Точка как буквально любой символ, с флагом «s»</h3>
+            <p>Обычно точка не соответствует символу новой строки \n. Но как <a
+                    href="./regexp-introduction.html#flags">писалось в этом разделе</a> с <code>\s</code> означает оно и
+                перевод строки:</p>
+            <pre><code class="language-js startbutton" onclick="expl5()">
+alert( "A\nB".match(/A.B/s) ); // A\nB (совпадение!)
+alert( "A\r\nB".match(/A.B/s) ); // A\r\nB (совпадение? не думаю! потому что более одного символа)
+//А так сработает:
+alert( "A\r\nB".match(/A..B/s) ); // A\r\nB (совпадение!)
+</code></pre>
+            <script>
+                function expl5() {
+                    alert("A\nB".match(/A.B/s)); // A\nB (совпадение!)
+                    alert("A\r\nB".match(/A.B/s)); // A\r\nB (совпадение? не думаю! потому что более одного символа)
+                    alert("A\r\nB".match(/A..B/s)); //  (совпадение!)
+                }
+            </script>
+        </div>
+    </div>
 
 
 
