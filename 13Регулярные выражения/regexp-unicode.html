@@ -28,6 +28,146 @@
         <p>Далее автор подводит к наличию флага <code>u</code> который обозначает юникод в регекспах. И из чего можно
             сделать вывод, что регекспы появились значительно позже чем класс String. </p>
     </div>
+    <div class="topic" id="prop">
+        <h3>Юникодные свойства \p{…}</h3>
+        <p>Вот основные категории символов и их подкатегории:</p>
+        <ul>
+            <li>Буквы<code> L</code>:</li>
+            <ul>
+                <li>в нижнем регистре <code>Ll</code>,</li>
+                <li>модификаторы <code>Lm</code>,</li>
+                <li>заглавные буквы <code>Lt</code>,</li>
+                <li>в верхнем регистре <code>Lu</code>,</li>
+                <li>прочие <code>Lo</code>.</li>
+            </ul>
+            <li>Числа<code>N</code>:</li>
+            <ul>
+                <li>десятичная цифра <code>Nd</code>,</li>
+                <li>цифры обозначаемые буквами (римские) <code>Nl</code>,</li>
+                <li>прочие <code>No</code>.</li>
+            </ul>
+            <li>Знаки пунктуации <code>P</code>:</li>
+            <ul>
+                <li>соединители <code>Pc</code>,</li>
+                <li>тире <code>Pd</code>,</li>
+                <li>открывающие кавычки <code>Pi</code>,</li>
+                <li>закрывающие кавычки <code>Pf</code>,</li>
+                <li>открывающие скобки <code>Ps</code>,</li>
+                <li>закрывающие скобки <code>Pe</code>,</li>
+                <li>прочее <code>Po</code>.</li>
+            </ul>
+            <li>Отметки <code>M</code> (например, акценты):</li>
+            <ul>
+                <li>двоеточия <code>Mc</code>,</li>
+                <li>вложения <code>Me</code>,</li>
+                <li>апострофы <code>Mn</code>.</li>
+            </ul>
+            <li>Символы <code>S</code>:</li>
+            <ul>
+                <li>валюты <code>Sc</code>,</li>
+                <li>модификаторы <code>Sk</code>,</li>
+                <li>математические <code>Sm</code>,</li>
+                <li>прочие <code>So</code>.</li>
+            </ul>
+            <li>Разделители <code>Z</code>:</li>
+            <ul>
+                <li>линия <code>Zl</code>,</li>
+                <li>параграф <code>Zp</code>,</li>
+                <li>пробел <code>Zs</code>.</li>
+            </ul>
+            <li>Прочие <code>C</code>:</li>
+            <ul>
+                <li>контрольные <code>Cc</code>,</li>
+                <li>форматирование <code>Cf</code>,</li>
+                <li>не назначенные <code>Cn</code>,</li>
+                <li>для приватного использования <code>Co</code>,</li>
+                <li>суррогаты <code>Cs</code>.</li>
+            </ul>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+let str = "A ბ ㄱ";
+
+alert( str.match(/\p{L}/gu) ); // A,ბ,ㄱ
+alert( str.match(/\p{L}/g) ); // null (ничего не нашло, так как \p не работает без флага "u")            
+        </code></pre>
+        <script>
+            function expl1() {
+                let str = "A ბ ㄱ";
+
+                alert(str.match(/\p{L}/gu)); // A,ბ,ㄱ
+                alert(str.match(/\p{L}/g)); // null (ничего не нашло, так как \p не работает без флага "u")         
+            }
+        </script>
+        <p>Так же есть производные то есть комбинация каких-либо символов и не перечисленные классы симоволов по типу
+            <code>Hex_Digit</code> и т.д. В целом юникод достаточно огромен и запутан, а потому в оригинальном
+            топике у автора есть соотвествующие ссылки на стандарты. Иногда мне кажется, что Столяров был прав
+            относительно юникода.
+        </p>
+        <div id="example">
+            <h4>Пример: шестнадцатеричные числа</h4>
+            <pre><code class="language-js startbutton" onclick="expl2()">
+let regexp = /x\p{Hex_Digit}\p{Hex_Digit}/u;
+
+alert("число: xAF".match(regexp)); // xAF                
+            </code></pre>
+            <script>
+                function expl2() {
+                    let regexp = /x\p{Hex_Digit}\p{Hex_Digit}/u;
+
+                    alert("число: xAF".match(regexp)); // xAF                    
+                }
+            </script>
+        </div>
+        <div id="han">
+            <h4>Пример: китайские иероглифы</h4>
+            <p>В Юникоде есть свойство Script (система написания), которое может иметь значения
+                <code>Cyrillic (Кириллическая)</code>, <code>Greek (Греческая)</code>, <code>Arabic (Арабская)</code>,
+                <code>Han (Китайская)</code> и так далее, <a
+                    href="https://en.wikipedia.org/wiki/Script_(Unicode)">здесь</a> полный список.
+                Для поиска символов в нужной системе мы должны установить <code>Script=&lt;значение></code>:
+            </p>
+            <pre><code class="language-js startbutton" onclick="expl3()">
+let regexp = /\p{sc=Han}/gu; // вернёт китайские иероглифы
+
+let str = `Hello Привет 你好 123_456`;
+
+alert( str.match(regexp) ); // 你,好                
+            </code></pre>
+            <script>
+                function expl3() {
+                    let regexp = /\p{sc=Han}/gu; // вернёт китайские иероглифы
+
+                    let str = `Hello Привет 你好 123_456`;
+
+                    alert(str.match(regexp)); // 你,好        
+                }
+            </script>
+        </div>
+        <div id="currency">
+            <h4>Пример: валюта</h4>
+            <p>
+                Символы, обозначающие валюты, такие как <code>$,</code> <code>€</code>, <code>¥</code>, имеют свойство
+                <code>\p{Currency_Symbol}</code>, короткая запись: <code>\p{Sc}</code>.
+            </p>
+            <pre><code class="language-js startbutton" onclick="expl4()">
+let regexp = /\p{Sc}\d/gu;
+
+let  str = `Цены: $2, €1, ¥9`;
+
+alert( str.match(regexp) ); // $2,€1,¥9                
+            </code></pre>
+            <script>
+                function expl4() {
+                    let regexp = /\p{Sc}\d/gu;
+
+                    let str = `Цены: $2, €1, ¥9`;
+
+                    alert(str.match(regexp)); // $2,€1,¥9    
+                }                
+            </script>
+        </div>
+    </div>
 
 
 
