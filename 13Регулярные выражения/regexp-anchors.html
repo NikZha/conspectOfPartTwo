@@ -13,14 +13,32 @@
 </head>
 
 <body>
-<div class="contents">
-    <h2><a href="#anchors">Якоря: начало строки ^ и конец $</a></h2>
-    <ul>
-        <li><a href="#check">Проверка на полное совпадение</a></li>
-        <li><a href="#tasks">Задача</a></li>
-    </ul>
-</div>
-
+    <div class="contents">
+        <h2><a href="#anchors">Якоря: начало строки ^ и конец $</a></h2>
+        <ul>
+            <li><a href="#check">Проверка на полное совпадение</a></li>
+            <li><a href="#tasks">Задача</a></li>
+        </ul>
+    </div>
+    <div class="topic" id="anchors">
+        <h2><a href="https://learn.javascript.ru/regexp-anchors">Якоря: начало строки ^ и конец $</a></h2>
+        <p>Как следует из названия <code>^</code> означает начало строки, а <code>$</code> конец строки, например:</p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+let str1 = "Mary had a little lamb";
+alert( /^Mary/.test(str1) ); // true
+alert( /lamb$/.test(str1) ); // true            
+        </code></pre>
+        <script>
+            function expl1() {
+                let str1 = "Mary had a little lamb";
+                alert(/^Mary/.test(str1)); // true
+                alert(/lamb$/.test(str1)); // true 
+            }
+        </script>
+        <p>В конкретно этих случаях мы могли бы использовать и методы строк
+            <code>startsWith</code>/<code>endsWith</code>. Регулярные выражения
+            следует применять, когда нужна проверка сложнее.</p>
+    </div>
 
 
 
