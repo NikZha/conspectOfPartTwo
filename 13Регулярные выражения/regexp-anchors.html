@@ -37,7 +37,31 @@ alert( /lamb$/.test(str1) ); // true
         </script>
         <p>В конкретно этих случаях мы могли бы использовать и методы строк
             <code>startsWith</code>/<code>endsWith</code>. Регулярные выражения
-            следует применять, когда нужна проверка сложнее.</p>
+            следует применять, когда нужна проверка сложнее.
+        </p>
+    </div>
+    <div class="topic" id="check">
+        <h3>Проверка на полное совпадение</h3>
+        <p>Оба якоря вместе <code>^...$</code> используют чтобы проверить строку на полное совпадение с паттерном: </p>
+        <pre><code class="language-js startbutton" onclick="expl2()">
+let goodInput = "12:34";
+let badInput = "12:345";
+
+let regexp = /^\d\d:\d\d$/;
+alert( regexp.test(goodInput) ); // true
+alert( regexp.test(badInput) ); // false            
+        </code></pre>
+        <script>
+            function expl2() {
+                let goodInput = "12:34";
+                let badInput = "12:345";
+
+                let regexp = /^\d\d:\d\d$/;
+                alert(regexp.test(goodInput)); // true
+                alert(regexp.test(badInput)); // false                
+            }
+        </script>
+        <p>У самих якорей нулевая длинна.</p>
     </div>
 
 
