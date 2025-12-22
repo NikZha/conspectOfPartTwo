@@ -63,6 +63,23 @@ alert( regexp.test(badInput) ); // false
         </script>
         <p>У самих якорей нулевая длинна.</p>
     </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <input type="button" value="Тест ^&" onclick="task1()">
+        <script>
+            function task1() {
+                let str = ''
+                let regexp = /^$/;
+                alert(regexp.test(str))
+            }
+        </script>
+        <pre><code class="language-js">
+                let str = ''
+                let regexp = /^$/;
+                alert(regexp.test(str))            
+        </code></pre>
+        <p>Итого паттерн <code>/^$/</code>соотвествует пустой строке.</p>
+    </div>
 
 
 
