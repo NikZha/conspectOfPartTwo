@@ -73,7 +73,28 @@ let str = `Винни: 1
 alert( str.match(/\d$/gm) ); // 1,2,3       
 </code></pre>
     </div>
+    <div class="topic" id="vice">
+        <h3>Ищем \n вместо ^ $</h3>
+        <p>В целом надуманный пример использования <code>\n</code> вместо <code>$</code>:</p>
+        <script>
+            function expl3() {
+                let str = `Винни: 1
+Пятачок: 2
+Слонопотам: 3`;
 
+                alert(str.match(/\d\n/g)); // 1\n,2\n                
+            }
+        </script>
+        <pre><code class="language-js startbutton" onclick="expl3()">
+let str = `Винни: 1
+Пятачок: 2
+Слонопотам: 3`;
+
+alert( str.match(/\d\n/g) ); // 1\n,2\n              
+        </code></pre>
+        <p>Цифру <code>3</code> оно не ловит, потому что после этой цифры нет <code>\n</code>. То есть
+            использование именно такое, когда нужен именно перевод <code>\n</code> строки.</p>
+    </div>
 
 
 </body>
