@@ -53,7 +53,26 @@ alert( str.match(/^\d/g) ); // 1
             }
         </script>
     </div>
+    <div class="topic" id="end">
+        <h3>Поиск в конце строки $</h3>
+        <p>Символ доллара <code>$</code> ведёт себя аналогично.</p>
+        <script>
+            function expl2() {
+                let str = `Винни: 1
+Пятачок: 2
+Слонопотам: 3`;
 
+                alert(str.match(/\d$/gm)); // 1,2,3    
+            }            
+        </script>
+        <pre><code class="language-js startbutton" onclick="expl2()">
+let str = `Винни: 1
+Пятачок: 2
+Слонопотам: 3`;
+
+alert( str.match(/\d$/gm) ); // 1,2,3       
+</code></pre>
+    </div>
 
 
 
