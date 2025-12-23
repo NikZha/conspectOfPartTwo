@@ -25,9 +25,33 @@
         <h2><a href="https://learn.javascript.ru/regexp-multiline-mode">Многострочный режим якорей ^ $, флаг "m"</a>
         </h2>
         <p>Многострочный режим включается флагом <code>m</code>. Он влияет только на поведение <code>^</code> и
-            <code>$</code>.</p>
+            <code>$</code>.
+        </p>
         <p>В многострочном режиме они означают не только начало/конец текста, но и начало/конец каждой строки в тексте.
         </p>
+    </div>
+    <div class="topic" id="begin">
+        <h3>Поиск в начале строки ^</h3>
+        <p>Шаблон <code>/^\d/gm</code> берёт цифру с начала каждой строки, а без флага <code>m</code> сматчится только
+            первая строка:</p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+let str = `1е место: Винни
+2е место: Пятачок
+3е место: Слонопотам`;
+
+alert( str.match(/^\d/gm) ); // 1, 2, 3    
+alert( str.match(/^\d/g) ); // 1               
+        </code></pre>
+        <script>
+            function expl1() {
+                let str = `1е место: Винни
+2е место: Пятачок
+3е место: Слонопотам`;
+
+                alert(str.match(/^\d/gm)); // 1, 2, 3    
+                alert(str.match(/^\d/g)); // 1            
+            }
+        </script>
     </div>
 
 
