@@ -59,6 +59,25 @@ alert( "12,34,56".match(/\b\d\d\b/g) ); // 12,34,56
             }
         </script>
     </div>
+    <div class="topic" id="tasks">
+        <h3>Задача</h3>
+        <button onclick="alert(task1())">Тест поиска времени</button>
+        <pre><code class="language-js startbutton">
+                let timeStr = 'Завтрак в 09:00 в комнате 123:456';
+                let regexp = new RegExp('\\b\\d\\d:\\d\\d\\b', 'g')
+                return timeStr.match(regexp)            
+        </code></pre>
+        <script>
+            function task1() {
+                let timeStr = 'Завтрак в 09:00 в комнате 123:456';
+                let regexp = new RegExp('\\b\\d\\d:\\d\\d\\b', 'g')
+                return timeStr.match(regexp)
+            }
+        </script>
+        <p>Сложность тут была в понимании как создавать регексп с флагами и как их надо экранировать
+            <code>let regexp = new RegExp('\\b\\d\\d:\\d\\d\\b', 'g')</code>. На текущий момент я не видел этого
+        в учебнике.</p>
+    </div>
 
 
 
