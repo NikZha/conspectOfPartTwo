@@ -27,6 +27,25 @@
         <h2><a href="https://learn.javascript.ru/regexp-escaping">Экранирование, специальные символы</a></h2>
         <p>Помимо <code>\</code> есть и другие управляющие символы: <code>[ ] \ ^ $ . | ? * + ( )</code></p>
     </div>
+    <div class="topic" id="shield">
+        <h3>Экранирование символов</h3>
+        <p>Экранирование символов осуществляется косой чертой <code>\</code>, что позволяет искать в тексте
+            специфические символы:</p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+alert( "Глава 5.1".match(/\d\.\d/) ); // 5.1 (совпадение!)
+alert( "Глава 511".match(/\d\.\d/) ); // null ("\." - ищет обычную точку)
+alert( "function g()".match(/g\(\)/) ); // "g()"
+alert( "1\\2".match(/\\/) ); // '\'    
+</code></pre>
+        <script>
+            function expl1() {
+                alert("Глава 5.1".match(/\d\.\d/)); // 5.1 (совпадение!)
+                alert("Глава 511".match(/\d\.\d/)); // null ("\." - ищет обычную точку)
+                alert("function g()".match(/g\(\)/)); // "g()"
+                alert("1\\2".match(/\\/)); // '\'        
+            }
+        </script>
+    </div>
 
 
 
