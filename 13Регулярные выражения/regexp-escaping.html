@@ -46,6 +46,22 @@ alert( "1\\2".match(/\\/) ); // '\'
             }
         </script>
     </div>
+    <div class="topic" id="slash">
+        <h3>Косая черта (slash)</h3>
+        <p>Косая черта тоже экранируется, так как использутся в самом языке для создания регекспов <code>/.../</code>,
+            или используются <code>new RegExp('/')</code>:
+        </p>
+        <pre><code class="language-js startbutton" onclick="expl2()">
+alert( "/".match(/\//) ); // '/'
+alert( "/".match(new RegExp("/")) ); // находит /            
+        </code></pre>
+        <script>
+            function expl2() {
+                alert("/".match(/\//)); // '/'
+                alert("/".match(new RegExp("/"))); // находит /   
+            }
+        </script>
+    </div>
 
 
 
