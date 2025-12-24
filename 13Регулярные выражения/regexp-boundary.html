@@ -19,7 +19,46 @@
             <li><a href="#tasks">Задачи</a></li>
         </ul>
     </div>
-
+    <div class="topic" id="border">
+        <h2><a href="https://learn.javascript.ru/regexp-boundary">Граница слова: \b</a></h2>
+        <p>Проверка на границы слова:</p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+alert( "Hello, Java!".match(/\bHello\b/) ); // Hello
+alert( "Hello, Java!".match(/\bJava\b/) );  // Java
+alert( "Hello, Java!".match(/\bHell\b/) );  // null (нет совпадения)
+alert( "Hello, Java!".match(/\bJava!\b/) ); // null (нет совпадения)
+alert(' Тест '.match(/\bТест\b/))    //не ищет не латиницу            
+        </code></pre>
+        <script>
+            function expl1() {
+                alert("Hello, Java!".match(/\bHello\b/)); // Hello
+                alert("Hello, Java!".match(/\bJava\b/));  // Java
+                alert("Hello, Java!".match(/\bHell\b/));  // null (нет совпадения)
+                alert("Hello, Java!".match(/\bJava!\b/)); // null (нет совпадения)
+                alert(' Тест '.match(/\bТест\b/))    //не ищет не латиницу            
+            }
+        </script>
+        <p>Как видно из этого примера:</p>
+        <ol>
+            <li>Границами отмечают как начало, так и конец слова.</li>
+            <li>Если паттерн найден, то возвращается слово найденное паттерном. Если паттерн не найден возвращается
+                <code>null</code>.
+            </li>
+            <li>Не работает на символы, но работает на цифры.</li>
+            <li>Не латинские знаки оно не ищет.</li>
+        </ol>
+        <p>Как было написано, можно искать цифры:</p>
+        <pre><code class="language-js startbutton" onclick="expl2()">
+alert( "1 23 456 78".match(/\b\d\d\b/g) ); // 23,78
+alert( "12,34,56".match(/\b\d\d\b/g) ); // 12,34,56            
+        </code></pre>
+        <script>
+            function expl2() {
+                alert("1 23 456 78".match(/\b\d\d\b/g)); // 23,78
+                alert("12,34,56".match(/\b\d\d\b/g)); // 12,34,56                
+            }
+        </script>
+    </div>
 
 
 
