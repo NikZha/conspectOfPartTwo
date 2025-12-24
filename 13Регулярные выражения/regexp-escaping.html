@@ -62,6 +62,29 @@ alert( "/".match(new RegExp("/")) ); // находит /
             }
         </script>
     </div>
+    <div class="topic" id="newregexp">
+        <h3>new RegExp</h3>
+        <p>Как я <a href="regexp-boundary.html#tasks">столкнулся в задаче</a> - <code>\</code> обратный слеш в строках
+            надо экранировать:</p>
+        <pre><code class="language-js startbutton" onclick="expl3()">
+let regStr = "\\d\\.\\d";
+alert(regStr); // \d\.\d (теперь правильно)
+
+let regexp = new RegExp(regStr);
+
+alert( "Глава 5.1".match(regexp) ); // 5.1                
+            </code></pre>
+        <script>
+            function expl3() {
+                let regStr = "\\d\\.\\d";
+                alert(regStr); // \d\.\d (теперь правильно)
+
+                let regexp = new RegExp(regStr);
+
+                alert("Глава 5.1".match(regexp)); // 5.1                    
+            }
+        </script>
+    </div>
 
 
 
