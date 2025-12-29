@@ -102,6 +102,22 @@ alert( str.match(regexp) ); // H,i,你,好,1,2
             </script>
         </div>
     </div>
+    <div class="topic" id="noband">
+        <h3>Исключающие диапазоны</h3>
+        <p>Помимо обычных диапазонов, есть «исключающие» диапазоны, которые выглядят как <code>[^…]</code>. Например:
+        </p>
+        <pre><code class="language-js startbutton" onclick="expl3()">
+alert( "alice15@gmail.com".match(/[^a-z]/gi) );
+alert( "alice15@gmail.com".match(/[^\d.@]/gi) );          
+        </code></pre>
+        <p>Данный скрипт исключает все буквы нижнего регистра и вторым алертом - цифры, точки и @.</p>
+        <script>
+            function expl3() {
+                alert("alice15@gmail.com".match(/[^a-z]/gi));
+                alert("alice15@gmail.com".match(/[^\d.@]/gi));
+            }
+        </script>
+    </div>
 
 
 
