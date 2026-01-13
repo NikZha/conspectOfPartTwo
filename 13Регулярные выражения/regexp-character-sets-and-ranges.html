@@ -176,6 +176,33 @@ alert( '𝒴'.match(/[𝒳-𝒵]/u) ); // 𝒴
         </script>
         <p>Причём выражение <code>𝒳'.match(/[𝒳-𝒴]/);</code> вообще отказывается обрабатываться. </p>
     </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <input type="button" value="Тест задачи" onclick="task1()">
+            <script>
+                function task1() {
+                    let str1 = 'Java'
+                    let str2 = 'JavaScript'
+                    let regexp = /Java[^script]/
+                    alert(str1.match(regexp))
+                    alert(str2.match(regexp))
+                }
+            </script>
+        </div>
+        <div id="task2">
+            <h4>Задача 2</h4>
+            <input type="button" value="Тест задачи 2" onclick="task2()">
+            <script>
+                function task2() {
+                    let regexp = /\d\d[:-]\d\d/g;
+                    alert("Завтрак в 09:00. Ужин в 21-30".match(regexp)); // 09:00, 21-30
+                }
+            </script>
+            <p>Регексп такой <code>let regexp = /\d\d[:-]\d\d/g;</code>.</p>
+        </div>
+    </div>
 
 
 
