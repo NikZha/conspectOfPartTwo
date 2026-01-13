@@ -143,6 +143,39 @@ alert( "1 + 2 - 3".match(regexp) ); // работает: +, -
             }
         </script>
     </div>
+    <div class="topic" id="flag">
+        <h3>Наборы и флаг «u»</h3>
+        <p>Суррогатные пары не обрабатываются без флага <code>u</code>:</p>
+        <pre><code class="language-js startbutton" onclick="expl5()">
+alert( '𝒳'.match(/[𝒳𝒴]/) ); // покажет странный символ, что-то типа [?]
+alert( '𝒳'.match(/[𝒳𝒴]/u) ); // 𝒳            
+        </code></pre>
+        <script>
+            function expl5() {
+                alert('𝒳'.match(/[𝒳𝒴]/)); // покажет странный символ, что-то типа [?]
+                alert('𝒳'.match(/[𝒳𝒴]/u)); // 𝒳  
+            }
+        </script>
+        <p>Тоже самое касается и диапазонов многобайтовых знаков:</p>
+        <pre><code class="language-js startbutton" onclick="expl6()">
+'𝒳'.match(/[𝒳-𝒴]/); // Error: Invalid regular expression
+// поищем символы от 𝒳 до 𝒵
+alert( '𝒴'.match(/[𝒳-𝒵]/u) ); // 𝒴            
+        </code></pre>
+        <script>
+            function expl6() {
+                try {
+                    //       '𝒳'.match(/[𝒳-𝒴]/);  Error: Invalid regular expression
+                    alert('𝒴'.match(/[𝒳-𝒵]/u)); // 𝒴 
+                } catch (error) {
+                    alert(error)
+                }
+                // поищем символы от 𝒳 до 𝒵
+
+            }
+        </script>
+        <p>Причём выражение <code>𝒳'.match(/[𝒳-𝒴]/);</code> вообще отказывается обрабатываться. </p>
+    </div>
 
 
 
