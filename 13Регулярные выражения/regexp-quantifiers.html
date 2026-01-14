@@ -26,6 +26,53 @@
         <h3><a href="https://learn.javascript.ru/regexp-quantifiers">Квантификаторы +, *, ? и {n}</a></h3>
         <p>Квантификаторы это мультипликаторы для классов <code>\w</code>, <code>\d</code> и так далее.</p>
     </div>
+    <div class="topic" id="quantity">
+        <h3>Количество {n}</h3>
+        <p>Самый простой квантификатор — это число в фигурных скобках: {n}.Может быть разным:</p>
+        <ul>
+            <li>Точное количество: {5}
+                <p>Шаблон <code>\d{5}</code> обозначает ровно 5 цифр, он эквивалентен <code>\d\d\d\d\d</code>.</p>
+                <pre><code class="language-js startbutton" onclick="expl0()">
+alert( "Мне 12345 лет".match(/\d{5}/) ); //  "12345"                    
+                </code></pre>
+                <script>
+                    function expl0() {
+                        alert("Мне 12345 лет".match(/\d{5}/));
+                    }
+                </script>
+                <p>Шаблон может быть длиннее: <code>\b\d{5}\b</code>.</p>
+            </li>
+            <li>Диапазон: {3,5}, от 3 до 5
+                <p>Можно указывать диапазон поиска <code>\d{3,5}</code></p>
+                <pre><code class="language-js startbutton" onclick="expl1()">
+alert( "Мне не 12, а 1234 года".match(/\d{2,5}/g) ); // "12,1234"                    
+                </code></pre>
+                <script>
+                    function expl1() {
+                        alert("Мне не 12, а 1234 года".match(/\d{2,5}/g));
+                    }
+                </script>
+                <p>Так же можно не указывать верхнюю границу поиска: <code>\d{1,}</code>:</p>
+                <pre><code class="language-js startbutton" onclick="expl2()">
+let str = "+7(903)-123-45-67";
+
+let numbers = str.match(/\d{1,}/g);
+
+alert(numbers); // 7,903,123,45,67                    
+                </code></pre>
+                <script>
+                    function expl2() {
+                        let str = "+7(903)-123-45-67";
+
+                        let numbers = str.match(/\d{1,}/g);
+
+                        alert(numbers); // 7,903,123,45,67
+                    }
+                </script>
+            </li>
+        </ul>
+
+    </div>
 
 
 
