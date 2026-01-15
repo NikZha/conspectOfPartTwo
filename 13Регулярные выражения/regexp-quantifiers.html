@@ -127,6 +127,43 @@ alert( "100 10 1".match(/\d0*/g) ); // 100, 10, 1
             </li>
         </ul>
     </div>
+    <div class="topic" id="more">
+        <h3>Ещё примеры</h3>
+        <ul>
+            <li>Регулярное выражение для десятичных дробей (чисел с плавающей точкой): <code>\d+\.\d+</code>
+                <pre><code class="language-js startbutton" onclick="expl6()">
+alert( "0 1 12.345 7890".match(/\d+\.\d+/g) ); // 12.345
+        </code></pre>
+                <script>
+                    function expl6() {
+                        alert("0 1 12.345 7890".match(/\d+\.\d+/g)); // 12.345                
+                    }
+                </script>
+            </li>
+            <li>Регулярное выражение для «открывающего HTML-тега без атрибутов», например, &lt;span> или &lt;p>
+                <pre><code class="language-js startbutton" onclick="expl7()">
+alert( "&lt;body> ...&lt;/body>".match(/<[a-z]+>/gi) ); // &lt;body>                    
+                </code></pre>
+                <script>
+                    function expl7() {
+                        alert("<body> ... </body>".match(/<[a-z]+>/gi)); // <body>                        
+                    }
+                </script>
+            </li>
+            <li>Регулярное выражение для «открывающего или закрывающего HTML-тега без атрибутов»:
+                <code>/&lt;\/?[a-z][a-z0-9]*>/i</code>
+            <pre><code class="language-js startbutton" onclick="expl8()">
+alert( "&lt;h1>Привет!&lt;/h1>".match(/&lt;\/?[a-z][a-z0-9]*>/gi) ); // &lt;h1>, &lt;/h1>                
+            </code></pre>
+            <script>
+                function expl8() {
+alert( "<h1>Привет!</h1>".match(/<\/?[a-z][a-z0-9]*>/gi) ); // <h1>, </h1>                    
+                }
+            </script>
+            </li>
+        </ul>
+
+    </div>
 
 
 
