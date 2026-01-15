@@ -73,6 +73,60 @@ alert(numbers); // 7,903,123,45,67
         </ul>
 
     </div>
+    <div class="topic" id="short">
+        <h3>Короткие обозначения</h3>
+        <p>Для самых востребованных квантификаторов есть сокращённые формы записи:</p>
+        <ul>
+            <li><code>+</code>
+                <br>Означает «один или более». То же самое, что и <code>{1,}</code>.
+                Например, <code>\d+</code> находит числа (из одной или более
+                цифр):
+                <pre><code class="language-js startbutton" onclick="expl3()">
+let str = "+7(903)-123-45-67";
+
+alert( str.match(/\d+/g) ); // 7,903,123,45,67                    
+                </code></pre>
+                <script>
+                    function expl3() {
+                        let str = "+7(903)-123-45-67";
+
+                        alert(str.match(/\d+/g)); // 7,903,123,45,67                        
+                    }
+                </script>
+            </li>
+            <li><code>?</code>
+                <br>Означает «ноль или один». То же самое, что и <code>{0,1}</code>. По сути, делает символ
+                необязательным.
+                <pre><code class="language-js startbutton" onclick="expl4()">
+let str = "Следует писать color или colour?";
+
+alert( str.match(/colou?r/g) ); // color, colour            
+        </code></pre>
+                <script>
+                    function expl4() {
+                        let str = "Следует писать color или colour?";
+
+                        alert(str.match(/colou?r/g)); // color, colour                 
+                    }
+                </script>
+                <p>То есть поскольку символ необязательный найдёт с ним и без него.</p>
+            </li>
+            <li><code>*</code>
+                <br>Означает «ноль или более». То же самое, что и <code>{0,}</code>.
+                <pre><code class="language-js startbutton" onclick="expl5()">
+alert( "100 10 1".match(/\d0*/g) ); // 100, 10, 1            
+        </code></pre>
+                <p>Тут смысл в том, что это <code>*</code> относится к <code>0</code> и если сравнивать с
+                    <code>\d0+</code>, то единицу оно не найдёт поскольку там шаблон <code>{1,}</code>.
+                </p>
+                <script>
+                    function expl5() {
+                        alert("100 10 1".match(/\d0*/g)); // 100, 10, 1                  
+                    }
+                </script>
+            </li>
+        </ul>
+    </div>
 
 
 
