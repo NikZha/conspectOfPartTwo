@@ -23,6 +23,27 @@
             <li><a href="#tasks">Задачи</a></li>
         </ul>
     </div>
+    <div class="topic" id="begin">
+        <h2><a href="https://learn.javascript.ru/regexp-greedy-and-lazy">Жадные и ленивые квантификаторы</a></h2>
+        <p>Проблематика найти все слова в кавычках <code>"</code>:</p>
+        <pre><code class="language-js startbutton" onclick="expl0()">
+let regexp = /".+"/g;
+
+let str = 'a "witch" and her "broom" is one';
+
+alert( str.match(regexp) ); // "witch" and her "broom"
+        </code></pre>
+        <script>
+            function expl0() {
+                let regexp = /".+"/g;
+
+                let str = 'a "witch" and her "broom" is one';
+
+                alert(str.match(regexp));
+            }
+        </script>
+        <p>И как видно - ничего не получается.</p>
+    </div>
 
 
 
