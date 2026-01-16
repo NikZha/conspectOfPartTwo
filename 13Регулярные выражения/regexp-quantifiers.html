@@ -176,6 +176,19 @@ alert( "&lt;h1>Привет!&lt;/h1>".match(/&lt;\/?[a-z][a-z0-9]*>/gi) ); // &l
                 }
             </script>
         </div>
+        <div id="task2">
+            <h4>Задача 2</h4>
+            <input type="button" value="Задача 2" onclick="task2()">
+            <script>
+                function task2() {
+                    let regexp = /#\p{Hex_Digit}{6}\b/gu;
+
+                    let str = "color:#121212; background-color:#AA00ef bad-colors:f#fddee #fd2 #12345678";
+
+                    alert(str.match(regexp))  // #121212,#AA00ef                    
+                }
+            </script>
+        </div>
     </div>
 
 
