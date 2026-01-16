@@ -152,17 +152,30 @@ alert( "&lt;body> ...&lt;/body>".match(/<[a-z]+>/gi) ); // &lt;body>
             </li>
             <li>Регулярное выражение для «открывающего или закрывающего HTML-тега без атрибутов»:
                 <code>/&lt;\/?[a-z][a-z0-9]*>/i</code>
-            <pre><code class="language-js startbutton" onclick="expl8()">
+                <pre><code class="language-js startbutton" onclick="expl8()">
 alert( "&lt;h1>Привет!&lt;/h1>".match(/&lt;\/?[a-z][a-z0-9]*>/gi) ); // &lt;h1>, &lt;/h1>                
             </code></pre>
-            <script>
-                function expl8() {
-alert( "<h1>Привет!</h1>".match(/<\/?[a-z][a-z0-9]*>/gi) ); // <h1>, </h1>                    
-                }
-            </script>
+                <script>
+                    function expl8() {
+                        alert("<h1>Привет!</h1>".match(/<\/?[a-z][a-z0-9]*>/gi)); // <h1>, </h1>                    
+                    }
+                </script>
             </li>
         </ul>
 
+    </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1</h4>
+            <input type="button" value="Задача 1" onclick="task1()">
+            <script>
+                function task1() {
+                    let regexp = /\.{3,}/g;
+                    alert("Привет!... Как дела?.....".match(regexp)); // ..., .....
+                }
+            </script>
+        </div>
     </div>
 
 
