@@ -52,6 +52,46 @@ alert( str.match(regexp) ); // "witch" and her "broom"
         </p>
         <p>В нашей задаче требуется использовать ленивый режим квантификатора.</p>
     </div>
+    <div class="topic" id="lazy">
+        <h3>Ленивый режим</h3>
+        <p>«Ленивый» режим противоположен «жадному». Он означает: «повторять квантификатор наименьшее количество раз».
+
+            Мы можем включить его, вставив знак вопроса <code>'?'</code> после квантификатора, то есть будет
+            <code>*?</code> или <code>+?</code> или даже <code>??</code>
+            для <code>'?'</code> .
+        </p>
+        <p>Регулярное выражение <code>/".+?"/g</code> работает как задумано, оно находит <code>"witch"</code> и
+            <code>"broom"</code>:
+        </p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+let regexp = /".+?"/g;
+
+let str = 'a "witch" and her "broom" is one';
+
+alert( str.match(regexp) ); // "witch","broom"                
+            </code></pre>
+        <script>
+            function expl1() {
+                let regexp = /".+?"/g;
+
+                let str = 'a "witch" and her "broom" is one';
+
+                alert(str.match(regexp)); // "witch","broom"                    
+            }
+        </script>
+        <h4>Ленивый режим включается только для квантификаторов с ?.</h4>
+        <p>Остальные квантификаторы остаются жадными.
+
+            Например:</p>
+        <pre><code class="language-js startbutton" onclick="expl2()">
+alert( "123 456".match(/\d+ \d+?/) ); // 123 4                
+            </code></pre>
+        <script>
+            function expl2() {
+                alert("123 456".match(/\d+ \d+?/)); // 123 4                    
+            }
+        </script>
+    </div>
 
 
 
