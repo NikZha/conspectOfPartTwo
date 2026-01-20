@@ -92,7 +92,52 @@ alert( "123 456".match(/\d+ \d+?/) ); // 123 4
             }
         </script>
     </div>
+    <div class="topic" id="alter">
+        <h3>Альтернативный подход</h3>
+        <p>Альтернативный подход зачастую позволяет получать правильные совпадения, там где жадный и ленивый поиск могут
+            давать сбои:
+            В нашем случаем мы можем найти кавычки без использования ленивого режима с помощью регулярного выражения
+            <code>"[^"]+"</code>:
+        </p>
+        <pre><code class="language-js startbutton" onclick="expl3()">
+let regexp = /"[^"]+"/g;
 
+let str = 'a "witch" and her "broom" is one';
+
+alert( str.match(regexp) ); // "witch","broom"                
+            </code></pre>
+        <script>
+            function expl3() {
+                let regexp = /"[^"]+"/g;
+
+                let str = 'a "witch" and her "broom" is one';
+
+                alert(str.match(regexp)); // "witch","broom"                    
+            }
+        </script>
+        <p>Более жизнеспособным примером использования этого шаблона является пример в котором жадный и ленивый поиск не
+            работают:</p>
+        <pre><code class="language-js startbutton" onclick="expl4()">
+let str1 = '...&lt;a href="link1" class="wrong">... &lt;p style="" class="doc">...';
+let str2 = '...&lt;a href="link1" class="doc">... &lt;a href="link2" class="doc">...';
+let regexp = /&lt;a href="[^"]*" class="doc">/g;
+
+// Работает!
+alert( str1.match(regexp) ); // совпадений нет, всё правильно
+alert( str2.match(regexp) ); // &lt;a href="link1" class="doc">, &lt;a href="link2" class="doc">        
+       </code></pre>
+        <script>
+            function expl4() {
+                let str1 = '...<a href="link1" class="wrong">... <p style="" class="doc">...';
+                let str2 = '...<a href="link1" class="doc">... <a href="link2" class="doc">...';
+                let regexp = /<a href="[^"]*" class="doc">/g;
+
+                // Работает!
+                alert(str1.match(regexp)); // совпадений нет, всё правильно
+                alert(str2.match(regexp)); // <a href="link1" class="doc">, <a href="link2" class="doc">            
+            }
+        </script>
+    </div>
 
 
 
