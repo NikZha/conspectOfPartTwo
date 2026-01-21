@@ -191,6 +191,22 @@ alert( str2.match(regexp) ); // &lt;a href="link1" class="doc">, &lt;a href="lin
             </script>
             <p>Эта задача решена как в учебнике.</p>
         </div>
+        <div id="task3">
+            <h4>Задача 3 Поиск HTML-тегов</h4>
+            <input type="button" value="Тест задачи 3" onclick="task3()">
+            <script>
+                function task3() {
+                    let regexp = /<[^<]+>/g;
+
+                    let str = '<> <a href="/"> <input type="radio" checked> <b>';
+
+                    alert(str.match(regexp)); // '<a href="/">', '<input type="radio" checked>', '<b>'                    
+                }
+            </script>
+            <p>Я не понял в очередной раз автора и использовал <code>*</code> квантификатор, а он имел в виду, что там
+                хотя бы один симовол должен быть. Автор предлагает <code>&lt;[^&lt;>]+></code> хотя у меня работает и
+                <code>&lt;[^&lt;]+></code>.</p>
+        </div>
     </div>
 
 
