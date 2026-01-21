@@ -172,7 +172,24 @@ alert( str2.match(regexp) ); // &lt;a href="link1" class="doc">, &lt;a href="lin
                 }
             </script>
             <p>Решил не верно. Не смотря на то, что первый квантификатор ленивый
-                <code>"123 456".match(/\d+? \d+?/g)</code>, но идет он до пробела.</p>
+                <code>"123 456".match(/\d+? \d+?/g)</code>, но идет он до пробела.
+            </p>
+        </div>
+        <div id="task2">
+            <h3>Задача 2 Поиск HTML-комментариев</h3>
+            <input type="button" value="Тест задачи 2" onclick="task2()">
+            <script>
+                function task2(params) {
+                    let regexp = /\<\!--.*?--\>/gs;
+
+                    let str = `... <!-- My -- comment
+ test --> ..  <!----> ..
+`;
+
+                    alert(str.match(regexp)); // '<!-- My -- comment \n test -->', '<!---->'                    
+                }
+            </script>
+            <p>Эта задача решена как в учебнике.</p>
         </div>
     </div>
 
