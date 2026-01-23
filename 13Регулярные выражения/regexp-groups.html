@@ -37,6 +37,60 @@
                 одному символу. </li>
         </ol>
     </div>
+    <div class="topic" id="examples">
+        <h3>Примеры</h3>
+        <div id="repeat">
+            <h4>Пример: gogogo</h4>
+            <pre><code class="language-js startbutton" onclick="expl0()">
+alert( 'Gogogo now!'.match(/(go)+/ig) ); // "Gogogo"            
+        </code></pre>
+            <script>
+                function expl0() {
+                    alert('Gogogo now!'.match(/(go)+/ig)); // "Gogogo"                
+                }
+            </script>
+            <p>В этом примере происходит поиск повторяющегося выражения <code>go</code> которое стоит в скобках.</p>
+        </div>
+        <div id="domen">
+            <h4>Пример: домен</h4>
+            <p>Поиск домена в тексте:</p>
+            <pre><code>
+mail.com
+users.mail.com
+smith.users.mail.com                
+            </code></pre>
+            <p>Для поиска используется регексп <code>(\w+\.)+\w+</code>:</p>
+            <pre><code class="language-js startbutton" onclick="expl1()">
+let regexp = /(\w+\.)+\w+/g;
+
+alert( "site.com my.site.com".match(regexp) ); // site.com,my.site.com                
+            </code></pre>
+            <script>
+                function expl1() {
+                    let regexp = /(\w+\.)+\w+/g;
+
+                    alert("site.com my.site.com".match(regexp)); // site.com,my.site.com                    
+                }
+            </script>
+            <p>Пример наивный потому что не учитывает <code>-</code>, что можно исправить <code>([\w-]+\.)+\w+</code>.
+            </p>
+        </div>
+        <div id="email">
+            <h4>Пример: email</h4>
+            <pre><code class="language-js startbutton" onclick="expl2()">
+let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g;
+
+alert("my@mail.com @ his@site.com.uk".match(regexp)); // my@mail.com, his@site.com.uk                
+            </code></pre>
+            <script>
+                function expl2() {
+                    let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g;
+
+                    alert("my@mail.com @ his@site.com.uk".match(regexp)); // my@mail.com, his@site.com.uk                    
+                }
+            </script>
+        </div>
+    </div>
 
 
 
