@@ -91,6 +91,96 @@ alert("my@mail.com @ his@site.com.uk".match(regexp)); // my@mail.com, his@site.c
             </script>
         </div>
     </div>
+    <div class="topic" id="match">
+        <h3>Содержимое скобок в match</h3>
+        <p>Метод <code>str.match(regexp)</code>, если у регулярного выражения <code>regexp</code> нет флага
+            <code>g</code>, ищет первое совпадение и возвращает его в виде массива:
+        </p>
+        <ol>
+            <li>На позиции 0 будет всё совпадение целиком.</li>
+            <li>На позиции 1 – содержимое первой скобочной группы.</li>
+            <li>На позиции 2 – содержимое второй скобочной группы.</li>
+            <li>…и так далее… </li>
+        </ol>
+        <p>Например:</p>
+        <pre><code class="language-js startbutton" onclick="expl3()">
+let str = '<h1>Hello, world!</h1>';
+
+let tag = str.match(/&lt;(.*?)>/);
+
+alert( tag[0] ); // &lt;h1>
+alert( tag[1] ); // h1            
+        </code></pre>
+        <script>
+            function expl3() {
+                let str = '<h1>Hello, world!</h1>';
+
+                let tag = str.match(/<(.*?)>/);
+
+                alert(tag[0]); // <h1>
+                alert(tag[1]); // h1                
+            }
+        </script>
+        <div id="include">
+            <h4>Вложенные группы</h4>
+            <p>Круглые скобки в регекспе могут быть вложенными например для поиска HTML-тегов вида
+                <code>&lt;span class="my"&gt;</code> можно использовать регексп <code>&lt;(([a-z]+)\s*([^>]*))></code>
+                который позволит:
+            </p>
+            <ol>
+                <li>Показать содержимое тега целиком.</li>
+                <li>Отдельно показать название тега.</li>
+                <li>Отдельно показать атрибуты тега.</li>
+            </ol>
+            <pre><code class="language-js startbuttont" onclick="expl4()">
+let str = '&lt;span class="my">';
+
+let regexp = /&lt;(([a-z]+)\s*([^>]*))>/;
+
+let result = str.match(regexp);
+alert(result[0]); // &lt;span class="my">
+alert(result[1]); // span class="my"
+alert(result[2]); // span
+alert(result[3]); // class="my"                
+            </code></pre>
+            <script>
+                function expl4() {
+                    let str = '<span class="my">';
+
+                    let regexp = /<(([a-z]+)\s*([^>]*))>/;
+
+                    let result = str.match(regexp);
+                    alert(result[0]); // <span class="my">
+                    alert(result[1]); // span class="my"
+                    alert(result[2]); // span
+                    alert(result[3]); // class="my"                    
+                }
+            </script>
+        </div>
+        <div id="optional">
+            <h4>Необязательные группы</h4>
+            <p>Если группа необязательная и совпадение по ней нет, то в массиве ставиться <code>undefined</code> вместо
+                значения. Например:</p>
+            <pre><code class="language-js startbutton" onclick="expl5()">
+let match = 'ac'.match(/a(z)?(c)?/)
+
+alert( match.length ); // 3
+alert( match[0] ); // ac (всё совпадение)
+alert( match[1] ); // undefined, потому что для (z)? ничего нет
+alert( match[2] ); // c                    
+                </code></pre>
+            <script>
+                function expl5() {
+                    let match = 'ac'.match(/a(z)?(c)?/)
+
+                    alert(match.length); // 3
+                    alert(match[0]); // ac (всё совпадение)
+                    alert(match[1]); // undefined, потому что для (z)? ничего нет
+                    alert(match[2]); // c                        
+                }
+            </script>
+        </div>
+    </div>
 
 
 
