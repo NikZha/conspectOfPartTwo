@@ -181,6 +181,45 @@ alert( match[2] ); // c
             </script>
         </div>
     </div>
+    <div class="topic" id="matchall">
+        <h3>Поиск всех совпадений с группами: matchAll</h3>
+        <p>Ряд особенностей функции <code>matchAll</code>:</p>
+        <ul>
+            <li>Он возвращает не массив, а перебираемый объект.</li>
+            <li>При поиске с флагом <code>g</code>, он возвращает каждое совпадение в виде массива со скобочными
+                группами.</li>
+            <li>Если совпадений нет, он возвращает не <code>null</code>, а просто пустой перебираемый объект.</li>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-js startbutton" onclick="expl6()">
+let results = '&lt;h1> &lt;h2>'.matchAll(/&lt;(.*?)>/gi);
+
+// results - не массив, а перебираемый объект
+alert(results); // [object RegExp String Iterator]
+
+alert(results[0]); // undefined (*)
+
+results = Array.from(results); // превращаем в массив
+
+alert(results[0]); // &lt;h1>,h1 (первый тег)
+alert(results[1]); // &lt;h2>,h2 (второй тег)            
+        </code></pre>
+        <script>
+            function expl6() {
+                let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
+
+                // results - не массив, а перебираемый объект
+                alert(results); // [object RegExp String Iterator]
+
+                alert(results[0]); // undefined (*)
+
+                results = Array.from(results); // превращаем в массив
+
+                alert(results[0]); // <h1>,h1 (первый тег)
+                alert(results[1]); // <h2>,h2 (второй тег)                
+            }
+        </script>
+    </div>
 
 
 
