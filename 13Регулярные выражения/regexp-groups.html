@@ -281,6 +281,49 @@ for(let result of results) {
             }
         </script>
     </div>
+    <div class="topic" id="replace">
+        <h3>Скобочные группы при замене</h3>
+        <p>Метод <code>str.replace(regexp, replacement)</code> позволяет использовать группы: </p>
+        <ul>
+            <li>Неименнованные группы используют обозначения вида <code>$n</code>, где <code>n</code>– номер скобочной
+                группы. Например:
+                <pre><code class="language-js startbutton" onclick="expl9()">
+let str = "John Bull";
+let regexp = /(\w+) (\w+)/;
+
+alert( str.replace(regexp, '$2, $1') ); // Bull, John                
+            </code></pre>
+                <script>
+                    function expl9() {
+                        let str = "John Bull";
+                        let regexp = /(\w+) (\w+)/;
+
+                        alert(str.replace(regexp, '$2, $1')); // Bull, John                    
+                    }
+                </script>
+            </li>
+            <li>Именованные скобочные группы - вызываются по именам:
+                <pre><code class="language-js startbutton" onclick="expl10()">
+let regexp = /(?&lt;ear>[0-9]{4})-(?&lt;month>[0-9]{2})-(?&lt;day>[0-9]{2})/g;
+
+let str = "2019-10-30, 2020-01-01";
+
+alert( str.replace(regexp, '$&lt;day>.$&lt;month>.$&lt;year>') );
+// 30.10.2019, 01.01.2020                
+            </code></pre>
+                <script>
+                    function expl10() {
+                        let regexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g;
+
+                        let str = "2019-10-30, 2020-01-01";
+
+                        alert(str.replace(regexp, '$<day>.$<month>.$<year>'));
+                        // 30.10.2019, 01.01.2020        
+                    }
+                </script>
+            </li>
+        </ul>
+    </div>
 
 
 
