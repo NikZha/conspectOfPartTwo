@@ -324,6 +324,36 @@ alert( str.replace(regexp, '$&lt;day>.$&lt;month>.$&lt;year>') );
             </li>
         </ul>
     </div>
+    <div class="topic" id="exeption">
+        <h3>Исключение из запоминания через ?:</h3>
+        <p>Скобочную группу можно исключить из запоминаемых добавив в её начало <code>?:</code></p>
+        <pre><code class="language-js" onclick="expl11()">
+let str = "Gogogo John!";
+
+// ?: исключает go из запоминания
+let regexp = /(?:go)+ (\w+)/i;
+
+let result = str.match(regexp);
+
+alert( result[0] ); // Gogogo John (полное совпадение)
+alert( result[1] ); // John
+alert( result.length ); // 2 (больше в массиве элементов нет)            
+        </code></pre>
+        <script>
+            function expl11() {
+                let str = "Gogogo John!";
+
+                // ?: исключает go из запоминания
+                let regexp = /(?:go)+ (\w+)/i;
+
+                let result = str.match(regexp);
+
+                alert(result[0]); // Gogogo John (полное совпадение)
+                alert(result[1]); // John
+                alert(result.length); // 2 (больше в массиве элементов нет)                
+            }
+        </script>
+    </div>
 
 
 
