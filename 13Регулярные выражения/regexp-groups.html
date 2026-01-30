@@ -365,6 +365,29 @@ alert( result.length ); // 2 (больше в массиве элементов 
             имена групп в функциях или использовать номера групп если группы не именованные.</p>
         <p>Можно исключить из запоминания группу при помощи подстановки в начало <code>?:</code>.</p>
     </div>
+    <div class="topic" id="tasks">
+        <h3>Задачи</h3>
+        <div id="task1">
+            <h4>Задача 1 Проверьте MAC-адрес</h4>
+            <input type="button" value="Задача 1" onclick="task1()">
+            <p>Мой регексп: <code>/(((\p{Hex_Digit}\p{Hex_Digit}):){5}(\p{Hex_Digit}\p{Hex_Digit}){1})/u</code></p>
+            <p>Регексп который предлагает автор - <code>/^[0-9a-f]{2}(:[0-9a-f]{2}){5}$/i</code></p>
+            <p>Я хз, но мой регексп проходит тесты автора.</p>
+            <script>
+                function task1() {
+                    let regexp = /(((\p{Hex_Digit}\p{Hex_Digit}):){5}(\p{Hex_Digit}\p{Hex_Digit}){1})/u;
+
+                    alert(regexp.test('01:32:54:67:89:AB')); // true
+
+                    alert(regexp.test('0132546789AB')); // false (нет двоеточий)
+
+                    alert(regexp.test('01:32:54:67:89:AB')); // false (5 чисел, должно быть 6)
+
+                    alert(regexp.test('01:32:54:67:89:ZZ')) // false (ZZ в конце строки)
+                }
+            </script>
+        </div>
+    </div>
 
 
 
