@@ -387,6 +387,23 @@ alert( result.length ); // 2 (больше в массиве элементов 
                 }
             </script>
         </div>
+        <div id="task2">
+            <h4>Задача 2 Найти цвет в формате #abc или #abcdef</h4>
+            <input type="button" value="Задача 2" onclick="task2()">
+            <p>Задача не решена самостоятельно, автор использовал хитрый поиск вида:
+                <code>let regexp = /(#(\p{Hex_Digit}{3}){1,2}\b)/gu;</code> в котором поисковая группа заключена
+                между <code>#</code> и группой <code>{1,2}</code>.
+            </p>
+            <script>
+                function task2() {
+                    let regexp = /(#(\p{Hex_Digit}{3}){1,2}\b)/gu;
+
+                    let str = "color: #3f3; background-color: #AA00ef; and: #abcd";
+
+                    alert(str.match(regexp)); // #3f3 #AA00ef                    
+                }
+            </script>
+        </div>
     </div>
 
 
