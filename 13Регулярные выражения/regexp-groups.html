@@ -420,6 +420,27 @@ alert( result.length ); // 2 (больше в массиве элементов 
                 }
             </script>
         </div>
+        <div id="task4">
+            <h4>Разобрать выражение</h4>
+            <input type="button" value="Задача 4" onclick="task4()">
+            <p id="test4">Задача полностью не решена, <a
+                    href="https://learn.javascript.ru/task/parse-expression">решение по ссылке</a>.</p>
+            <script>
+                function parse(expr) {
+                    let regexp = /(-?\d+(\.\d+)?)[\-,\+,\*,\/]+/g
+
+                    alert(expr.match(regexp));
+                    //return expr.match(regexp)
+                }
+                function task4() {
+                    let [a, op, b] = parse("1.2 * 3.4");
+
+                    alert(a); // 1.2
+                    alert(op); // *
+                    alert(b); // 3.4                    
+                }
+            </script>
+        </div>
     </div>
 
 
