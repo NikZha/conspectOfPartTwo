@@ -404,6 +404,22 @@ alert( result.length ); // 2 (больше в массиве элементов 
                 }
             </script>
         </div>
+        <div id="task3">
+            <h4>Задача 3 Найти все числа</h4>
+            <input type="button" value="Задача 3" onclick="task3()">
+            <p>Мой регексп <code>let regexp = /(\b([-])*(\d{1,}\.*(d{1,})*\b)+)/g;</code>. Проходит тесты автора.</p>
+            <p>Регексп автора <code>let regexp = /-?\d+(\.\d+)?/g;</code> - из плюсов использован более подходящий
+                квартификатор.</p>
+            <script>
+                function task3() {
+                    let regexp = /(\b([-])*(\d{1,}\.*(d{1,})*\b)+)/g;
+
+                    let str = "-1.5 0 2 -123.4.";
+
+                    alert(str.match(regexp)); // -1.5, 0, 2, -123.4
+                }
+            </script>
+        </div>
     </div>
 
 
