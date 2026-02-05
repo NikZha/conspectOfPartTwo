@@ -54,7 +54,23 @@ alert( str.match(regexp) ); // Java,HTML,JavaScript
             <li><code>Люблю (HTML|CSS)</code> найдёт <code>Люблю HTML</code> или <code>Люблю CSS</code>. </li>
         </ul>
     </div>
+    <div class="topic" id="expamleTime">
+        <h3>Пример: шаблон для времени</h3>
+        <p>Часы в шаблоне ищутся при помощи альтернации: <code>([01]\d|2[0-3])</code>.</p>
+        <p>Минуты при помощи шаблона <code>[0-5]\d</code>. Таким образом получается:</p>
+        <pre><code class="language-js startbutton" ondblclick="expl1()">
+let regexp = /([01]\d|2[0-3]):[0-5]\d/g;
 
+alert("00:00 10:10 23:59 25:99 1:2".match(regexp)); // 00:00,10:10,23:59            
+        </code></pre>
+        <script>
+            function expl1() {
+                let regexp = /([01]\d|2[0-3]):[0-5]\d/g;
+
+                alert("00:00 10:10 23:59 25:99 1:2".match(regexp));
+            }
+        </script>
+    </div>
 
 
 
