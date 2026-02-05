@@ -23,7 +23,37 @@
         </ul>
     </div>
 
+    <div class="topic" id="alter">
+        <h2><a href="https://learn.javascript.ru/regexp-alternation">Альтернация (или) |</a></h2>
+        <p>Альтернация - это логическое <code>ИЛИ</code> которое в регекспе обозначается при помощи <code>|</code>.
+            Например:</p>
+        <pre><code class="language-js startbutton" ondblclick="expl0()">
+let regexp = /html|css|java(script)?/gi;
 
+let str = "Сначала появился язык Java, затем HTML, потом JavaScript";
+
+alert( str.match(regexp) ); // Java,HTML,JavaScript                
+            </code></pre>
+        <script>
+            function expl0() {
+                let regexp = /html|css|java(script)?/gi;
+
+                let str = "Сначала появился язык Java, затем HTML, потом JavaScript";
+
+                alert(str.match(regexp));
+            }
+        </script>
+        <p>Есть несколько нюансов использования альтарнации:</p>
+        <ul>
+            <li><code>gr(a|e)y</code> означает точно то же, что и <code>gr[ae]y</code>.</li>
+            <li><code>gra|ey</code> означает <code>gra</code> или <code>ey</code>. </li>
+        </ul>
+        <p>Чтобы применить альтернацию только к части шаблона, можно заключить её в скобки:</p>
+        <ul>
+            <li><code>Люблю HTML|CSS</code> найдёт <code>Люблю HTML</code> или <code>CSS</code>.</li>
+            <li><code>Люблю (HTML|CSS)</code> найдёт <code>Люблю HTML</code> или <code>Люблю CSS</code>. </li>
+        </ul>
+    </div>
 
 
 
