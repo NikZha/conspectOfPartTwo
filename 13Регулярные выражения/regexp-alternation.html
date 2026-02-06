@@ -85,6 +85,21 @@ alert("00:00 10:10 23:59 25:99 1:2".match(regexp)); // 00:00,10:10,23:59
                 }
             </script>
         </div>
+        <div id="task4">
+            <h4>Задача 4</h4>
+            <button onclick="task4()">Задача 4</button>
+            <p>Мой регексп <code>let regexp = /&lt;style(( [a-z]*[\=,\",\.,(a-z)*]*))*?>/g;</code> проходит все мои
+                тесты, а именно добавление атрибутов с именами и атрибутов с точками. Но автор предлагает свой более
+                совершенный регексп <code>&lt;style(>|\s.*?>)</code>. Естественно мой регексп можно доработать добавив
+                альтернацию вида <code>/&lt;style(>|( [a-z]*[\=,\",\.,(a-z)*]*))*>/g</code>.</p>
+            <script>
+                function task4() {
+                    let regexp = /<style(( [a-z]*[\=,\",\.,(a-z)*]*))*?>/g;
+
+                    alert('<style> <styler> <style test="...">'.match(regexp)); // <style>, <style test="...">
+                }
+            </script>
+        </div>
     </div>
 
 
