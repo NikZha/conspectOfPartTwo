@@ -85,6 +85,25 @@ alert("00:00 10:10 23:59 25:99 1:2".match(regexp)); // 00:00,10:10,23:59
                 }
             </script>
         </div>
+        <div id="task3">
+            <h4>Задача 3. Найдите строки в кавычках</h4>
+            <input type="button" value="Задача 3" onclick="task3()">
+            <p>Не решено.</p>
+            <script>
+                function task3() {
+                    let arrStr = [
+                        "\"test me\"",
+                        "\"Скажи \\\"Привет\\\"!\"",
+                        "\"\\\"",
+                        "\"\\ \"\""
+                    ]
+                    let regexp = /^"[a-z,\s,\\,!]*([^\\])"/gi
+                    for (let i = 0; i < arrStr.length; i++) {
+                        alert(arrStr[i].match(regexp) + ' слово: ' + arrStr[i])
+                    }
+                }
+            </script>
+        </div>
         <div id="task4">
             <h4>Задача 4</h4>
             <button onclick="task4()">Задача 4</button>
