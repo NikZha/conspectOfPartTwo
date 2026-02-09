@@ -36,7 +36,37 @@
             (lookbehind) проверка.
         </p>
     </div>
+    <div class="topic" id="first">
+        <h3>Опережающая проверка</h3>
+        <p>Бывает как на соотвествие одному условию <code>X(?=Y)</code>, <code>X</code> - это искомое если за ним
+            следует <code>Y</code>. Вместо <code>X</code> и <code>Y</code> может быть любой шаблон. Например:</p>
+        <pre><code class="language-js startbutton" ondblclick="expl0()">
+let str = "1 индейка стоит 30€";
 
+alert( str.match(/\d+(?=€)/) ); // 30, число 1 проигнорировано, так как за ним НЕ следует €                
+            </code></pre>
+        <script>
+            function expl0() {
+                let str = "1 индейка стоит 30€";
+
+                alert(str.match(/\d+(?=€)/));
+            }
+        </script>
+        <p>Более сложный шаблон <code>X(?=Y)(?=Z)</code> проверяет на удовлетворение двум условиям сразу: <code>Y</code>
+            и <code>Z</code> и если что-то не совпадает - регексп не работает:</p>
+        <pre><code class="language-js startbutton" ondblclick="expl1()">
+let str = "1 индейка стоит 30€";
+
+alert( str.match(/\d+(?=\s)(?=.*30)/) ); // 1                
+            </code></pre>
+        <script>
+            function expl1() {
+                let str = "1 индейка стоит 30€";
+
+                alert(str.match(/\d+(?=\s)(?=.*30)/)); // 1                    
+            }
+        </script>
+    </div>
 
 
 
