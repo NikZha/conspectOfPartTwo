@@ -85,6 +85,20 @@ alert("00:00 10:10 23:59 25:99 1:2".match(regexp)); // 00:00,10:10,23:59
                 }
             </script>
         </div>
+        <div id="task2">
+            <h4>Задача 2 Найдите пары BB-кодов</h4>
+            <input type="button" value="Задача 2" onclick="task2()">
+            <p>Задача решена криво-косо, два теста автора она проходит, но альтернацию не использует. Два одинаковых
+                кода подряд - тоже проблема.</p>
+            <script>
+                function task2() {
+                    let regexp = /(\[(?<bbcode>[a-z]+)\])(.)+\[\/\k<bbcode>\]/g;
+
+                    let str = "..[url][b]http://ya.ru[/b][/url]....[ur]http://ya.ru[/ur]..";
+                    alert(str.match(regexp));
+                }
+            </script>
+        </div>
         <div id="task3">
             <h4>Задача 3. Найдите строки в кавычках</h4>
             <input type="button" value="Задача 3" onclick="task3()">
