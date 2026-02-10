@@ -67,7 +67,26 @@ alert( str.match(/\d+(?=\s)(?=.*30)/) ); // 1
             }
         </script>
     </div>
+    <div class="topic" id="negative">
+        <h3>Негативная опережающая проверка</h3>
+        <p>
+            Синтаксис: <code>X(?!Y)</code>
 
+            Он означает: найди такой <code>X</code>, за которым НЕ следует <code>Y</code>:
+        </p>
+        <pre><code class="language-js startbutton" ondblclick="expl2()">
+let str = "2 индейки стоят 60€";
+
+alert( str.match(/\d+(?!€)/) ); // 2 (в этот раз проигнорирована цена)            
+        </code></pre>
+        <script>
+            function expl2() {
+                let str = "2 индейки стоят 60€";
+
+                alert(str.match(/\d+(?!€)/));
+            }
+        </script>
+    </div>
 
 
 
