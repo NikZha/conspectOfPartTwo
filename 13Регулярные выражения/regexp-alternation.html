@@ -102,16 +102,18 @@ alert("00:00 10:10 23:59 25:99 1:2".match(regexp)); // 00:00,10:10,23:59
         <div id="task3">
             <h4>Задача 3. Найдите строки в кавычках</h4>
             <input type="button" value="Задача 3" onclick="task3()">
-            <p>Не решено.</p>
+            <p>Вроде как решил на <a href="regexp-lookahead-lookbehind.html">материале</a> следующего урока. Вроде как
+                тесты проходит. Но в целом неудачная задача, надо другой символ перед <code>"</code>, а то путаница с
+                экранированием того и другого.</p>
             <script>
                 function task3() {
                     let arrStr = [
-                        "\"test me\"",
+                        "\\\"test me\\\"",
                         "\"Скажи \\\"Привет\\\"!\"",
                         "\"\\\"",
                         "\"\\ \"\""
                     ]
-                    let regexp = /^"[a-z,\s,\\,!]*([^\\])"/gi
+                    let regexp = /(?<quote>(?<!\\)\")(.*)\k<quote>/gi
                     for (let i = 0; i < arrStr.length; i++) {
                         alert(arrStr[i].match(regexp) + ' слово: ' + arrStr[i])
                     }
