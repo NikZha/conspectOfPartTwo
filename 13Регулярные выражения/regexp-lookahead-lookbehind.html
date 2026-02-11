@@ -162,6 +162,41 @@ alert( str.match(regexp) ); // 30, $
         <p>Как видно из примеров достигается это заключением поискового шаблона в <code>(€|kr)</code> скобочную группу.
         </p>
     </div>
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Виды проверок:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>шаблон</th>
+                    <th>Тип</th>
+                    <th>Совпадение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>X(?=Y)</code></td>
+                    <td>Позитивная опережающая</td>
+                    <td><code>X</code>, если за ним следует <code>Y</code></td>
+                </tr>
+                <tr>
+                    <td><code>X(?!Y)</code></td>
+                    <td>Негативная опережающая</td>
+                    <td><code>X</code>, если за ним НЕ следует <code>Y</code></td>
+                </tr>
+                <tr>
+                    <td><code>(?&lt;=Y)X</code></td>
+                    <td>Позитивная ретроспективная</td>
+                    <td><code>X</code>, если следует за <code>Y</code></td>
+                </tr>
+                <tr>
+                    <td><code>(?&lt;!Y)X</code></td>
+                    <td>Негативная ретроспективная</td>
+                    <td><code>X</code>, если НЕ следует за <code>Y</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
 
