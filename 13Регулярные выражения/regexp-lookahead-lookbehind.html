@@ -220,6 +220,30 @@ alert( str.match(regexp) ); // 0, 12, 123
                 }
             </script>
         </div>
+        <div id="task2">
+            <h4>Задача 2. Вставьте после фрагмента</h4>
+            <p>Задача решена, регесп такой же как у автора <code>/(?&lt;=(&lt;body(.*)?>))/</code>, кроме
+                <code>(.*)?</code>:
+                <code>&lt;body.*?&gt;</code>
+            </p>
+            <input type="button" value="Решение 2" onclick="task2()">
+            <script>
+                function task2() {
+                    let regexp = /(?<=(<body(.*)?>))/;
+
+                    let str = `
+<html>
+  <body style="height: 200px">
+  ...
+  </body>
+</html>
+`;
+
+                    str = str.replace(regexp, `<h1>Hello</h1>`);
+                    alert(str)
+                }
+            </script>
+        </div>
     </div>
 
 
