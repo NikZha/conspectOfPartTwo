@@ -31,6 +31,39 @@
             То есть для каких-то простых случаев ответ будет получен, а для случаев посложнее ответ не будет получен
             никогда.</p>
     </div>
+    <div class="topic" id="example">
+        <h3>Пример</h3>
+        <p>Для иллюстрации вышесказанного возьмём простой пример: проверка строки на наличие только букв <code>\w</code>
+            и
+            <code>\s</code> пробелов. Используем регулярное выражение <code>^(\w+\s?)*$</code>, которое задаёт 0 или
+            более таких
+            слов. Пример работает на мелких строках:
+        </p>
+        <pre><code class="language-js startbutton" onclick="expl0()">
+let regexp = /^(\w+\s?)*$/;
+
+alert( regexp.test("A good string") ); // true
+alert( regexp.test("Bad characters: $@#") ); // false            
+        </code></pre>
+        <script>
+            function expl0(params) {
+                let regexp = /^(\w+\s?)*$/;
+
+                alert(regexp.test("A good string")); // true
+                alert(regexp.test("Bad characters: $@#")); // false                
+            }
+        </script>
+        <p>Однако если взять строку подлиннее, то мы сталкиваемся с алгоритмической сложностью:</p>
+        <pre><code class="language-js startbutton">
+let regexp = /^(\w+\s?)*$/;
+let str = "An input string that takes a long time or even makes this regexp to hang!";
+
+// этот поиск будет выполняться очень, очень долго
+alert( regexp.test(str) );            
+        </code></pre>
+        <p>Сознательно не делаю этот скрипт рабочим - смысла в этом нет, на edge он не отработает, а страница упаддёт в
+            ошибку.</p>
+    </div>
 
 
 
