@@ -85,6 +85,24 @@ alert( regexp.test(str) );
             конце <code>!</code>, движок перебирает комбинации составления разных "слов" из имеющихся букв.
         </p>
     </div>
+    <div class="topic" id="how">
+        <h3>Как исправить?</h3>
+        <p>Первых подход - уменьшить возможность движка строить комбинации <code>^(\w+\s)*\w*</code>:</p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+let regexp = /^(\w+\s)*\w*$/;
+let str = "An input string that takes a long time or even makes this regex to hang!";
+
+alert( regexp.test(str) ); // false            
+        </code></pre>
+        <script>
+            function expl1() {
+                let regexp = /^(\w+\s)*\w*$/;
+                let str = "An input string that takes a long time or even makes this regex to hang!";
+
+                alert(regexp.test(str)); // false                
+            }
+        </script>
+    </div>
 
 
 
