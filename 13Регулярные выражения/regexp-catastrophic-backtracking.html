@@ -103,7 +103,35 @@ alert( regexp.test(str) ); // false
             }
         </script>
     </div>
+    <div class="topic" id="forbid">
+        <h3>Запрет возврата</h3>
+        <p>Второй путь: это запрет возврата с использованием опережающих проверок:</p>
+        <pre><code class="language-js startbutton" onclick="expl2()">
+let regexp = /^((?=(\w+))\2\s?)*$/;
 
+alert( regexp.test("A good string") ); // true
+
+let str = "An input string that takes a long time or even makes this regex to hang!";
+
+alert( regexp.test(str) ); // false, работает и быстро            
+        </code></pre>
+        <script>
+            function expl2() {
+                let regexp = /^((?=(\w+))\2\s?)*$/;
+
+                alert(regexp.test("A good string")); // true
+
+                let str = "An input string that takes a long time or even makes this regex to hang!";
+
+                alert(regexp.test(str)); // false, работает и быстро                
+            }
+        </script>
+        <p>Таким образом мы разобрали два способа решения:</p>
+        <ul>
+            <li>Уменьшение возможных комбинаций переписыванием шаблона.</li>
+            <li>Запрет возврата. </li>
+        </ul>
+    </div>
 
 
 
