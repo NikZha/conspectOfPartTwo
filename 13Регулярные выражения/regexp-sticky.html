@@ -17,7 +17,33 @@
     <div class="contents">
         <h2><a href="#search">Поиск на заданной позиции, флаг "y"</a></h2>
     </div>
+    <div class="topic" id="search">
+        <h2><a href="https://learn.javascript.ru/regexp-sticky">Поиск на заданной позиции, флаг "y"</a></h2>
+        <p>Флаг <code>y</code> позволяет произвести поиск на определённой позиции в исходной строке. То есть как следует
+            из примера, происходит поиск регекспа с заданного индекса:</p>
+            <pre> <input type="button" value="Запуск примера" onclick="expl0()">
+                <code class="language-js">
+                let str = 'let varName = "value"';
 
+                let regexp = /\w+/y;
+                for (let index = 0; index < str.length; index++) {
+                    regexp.lastIndex = index;
+                    alert(regexp.exec(str) + "Индекс равен: " + index)
+                }                
+            </code></pre>       
+        <script>
+            function expl0() {
+                let str = 'let varName = "value"';
+
+                let regexp = /\w+/y;
+                for (let index = 0; index < str.length; index++) {
+                    regexp.lastIndex = index;
+                    alert(regexp.exec(str) + "Индекс равен: " + index)
+                }
+            }
+        </script>
+        <p>Автор пишет, что такое бывает полезно для производительности.</p>
+    </div>
 
 
 
