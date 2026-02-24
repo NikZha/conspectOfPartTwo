@@ -30,7 +30,59 @@
         <h2><a href="https://learn.javascript.ru/regexp-methods">Методы RegExp и String</a></h2>
         <p>В этой главе мы рассмотрим все детали методов для работы с регулярными выражениями.</p>
     </div>
+    <div class="topic" id="match">
+        <h3>str.match(regexp)</h3>
+        <p>Метод <code>str.match(regexp)</code> ищет совпадения с <code>regexp</code> в строке <code>str</code>. У него
+            есть три режима работы:</p>
+        <ol>
+            <li>Если у регулярного выражения нет флага <code>g</code>, то он возвращает первое совпадение в виде массива
+                со
+                скобочными группами и свойствами <code>index</code> (позиция совпадения), <code>input</code> (строка
+                поиска, равна <code>str</code>):
+                <pre><code class="language-js">
+let str = "I love JavaScript";
 
+let result = str.match(/Java(Script)/);
+
+alert( result[0] );     // JavaScript (всё совпадение)
+alert( result[1] );     // Script (первые скобки)
+alert( result.length ); // 2
+
+// Дополнительная информация:
+alert( result.index );  // 7 (позиция совпадения)
+alert( result.input );  // I love JavaScript (исходная строка)                
+            </code></pre>
+            </li>
+            <li>Если у регулярного выражения есть флаг <code>g</code>, то он возвращает массив всех совпадений, без
+                скобочных групп и других деталей.
+                <pre><code class="language-js">
+let str = "I love JavaScript";
+
+let result = str.match(/Java(Script)/g);
+
+alert( result[0] ); // JavaScript
+alert( result.length ); // 1                
+            </code></pre>
+            </li>
+            <li>Если совпадений нет, то, вне зависимости от наличия флага <code>g</code>, возвращается
+                <code>null</code>. Это очень важный нюанс. При отсутствии совпадений возвращается не пустой массив, а
+                именно
+                <code>null</code>. Если об этом забыть, можно легко допустить ошибку, например:
+                <pre><code class="language-js">
+let str = "I love JavaScript";
+
+let result = str.match(/HTML/);
+
+alert(result); // null
+alert(result.length); // Ошибка: у null нет свойства length                
+            </code></pre>
+                <p>Если хочется, чтобы результатом всегда был массив, можно написать так:</p>
+                <pre><code class="language-js">
+let result = str.match(regexp) || [];                
+            </code></pre>
+            </li>
+        </ol>
+    </div>
 
 
 
