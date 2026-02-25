@@ -83,6 +83,54 @@ let result = str.match(regexp) || [];
             </li>
         </ol>
     </div>
+    <div class="topic" id="matchAll">
+        <h3>str.matchAll(regexp)</h3>
+        <p>Метод <code>str.matchAll(regexp)</code> – «новый, улучшенный» вариант метода <code>str.match</code>, который
+            используеться для поиска всех отличий и имеет различия от
+            <code>match</code>:
+        </p>
+        <ol>
+            <li>Он возвращает не массив, а перебираемый объект с результатами, обычный массив можно сделать при помощи
+                <code>Array.from</code>.
+            </li>
+            <li>Каждое совпадение возвращается в виде массива со скобочными группами (как <code>str.match</code> без
+                флага <code>g</code>).</li>
+            <li>Если совпадений нет, то возвращается не <code>null</code>, а пустой перебираемый объект. </li>
+        </ol>
+        <p>Например:</p>
+        <pre><code class="language-js startbutton" onclick="expl0()">
+let str = '&lt;h1&gt;Hello, world!&lt;/h1&gt;';
+let regexp = /<(.*?)>/g;
+
+let matchAll = str.matchAll(regexp);
+
+alert(matchAll); // [object RegExp String Iterator], не массив, а перебираемый объект
+
+matchAll = Array.from(matchAll); // теперь массив
+alert(matchAll); // Показывает все результаты. И далее:
+let firstMatch = matchAll[0];
+alert( firstMatch[0] );  // &lt;h1>
+alert( firstMatch[1] );  // h1
+alert( firstMatch.index );  // 0
+alert( firstMatch.input );  // &lt;h1>Hello, world!&lt;/h1>            
+        </code></pre>
+        <script>
+            function expl0(params) {
+                let str = '<h1>Hello, world!</h1>';
+                let regexp = /<(.*?)>/g;
+
+                let matchAll = str.matchAll(regexp);
+                alert(matchAll);
+                matchAll = Array.from(matchAll);
+                alert(matchAll);
+                let firstMatch = matchAll[0];
+                alert(firstMatch[0]);
+                alert(firstMatch[1]);
+                alert(firstMatch.index);
+                alert(firstMatch.input);
+            }
+        </script>
+    </div>
 
 
 
