@@ -149,7 +149,19 @@ alert('12, 34, 56'.split(/,\s*/)) // массив [12, 34, 56]
             }
         </script>
     </div>
+    <div class="topic" id="search">
+        <h3>str.search(regexp)</h3>
+        <p>Метод <code>str.search(regexp)</code> возвращает позицию первого совпадения с regexp в строке str или -1,
+            если совпадения нет. Однако <code>search</code> возвращает только позицию первого совпадения.</p>
+        <p>Если нужны позиции всех сопадений, но используeтся <code>matchAll</code>.</p>
+        <pre><code class="language-js">
+let str = "Я люблю JavaScript!";
 
+let regexp = /Java.+/;
+
+alert( str.search(regexp) ); // 8                
+            </code></pre>
+    </div>
 
 
 
