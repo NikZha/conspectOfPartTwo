@@ -131,7 +131,24 @@ alert( firstMatch.input );  // &lt;h1>Hello, world!&lt;/h1>
             }
         </script>
     </div>
-
+    <div class="topic" id="split">
+        <h3>str.split(regexp|substr, limit)</h3>
+        <p>
+            Разбивает строку в массив по разделителю – регулярному выражению regexp или подстроке substr.
+            Обычно мы используем метод <code>split</code> со строками, вот так:
+        </p>
+        <pre><code class="language-js startbutton" onclick="expl1()">
+alert('12-34-56'.split('-')) // массив [12, 34, 56]
+//Так же можно по регулярке:
+alert('12, 34, 56'.split(/,\s*/)) // массив [12, 34, 56]            
+        </code></pre>
+        <script>
+            function expl1() {
+                alert('12-34-56'.split('-'))
+                alert('12, 34, 56'.split(/,\s*/))
+            }
+        </script>
+    </div>
 
 
 
