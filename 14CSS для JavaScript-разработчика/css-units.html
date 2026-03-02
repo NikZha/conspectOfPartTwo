@@ -90,7 +90,46 @@
             </div>
         </blockquote>
     </div>
+    <div class="topic" id="interest">
+        <h3>Проценты %</h3>
+        <p>Проценты %, <code>как</code> и <code>em</code> – относительные единицы. Как правило, процент будет от
+            значения свойства родителя с тем
+            же названием, но не всегда. Пример с <code>%</code> выглядит так же как и с <code>em</code>.
+        </p>
+        <pre><code class="language-html">
+&lt;div style="font-size:150%">
+  Страусы
+  &lt;div style="font-size:150%">Живут также в Африке&lt;/div>
+&lt;/div>            
+        </code></pre>
+        <blockquote>
+            <div style="font-size:150%">
+                Страусы
+                <div style="font-size:150%">Живут также в Африке</div>
+            </div>
+        </blockquote>
+        <p>Хотя в примере размер шрифта берётся от родителя, но бывают и исключения:</p>
+        <ul>
+            <li><a
+                    href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/margin-left">margin-left</a>
+                <p>При установке свойства <code>margin-left</code> в <code>%</code>, процент берётся от ширины
+                    родительского блока, а вовсе не от его <code>margin-left</code>.</p>
+            </li>
+            <li><a
+                    href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-height">line-height</a>
 
+                <p>При установке свойства <code>line-height</code> в <code>%</code>, процент берётся от текущего размера
+                    шрифта, а вовсе не от <code>line-height</code> родителя.</p>
+            </li>
+
+            <li>width/height</li>
+            <p>Для <code>width/height</code> обычно процент от ширины/высоты родителя, но при
+                <code>position:fixed</code>, процент берётся от
+                ширины/высоты окна (а не родителя и не документа). Кроме того, иногда <code>%</code> требует соблюдения
+                дополнительных условий, за примером – обратитесь к главе Особенности свойства height в %.
+            </p>
+        </ul>
+    </div>
 
 
 
