@@ -130,7 +130,62 @@
             </p>
         </ul>
     </div>
+    <div class="topic" id="rem">
+        <h3>Единица rem: смесь px и em</h3>
+        <p>Единица rem задаёт размер относительно размера шрифта элемента &lt;html>.
 
+            <br>Как правило, браузеры ставят этому элементу некоторый «разумный» (reasonable) размер по умолчанию,
+            который
+            мы, конечно, можем переопределить и использовать rem для задания шрифтов внутри относительно него:</p>
+        <pre><code class="language-html">
+&lt;style>
+  html {
+    font-size: 14px;
+  }
+  li {
+    font-size: 0.8rem;
+  }
+&lt;/style>
+
+&lt;div>&lt;button id="up">Кликните, чтобы увеличить размер шрифта</button>&lt;/div>
+
+&lt;img src="https://js.cx/clipart/angry_dog.png">
+
+&lt;ul>
+&lt;li>Собака
+  &lt;ul>
+  &lt;li>бывает
+    &lt;ul>
+    &lt;li>кусачей
+      &lt;ul>
+      &lt;li>только
+        &lt;ul>
+        &lt;li>от жизни
+          &lt;ul>
+          &lt;li>собачей&lt;/li>
+          &lt;/ul>
+        &lt;/li>
+        &lt;/ul>
+      &lt;/li>
+      &lt;/ul>
+    &lt;/li>
+    &lt;/ul>
+  &lt;/li>
+  &lt;/ul>
+&lt;/li>
+&lt;/ul>
+
+&lt;script>
+let html = document.documentElement;
+up.onclick = function() {
+  // при помощи JS увеличить размер шрифта html на 2px
+  html.style.fontSize = parseInt(getComputedStyle(html, '').fontSize) + 2 + 'px';
+};
+&lt;/script>    
+</code></pre>
+        <iframe src="expl1-css-units.html" frameborder="1" style="width: 600px; height: 300px;"></iframe>
+        <p>Таким образом получается мастабирование текста не затрагивающее картинку.</p>
+    </div>
 
 
 
