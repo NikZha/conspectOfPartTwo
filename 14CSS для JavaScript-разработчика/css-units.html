@@ -59,7 +59,37 @@
             <p>Браузер пересчитывает их значения в пиксели, и потом смысла в них нет.</p>
         </blockquote>
     </div>
-
+    <div class="topic" id="em">
+        <h3>Относительно шрифта: em</h3>
+        <p>Относительный размер в коэффициенте <code>1 em</code> - 100%, <code>2 em</code> 200%, <code>0,5 em</code> 50%
+            и так далее:</p>
+        <pre><code class="language-html">
+&lt;div style="font-size:24px">
+  Страусы
+  &lt;div style="font-size:24px">Живут также в Африке&lt;/div>
+&lt;/div>                
+            </code></pre>
+        <blockquote>
+            <div style="font-size:24px">
+                Страусы
+                <div style="font-size:24px">Живут также в Африке</div>
+            </div>
+        </blockquote>
+        <p>Размер шрифта в обоих случаях одинаков, но в случае с <code>em</code> размер будет увеличиваться относительно
+            родителя:</p>
+        <pre><code class="language-html">
+&lt;div style="font-size:1.5em">
+  Страусы
+  &lt;div style="font-size:1.5em">Живут также в Африке&lt;/div>
+&lt;/div>
+            </code></pre>
+        <blockquote>
+            <div style="font-size:1.5em">
+                Страусы
+                <div style="font-size:1.5em">Живут также в Африке</div>
+            </div>
+        </blockquote>
+    </div>
 
 
 
