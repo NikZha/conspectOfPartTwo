@@ -44,7 +44,29 @@
             ) Стоит внутри скобок
         </div>
     </div>
-
+    <div class="topic" id="block">
+        <h3>Значение block</h3>
+        <p>Это значение <code>display</code> многие элементы имеют по умолчанию: <code>&lt;div></code>, заголовок
+            <code>&lt;h1></code>, параграф <code>&lt;p></code>.
+            Его свойства:
+        </p>
+        <ul>
+            <li>Блочные элементы располагаются один над другим, вертикально (если нет особых свойств позиционирования,
+                например <code>float</code>).</li>
+            <li>Блок стремится расшириться на всю доступную ширину. Можно указать ширину и высоту явно. </li>
+        </ul>
+        <pre><code class="language-html">
+&lt;div style="border:1px solid black">
+  &lt;div style="border:1px solid blue; width: 50%">Первый&lt;/div>
+  &lt;div style="border:1px solid red">Второй&lt;/div>
+&lt;/div>            
+        </code></pre>
+        <div style="border:1px solid black">
+            <div style="border:1px solid blue; width: 50%">Первый</div>
+            <div style="border:1px solid red">Второй</div>
+        </div>
+        <p>Блоки прилегают друг к другу вплотную, если у них нет <code>margin</code>.</p>
+    </div>
 
 
 
