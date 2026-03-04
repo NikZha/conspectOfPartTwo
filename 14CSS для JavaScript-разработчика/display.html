@@ -67,7 +67,22 @@
         </div>
         <p>Блоки прилегают друг к другу вплотную, если у них нет <code>margin</code>.</p>
     </div>
-
+    <div class="topic" id="inline">
+        <h3>Значение inline</h3>
+        <p>По умолчанию инлайновые элементы: <code>&lt;span></code>, <code>&lt;a></code>. И если их располагать без
+            пробелов, то пробелов не будет и на странице:</p>
+        <pre><code class="language-html">
+&lt;span style="border:1px solid black">
+  &lt;span style="border:1px solid blue; width:50%">Без&lt;/span>&lt;a style="border:1px solid red">Пробела&lt;/a>
+&lt;/span>                
+            </code></pre>
+        <span style="border:1px solid black">
+            <span style="border:1px solid blue; width:50%">Без</span><a style="border:1px solid red">Пробела</a>
+        </span>
+        <p>Инлайновые элементы могут переносится на другую строчку и если инлайн элемент граничит с блочным - будет
+            перенос строки.
+        </p>
+    </div>
 
 
 
