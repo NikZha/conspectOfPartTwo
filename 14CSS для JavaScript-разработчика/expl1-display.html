@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <title>Пример для файла display.html</title>
+</head>
+
+<body>
+    <pre><code class="language-html">
+&lt;style>
+li {
+  display: inline-block;
+  list-style: none;
+  border:1px solid red;
+  vertical-align: middle;
+}
+&lt;/style>
+
+&lt;ul style="border:1px solid black; padding:0">
+  &lt;li>Инлайн Блок&lt;br>3 строки&lt;br>высота/ширина явно не заданы&lt;/li>
+  &lt;li style="width:100px;height:100px">Инлайн&lt;br>Блок 100x100&lt;/li>
+  &lt;li style="width:60px;height:60px">Инлайн&lt;br>Блок 60x60&lt;/li>
+  &lt;li style="width:100px;height:60px">Инлайн&lt;br>Блок 100x60&lt;/li>
+  &lt;li style="width:60px;height:100px">Инлайн&lt;br>Блок 60x100&lt;/li>
+&lt;/ul>    
+</code></pre>
+    <style>
+        li {
+            display: inline-block;
+            list-style: none;
+            border: 1px solid red;
+            vertical-align: middle;
+        }
+        ul{
+            border: 1px solid black;
+            padding: 0;
+        }
+    </style>
+
+    <ul>
+        <li>Инлайн Блок<br>3 строки<br>высота/ширина явно не заданы</li>
+        <li style="width:100px;height:100px">Инлайн<br>Блок 100x100</li>
+        <li style="width:60px;height:60px">Инлайн<br>Блок 60x60</li>
+        <li style="width:100px;height:60px">Инлайн<br>Блок 100x60</li>
+        <li style="width:60px;height:100px">Инлайн<br>Блок 60x100</li>
+    </ul>
+</body>
+
+</html>
