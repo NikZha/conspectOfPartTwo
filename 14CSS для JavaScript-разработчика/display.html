@@ -103,6 +103,62 @@
         <p>Как и в случае с инлайн-элементами, пробелы между блоками появляются из-за пробелов в HTML. Если элементы
             списка идут вплотную, например, генерируются в JavaScript – их не будет.</p>
     </div>
+    <div class="topic" id="table">
+        <h3>Значения table-*</h3>
+        <p>Можно задавать значение <code>display</code>, как таблицу <code>table</code>, задавая строки и столбцы.</p>
+        <caption>Соотвествие тегов таблицы значениям <code>display</code>:</caption>
+        <pre><code class="">
+table    { display: table }
+tr       { display: table-row }
+thead    { display: table-header-group }
+tbody    { display: table-row-group }
+tfoot    { display: table-footer-group }
+col      { display: table-column }
+colgroup { display: table-column-group }
+td, th   { display: table-cell }
+caption  { display: table-caption }            
+        </code></pre>
+        <p>Например:</p>
+        <pre><code class="language-html">
+&lt;form style="display: table">
+  &lt;div style="display: table-row">
+    &lt;label style="display: table-cell">Имя:&lt;/label>
+    &lt;input style="display: table-cell">
+  &lt;/div>
+  &lt;div style="display: table-row">
+    &lt;label style="display: table-cell">Фамилия:&lt;/label>
+    &lt;input style="display: table-cell">
+  &lt;/div>
+</form>            
+        </code></pre>
+        <form style="display: table">
+            <div style="display: table-row">
+                <label style="display: table-cell">Имя:</label>
+                <input style="display: table-cell">
+            </div>
+            <div style="display: table-row">
+                <label style="display: table-cell">Фамилия:</label>
+                <input style="display: table-cell">
+            </div>
+        </form>
+        <p>Таким образом получается полноценная таблица, использующая табличные алгоритмы вычисления ширины и высоты
+            элемента.</p>
+        <h3>Вертикальное центрирование с table-cell</h3>
+        <p>Внутри ячеек свойство vertical-align выравнивает содержимое по вертикали, что можно использовать для
+            центрирования:
+
+        </p>
+        <pre><code class="language-html">
+&lt;style>
+  div { border:1px solid black }
+&lt;/style>
+
+&lt;div style="height:100px; display: table-cell; vertical-align: middle">
+  &lt;div>Элемент&lt;br>С неизвестной&lt;br>Высотой&lt;/div>
+&lt;/div>
+        </code></pre>
+        <iframe src="expl2-display.html" frameborder="0"></iframe>
+    </div>
 
 
 
