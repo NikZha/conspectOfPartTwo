@@ -56,7 +56,38 @@ float: left | right | none | inherit;
         <p><a href="exmpl1-float.html">Пример</a> в отдельном фрейме:</p>
         <iframe src="exmpl1-float.html" frameborder="0"></iframe>
     </div>
-
+    <div class="topic" id="clear">
+        <h3>Очистка под float</h3>
+        <p>Особенность <code>float</code> в том, что блоки флоат могут наползать друг на друга:</p>
+        <iframe src="exmpl2-float.html" frameborder="0" style="width: 2000px;"></iframe>
+        <h3>Добавление свойства clear</h3>
+        <p>Для решения проблемы используется свойство <code>clear</code>:</p>
+        <pre><code>
+clear: left | right | both;
+         </code></pre>
+        <p>Применяемое к элементам:</p>
+        <pre><code class="language-css">
+h2 {
+  clear: left;
+}            
+         </code></pre>
+        <p>Таким образом получается:</p>
+        <iframe src="exmpl3-float.html" frameborder="0" style="width: 1500px;"></iframe>
+        <p>Но получается неидеально - второй заголовок сильно прилеплен к верхней картинке. Чтобы было
+            лучше надо добавить дополнительный разделяющих элемент:
+        </p>
+        <pre><code class="language-css">
+&lt;div style="clear:both">&lt;/div>            
+        </code></pre>
+        <p>Который решит эту проблему:</p>
+        <ul>
+            <li>Свойство clear гарантировало, что <code>&lt;div style="clear:both"></code> будет под картинкой с float.
+            </li>
+            <li>Заголовок <code>&lt;h2>Сова&lt;/h2></code> идёт после этого <code>&lt;div></code>. Так что его отступ
+                учитывается. </li>
+        </ul>
+        <p>Более похоже на кастыль, чем на решение.</p>
+    </div>
 
 
 
