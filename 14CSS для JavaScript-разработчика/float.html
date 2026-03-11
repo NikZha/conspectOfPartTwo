@@ -88,6 +88,69 @@ h2 {
         </ul>
         <p>Более похоже на кастыль, чем на решение.</p>
     </div>
+    <div class="topic" id="fil">
+        <h3>Заполнение блока-родителя</h3>
+        <p>Есть ещё одна засада, как <a href="exmpl4-float.html">видно</a> из примера:</p>
+        <iframe src="exmpl4-float.html" frameborder="0" style="width: 1500px;"></iframe>
+        <p>Элемент <code>float</code> выпадает из границ родительского блока:</p>
+        <pre><code class="language-html">
+    &lt;style>
+        .hero {
+            background: #D2B48C;
+            border: 1px solid red;
+        }
+    &lt;/style> 
+    &lt;div class="hero">
+        &lt;h2>Ленин, Владимир Ильич&lt;/h2>
+        &lt;div class="left border">
+            &lt;br>Портрет &lt;br>Владимира Ильича
+            &lt;br>Ленина
+        &lt;/div>
+        &lt;p>Влади́мир Ильи́ч Ле́нин (фамилия при рождении — Улья́нов; 10 (22) апреля 1870, ..... &lt;/p>
+    &lt;/div>           
+        </code></pre>
+        <p>Для решения этой проблемы используются следующие техники:</p>
+        <div id="parent">
+            <h3>Поставить родителю float</h3>
+            <pre><code class="language-css">
+.hero {
+  background: #D2B48C;
+  border: 1px solid red;
+  float: left;
+}                
+            </code></pre>
+            <iframe src="exmpl5-float.html" frameborder="0" style="width: 1500px;"></iframe>
+        </div>
+        <div id="add">
+            <h3>Добавить в родителя элемент с clear</h3>
+            <p>Добавим элемент <code>div style="clear:both"</code> в самый конец контейнера <code>.hero</code>. Минусом
+                этой техники является лишний элемент.</p>
+        </div>
+        <div id="clearfix">
+            <h3>Универсальный класс clearfix</h3>
+            <p>Чтобы не добавлять в HTML-код лишний элемент, можно задать его через <code>:after</code>.</p>
+            <pre><code class="language-css">
+.clearfix:after {
+  content: "."; /* добавить содержимое: "." */
+  display: block;  /* сделать блоком, т.к. inline не может иметь clear */
+  clear: both;  /* с обеих сторон clear */
+  visibility: hidden; /* сделать невидимым, зачем нам точка внизу? */
+  height: 0;  /* сделать высоту 0, чтобы не занимал место */
+}                
+            </code></pre>
+            <p>Добавив этот класс к родителю, получим тот же результат.</p>
+        </div>
+        <div id="hidden">
+            <h3>overflow:auto/hidden</h3>
+            <p>Если добавить родителю <code>overflow: hidden</code> или <code>overflow: auto</code>, то всё станет
+                хорошо.</p>
+            <pre><code class="language-css">
+.hero {
+  overflow: auto;
+}                    
+                </code></pre>
+        </div>
+    </div>
 
 
 
