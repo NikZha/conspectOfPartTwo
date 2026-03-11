@@ -151,7 +151,76 @@ h2 {
                 </code></pre>
         </div>
     </div>
+    <div class="topic" id="inline">
+        <h3>float вместо display:inline-block</h3>
+        <p>При помощи <code>float</code> можно размещать блочные элементы похоже на <code>display: inline-block</code>:
+        </p>
+        <iframe src="exmpl1-inline-float.html" frameborder="0" style="width: 1000px;"></iframe>
+        <p>Достигается это похожим образом:</p>
+        <details>
+            <summary>Большой пример кода доступный по клику</summary>
+            <pre><code class="language-html">
+&lt;head>
+    &lt;style>
+        .gallery li {
+            float: left;
+            width: 150px;
+            height: 150px;
+            list-style: none;
+            /* красивости */
 
+            border: 1px solid black;
+            text-align: center;
+            margin: 5px;
+        }
+    &lt;/style>
+&lt;/head>
+&lt;ul class="gallery">
+    &lt;li>        
+        &lt;div>Картинка 1&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 2&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 3&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 4&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 5&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 6&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 7&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 8&lt;/div>
+    &lt;/li>
+
+    &lt;li>        
+        &lt;div>Картинка 9&lt;/div>
+    &lt;/li>
+
+&lt;/ul>
+
+           
+        </code></pre>
+
+        </details>
+
+        
+    </div>
 
 
 </body>
