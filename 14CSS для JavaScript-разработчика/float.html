@@ -219,9 +219,56 @@ h2 {
 
         </details>
 
-        
-    </div>
 
+    </div>
+    <div class="topic" id="couple">
+        <h3>Вёрстка в несколько колонок</h3>
+        <p>Автор рассматривает два метода верстки:</p>
+        <div id="leftright">
+            <h3>float:left + float:right</h3>
+            <p>HTML-код примерно такой:</p>
+            <pre><code class="language-html">
+&lt;div>Шапка&lt;/div>
+&lt;div class="column-left">Левая колонка&lt;/div>
+&lt;div class="column-right">Правая колонка&lt;/div>
+&lt;div class="footer">Низ&lt;/div>                
+            </code></pre>
+            <p>CSS такой:</p>
+            <pre><code class="language-css">
+.column-left {
+  float: left;
+  width: 30%;
+}
+
+.column-right {
+  float: left;
+  width: 70%;
+}
+
+.footer {
+  clear: both;
+}                
+            </code></pre>
+        </div>
+        <div id="floatmargin">
+            <h3>float + margin</h3>
+            <p>Того же самого можно добиться оставив поле для правой колонки через <code>margin</code>:</p>
+            <pre><code class="language-css">
+.column-left {
+  float: left;
+  width: 30%;
+}
+
+.column-right {
+  margin-left: 30%;
+}
+
+.footer {
+  clear: both;
+}
+            </code></pre>
+        </div>
+    </div>
 
 </body>
 
