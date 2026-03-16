@@ -39,7 +39,56 @@ position: static;
         </code></pre>
         <p>В основном для переопределния других значений <code>position</code>.</p>
     </div>
+    <div class="topic" id="relative">
+        <h3>position: relative</h3>
+        <p>Относительное позиционирование <code>position: relative</code> в css. Так же с этим свойством указывают куда
+            сдвигают:
+            <code>left/right/top/bottom</code>, например:
+        </p>
+        <pre><code class="language-html">
+&lt;style>
+  #exmpl1 {
+    position: relative;
+    top: 10px;
+  }
+&lt;/style>
 
+&lt;div style="background: #fee; width: 500px">
+    Заголовок сдвинут на 10px вниз.
+
+    &lt;h2 style="background: #aef; margin: 0;" id="exmpl1">Заголовок&lt;/h2>
+
+    &lt;div>А тут - всякий разный текст... &lt;br/>
+         ... В две строки!&lt;/div>
+&lt;/div>            
+        </code></pre>
+        <blockquote>
+            <style>
+                #exmpl1 {
+                    position: relative;
+                    top: 10px;
+                }
+            </style>
+
+            <div style="background: #fee; width: 500px">
+                Заголовок сдвинут на 10px вниз.
+
+                <h2 style="background: #aef; margin: 0;" id="exmpl1">Заголовок</h2>
+
+                <div>А тут - всякий разный текст... <br />
+                    ... В две строки!</div>
+            </div>
+        </blockquote>
+        <h4>Координаты:</h4>
+        <ul>
+            <li><code>top</code> – сдвиг от «обычной» верхней границы</li>
+            <li><code>bottom</code> – сдвиг от нижней границы</li>
+            <li><code>left</code> – сдвиг слева</li>
+            <li><code>right</code> – сдвиг справа</li>
+        </ul>
+        <p>Можно сдвигать с минусом, например <code>left: 10%</code> сдвинет элемент на 10% его ширины вправо, а
+            <code>left: -10%</code> – влево. </p>
+    </div>
 
 
 
