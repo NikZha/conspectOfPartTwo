@@ -87,9 +87,68 @@ position: static;
             <li><code>right</code> – сдвиг справа</li>
         </ul>
         <p>Можно сдвигать с минусом, например <code>left: 10%</code> сдвинет элемент на 10% его ширины вправо, а
-            <code>left: -10%</code> – влево. </p>
+            <code>left: -10%</code> – влево.
+        </p>
     </div>
+    <div class="topic" id="absolute">
+        <h3>position: absolute</h3>
+        <pre><code class="language-css">
+position: absolute;            
+        </code></pre>
+        <p>Делает две вещи:</p>
+        <ol>
+            <li>Элемент исчезает с того места, где он должен быть и позиционируется заново. Остальные элементы,
+                располагаются так, как будто этого элемента никогда не было.</li>
+            <li>Координаты <code>top/bottom/left/right</code> для нового местоположения отсчитываются от ближайшего
+                позиционированного родителя, т.е. родителя с позиционированием, отличным от <code>static</code>. Если
+                такого родителя нет – то относительно документа. </li>
+        </ol>
+        <p>Помимо этого:</p>
+        <ul>
+            <li>Ширина элемента с position: absolute устанавливается по содержимому. </li>
+            <li>Элемент получает <code>display:block</code></li>
+        </ul>
+        <p>Например:</p>
+        <pre><code class="language-html">
+&lt;style>
+  #exmpl2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+&lt;/style>
 
+&lt;div style="background: #fee; width: 500px">
+    Заголовок в правом-верхнем углу документа.
+
+    &lt;h2 style="background: #aef; margin: 0;" id="exmpl2">Заголовок&lt;/h2>
+
+    &lt;div>А тут - всякий разный текст... &lt;br/>
+         ... В две строки!&lt;/div>
+&lt;/div>            
+        </code></pre>
+        <blockquote style="position: relative;">
+            <style>
+                #exmpl2 {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+            </style>
+
+            <div style="background: #fee; width: 500px">
+                Заголовок в правом-верхнем углу документа.
+
+                <h2 style="background: #aef; margin: 0;" id="exmpl2">Заголовок</h2>
+
+                <div>А тут - всякий разный текст... <br />
+                    ... В две строки!</div>
+            </div>
+        </blockquote>
+        <p>Чтобы спозиционировать этот пример в документе без танцев с бубном, элементу
+            <code>&lt;blockquote style="position: relative;"></blockquote></code> задано позиционирование.
+        </p>
+    </div>
 
 
 
