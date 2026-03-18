@@ -157,7 +157,36 @@ position: absolute;
             отороженостью поскольку оно может перекрывать другие элементы в отличии от <code>float</code>.
         </p>
     </div>
+    <div class="topic" id="fixed">
+        <h3>position: fixed</h3>
+        <p>Позиционирует объект точно так же, как <code>absolute</code>, но относительно <code>window</code>.
+            Синтаксис:</p>
+        <pre><code class="language-css">
+position: fixed;            
+        </code></pre>
+        <p>Пример:</p>
+        <pre><code class="language-html">
+&lt;style>
+  #top {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    background: #fee;
+  }
+&lt;/style>
 
+&lt;a href="#" id="top">Наверх (остаётся при прокрутке)&lt;/a>
+
+Фиксированное позиционирование.
+
+&lt;p>Текст страницы.. Прокрути меня...&lt;/p>
+&lt;p>Много строк..&lt;/p>&lt;p>Много строк..&lt;/p>
+&lt;p>Много строк..&lt;/p>&lt;p>Много строк..&lt;/p>
+&lt;p>Много строк..&lt;/p>&lt;p>Много строк..&lt;/p>
+&lt;p>Много строк..&lt;/p>&lt;p>Много строк..&lt;/p>            
+        </code></pre>
+        <iframe src="expl1-fixed-position.html" frameborder="0" style="width: 800px;"></iframe>
+    </div>
 
 
 
