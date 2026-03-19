@@ -187,7 +187,24 @@ position: fixed;
         </code></pre>
         <iframe src="expl1-fixed-position.html" frameborder="0" style="width: 800px;"></iframe>
     </div>
-
+    <div class="topic" id="total">
+        <h3>Итого</h3>
+        <p>Виды и особенности позиционирования:</p>
+        <ul>
+            <li><code>static</code>
+                <br>Свойство по умолчанию без позиционирования.
+            </li>
+            <li><code>relative</code>
+                <br>Сдвигает относительно текущего места по координатам: <code>left/right/top/bottom</code> однако
+                остальные элементы "ничего не знают об этом".
+            </li>
+            <li><code>absolute</code> <br>Позиционирование относительно документа по таким же координатам.</li>
+            <li><code>fixed</code>
+                <br>Позиционирование относительно окна.
+            </li>
+        </ul>
+        <p>В двух последних случаях элемент исключается из потока и может перекрывать другие элементы.</p>
+    </div>
 
 
 
