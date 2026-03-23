@@ -29,7 +29,85 @@
         <p>В CSS есть всего несколько техник центрирования элементов. Если их знать, то большинство задач решаются
             просто.</p>
     </div>
+    <div class="topic" id="horizontal">
+        <h3>Горизонтальное
+            <br>text-align
+        </h3>
+        <p>Для инлайновых элементов используется <code>text-align: center</code>, например:</p>
+        <pre><code class="language-html">
+&lt;style>
+  .outer {
+    text-align: center;
+    border: 1px solid blue;
+  }
+    .inner {
+    width: 100px;
+    border: 1px solid red;
+  }
+&lt;/style>
 
+&lt;div class="outer">Текстно для блочных элементов такое не сработает:
+                &lt;div class="inner">Текст&lt;/div>
+                &lt;/div>            
+        </code></pre>
+        <blockquote style="width: 500px;">
+            <style>
+                .outer {
+                    text-align: center;
+                    border: 1px solid blue;
+                }
+
+                .inner {
+                    width: 100px;
+                    border: 1px solid red;
+                }
+            </style>
+
+            <div class="outer">Текст, но для блочных элементов такое не сработает:
+                <div class="inner">Текст</div>
+            </div>
+        </blockquote>
+        <p>Для блочных элементов используют:</p>
+        <h3>margin: auto</h3>
+        <p>Блок по горизонтали центрируется margin: auto:</p>
+        <pre><code class="language-html">
+&lt;style>
+  .outer {
+    border: 1px solid blue;
+  }
+  .inner {
+    width: 100px;
+    border: 1px solid red;
+    margin: auto;
+  }
+&lt;/style>
+
+&lt;div class="outer">
+  &lt;div class="inner">Текст&lt;/div>
+&lt;/div>            
+        </code></pre>
+        <blockquote style="width: 500px;">
+            <style>
+                .outer {
+                    border: 1px solid blue;
+                }
+
+                .inner {
+                    width: 100px;
+                    border: 1px solid red;
+                    margin: auto;
+                }
+            </style>
+
+            <div class="outer">
+                <div class="inner">Текст</div>
+            </div>
+        </blockquote>
+        <p>Значение <code>margin: auto</code> нужно проставлять явно. Так же приспользовании свойств
+            <code>margin-left:auto/margin-right:auto</code> будет использовано все свободное место с соотвествующего
+            края.
+        </p>
+    </div>
 
 
 
