@@ -57,3 +57,7 @@ blockquote{
 .startbutton{
   cursor: pointer;
 }
+
+.width500{
+  width: 500px;
+}

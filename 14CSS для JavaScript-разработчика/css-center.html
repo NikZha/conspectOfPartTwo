@@ -108,7 +108,131 @@
             края.
         </p>
     </div>
+    <div class="topic" id="vertical">
+        <h3>Вертикальное</h3>
+        <p>Вертикальное же изначально не было предусмотрено в спецификации CSS и по сей день вызывает ряд проблем.
 
+            Есть три основных решения.</p>
+        <div id="position_absolute_margin">
+            <h4>position:absolute + margin</h4>
+            <pre><code class="language-html">
+&lt;style>
+  .outer {
+    position: relative;
+    height: 5em;
+    border: 1px solid blue;
+  }
+
+  .inner {
+    position: absolute;
+    top: 50%;
+    border: 1px solid red;
+  }
+&lt;/style>
+
+&lt;div class="outer">
+  &lt;div class="inner">Текст&lt;/div>
+                   
+                </code></pre>
+            <blockquote class="width500">
+                <style>
+                    .outer0 {
+                        position: relative;
+                        height: 5em;
+                        border: 1px solid blue;
+                    }
+
+                    .inner0 {
+                        position: absolute;
+                        top: 50%;
+                        border: 1px solid red;
+                    }
+                </style>
+
+                <div class="outer0">
+                    <div class="inner0">Текст</div>
+                </div>
+            </blockquote>
+            <p>Получается не по цетру поэтому сдвигаем вверх на половину штрифта:</p>
+            <pre><code class="language-html">
+&lt;style>
+  .outer {
+    position: relative;
+    height: 5em;
+    border: 1px solid blue;
+  }
+
+  .inner {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.625em;
+    border: 1px solid red;
+  }
+&lt;/style>
+
+&lt;div class="outer">
+  &lt;div class="inner">Текст&lt;/div>
+&lt;/div>
+            </code></pre>
+            <blockquote class="width500">
+                <style>
+                    .outer1 {
+                        position: relative;
+                        height: 5em;
+                        border: 1px solid blue;
+                    }
+
+                    .inner1 {
+                        position: absolute;
+                        top: 50%;
+                        margin-top: -0.625em;
+                        border: 1px solid red;
+                    }
+                </style>
+
+                <div class="outer1">
+                    <div class="inner1">Текст</div>
+                </div>
+            </blockquote>
+            <p>Можно аналогично центрировать и по горизонтали, если известен горизонтальный размер, при помощи
+                <code>left:50%</code>
+                и отрицательного <code>margin-left</code>.
+            </p>
+        </div>
+        <div id="line_height">
+            <h4>Одна строка: line-height</h4>
+            <p>Вертикально отцентрировать одну строку в элементе с известной высотой <code>height</code> можно, указав
+                эту высоту в свойстве <code>line-height</code>:</p>
+            <pre><code class="language-html">
+&lt;style>
+  .outer {
+    height: 5em;
+    line-height: 5em;
+    border: 1px solid blue;
+  }
+&lt;/style>
+
+&lt;div class="outer">
+  &lt;span style="border:1px solid red">Текст&lt;/span>
+&lt;/div>                    
+                </code></pre>
+            <blockquote class="width500">
+                <style>
+                    .outer2 {
+                        height: 5em;
+                        line-height: 5em;
+                        border: 1px solid blue;
+                    }
+                </style>
+
+                <div class="outer2">
+                    <span style="border:1px solid red">Текст</span>
+                </div>
+            </blockquote>
+            <p>Это работает, но лишь до тех пор, пока строка одна, а если содержимое вдруг переносится на другую строку,
+                то начинает выглядеть довольно уродливо.</p>
+        </div>
+    </div>
 
 
 
