@@ -232,6 +232,54 @@
             <p>Это работает, но лишь до тех пор, пока строка одна, а если содержимое вдруг переносится на другую строку,
                 то начинает выглядеть довольно уродливо.</p>
         </div>
+        <div id="verticalalign">
+            <h3>Таблица с vertical-align</h3>
+            <p>В таблицах свойство vertical-align указывает расположение содержимого ячейки:
+            </p>
+            <ul>
+                <li><code>baseline</code> - значение по умолчанию.</li>
+                <li><code>middle, top, bottom</code> - располагать содержимое посередине, вверху, внизу ячейки.
+                </li>
+            </ul>
+            <p>Например:</p>
+            <pre><code class="language-html">
+&lt;style>
+  table {  border-collapse: collapse; }
+  td {
+    border: 1px solid blue;
+    height: 100px;
+  }
+&lt;/style>
+
+&lt;table>
+&lt;tr>
+  &lt;td style="vertical-align: top">top&lt;/td>
+  &lt;td style="vertical-align: middle">middle&lt;/td>
+  &lt;td style="vertical-align: bottom">bottom&lt;/td>
+&lt;/tr>
+&lt;/table>                
+            </code></pre>
+            <blockquote class="width500">
+                <style>
+                    table {
+                        border-collapse: collapse;
+                    }
+
+                    td {
+                        border: 1px solid blue;
+                        height: 100px;
+                    }
+                </style>
+
+                <table>
+                    <tr>
+                        <td style="vertical-align: top">top</td>
+                        <td style="vertical-align: middle">middle</td>
+                        <td style="vertical-align: bottom">bottom</td>
+                    </tr>
+                </table>
+            </blockquote>
+        </div>
     </div>
 
 
